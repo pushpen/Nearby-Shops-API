@@ -4,7 +4,10 @@ import net.coobird.thumbnailator.Thumbnails;
 import org.nearbyshops.DAOsPrepared.ShopDAO;
 import org.nearbyshops.Globals.GlobalConstants;
 import org.nearbyshops.Globals.Globals;
+import org.nearbyshops.Model.Image;
 import org.nearbyshops.Model.Shop;
+import org.nearbyshops.ModelEndpoint.ShopEndPoint;
+import org.nearbyshops.ModelRoles.User;
 
 import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
@@ -21,7 +24,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 
 
-@Path("/v1/Shop")
+@Path("/api/v1/Shop")
 @Produces(MediaType.APPLICATION_JSON)
 public class ShopResource {
 
@@ -103,7 +106,7 @@ public class ShopResource {
 	@Path("/UpdateByAdmin/{ShopID}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@RolesAllowed({GlobalConstants.ROLE_ADMIN, GlobalConstants.ROLE_STAFF})
-	public Response updateShop(Shop shop, @PathParam("ShopID")int ShopID)
+	public Response updateShopByAdmin(Shop shop, @PathParam("ShopID")int ShopID)
 	{
 
 
@@ -160,7 +163,7 @@ public class ShopResource {
 	@Path("/UpdateBySelf")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@RolesAllowed({GlobalConstants.ROLE_SHOP_ADMIN})
-	public Response updateBySelf(Shop shop)
+	public Response updateShopBySelf(Shop shop)
 	{
 
 		// generate bounding coordinates for the shop based on its center and delivery range
@@ -175,35 +178,37 @@ public class ShopResource {
 //		shop.setLatMax(pointTwo.getLatitudeInDegrees());
 //		shop.setLonMax(pointTwo.getLongitudeInDegrees());
 
-		if(Globals.accountApproved instanceof ShopAdmin)
-		{
-				/*
-			int shopIDForTest = ((ShopAdmin) Globals.accountApproved).getShopID();
+//		if(Globals.accountApproved instanceof ShopAdmin)
+//		{
+//				/*
+//			int shopIDForTest = ((ShopAdmin) Globals.accountApproved).getShopID();
+//
+//			shopIDForTest = shopDAO.getShopForShopAdmin(((ShopAdmin) Globals.accountApproved).getShopAdminID()).getShopID();
+//
+//			if(ShopID != shopIDForTest)
+//			{
+//
+//
+//				// update by wrong account . Throw an Exception
+//				Response responseError = Response.status(Status.FORBIDDEN)
+//						.entity(new ErrorNBSAPI(403, APIErrors.UPDATE_BY_WRONG_SHOP_OWNER))
+//						.build();
+//
+//				throw new ForbiddenException("You are not allowed to update the shop you do not own !",responseError);
+//			}*/
+//
+////			shop.setShopAdminID(((ShopAdmin) Globals.accountApproved).getShopAdminID());
+//
+//		}
+//		else
+//		{
+//			throw new ForbiddenException();
+//		}
 
-			shopIDForTest = shopDAO.getShopForShopAdmin(((ShopAdmin) Globals.accountApproved).getShopAdminID()).getShopID();
-
-			if(ShopID != shopIDForTest)
-			{
-
-
-				// update by wrong account . Throw an Exception
-				Response responseError = Response.status(Status.FORBIDDEN)
-						.entity(new ErrorNBSAPI(403, APIErrors.UPDATE_BY_WRONG_SHOP_OWNER))
-						.build();
-
-				throw new ForbiddenException("You are not allowed to update the shop you do not own !",responseError);
-			}*/
-
-			shop.setShopAdminID(((ShopAdmin) Globals.accountApproved).getShopAdminID());
-
-		}
-		else
-		{
-			throw new ForbiddenException();
-		}
 
 
 
+		shop.setShopAdminID(((User)Globals.accountApproved).getUserID());
 
 		int rowCount = shopDAO.updateShopBySelf(shop);
 
@@ -659,28 +664,23 @@ public class ShopResource {
 	public Response getShopForShopAdmin()
 	{
 
-		if(Globals.accountApproved instanceof ShopAdmin)
+		Shop shop = shopDAO.getShopForShopAdmin(((User) Globals.accountApproved).getUserID());
+
+
+
+		if(shop!= null)
 		{
-			Shop shop = shopDAO.getShopForShopAdmin(((ShopAdmin) Globals.accountApproved).getShopAdminID());
+			return Response.status(Status.OK)
+					.entity(shop)
+					.build();
 
-			if(shop!= null)
-			{
-				return Response.status(Status.OK)
-						.entity(shop)
-						.build();
-
-			} else
-			{
-
-				return Response.status(Status.NO_CONTENT)
-						.build();
-			}
-
-		}
-		else
+		} else
 		{
-			throw new ForbiddenException();
+
+			return Response.status(Status.NO_CONTENT)
+					.build();
 		}
+
 
 	}
 

@@ -15,7 +15,8 @@ import java.util.List;
  * Created by sumeet on 9/8/16.
  */
 
-@Path("/v1/ItemReviewThanks")
+
+@Path("/api/v1/ItemReviewThanks")
 public class ItemReviewThanksResource {
 
 

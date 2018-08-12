@@ -35,7 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@Path("/v1/Item")
+@Path("/api/v1/Item")
 public class ItemResource {
 
 	private ItemDAO itemDAO = Globals.itemDAO;
@@ -899,6 +899,8 @@ public class ItemResource {
 
 		return response;
 	}
+
+
 
 
 }

@@ -49,7 +49,6 @@ public class ItemCategory {
 			+ " " + ItemCategory.IS_ABSTRACT + " boolean,"
 			+ " " + ItemCategory.IS_LEAF_NODE + " boolean,"
 
-
 			+ " FOREIGN KEY(" + ItemCategory.PARENT_CATEGORY_ID +") REFERENCES " + ItemCategory.TABLE_NAME + "(" + ItemCategory.ITEM_CATEGORY_ID + ")"
 			+ ")";
 

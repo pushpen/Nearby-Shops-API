@@ -6,6 +6,8 @@ import org.nearbyshops.ModelStats.OrderStats;
 
 import java.sql.Timestamp;
 
+
+
 /**
  * Created by sumeet on 29/5/16.
  */
@@ -49,7 +51,6 @@ public class Order {
     public static final String TIMESTAMP_HD_PACKED = "TIMESTAMP_HD_PACKED";
     public static final String TIMESTAMP_HD_OUT_FOR_DELIVERY = "TIMESTAMP_HD_OUT_FOR_DELIVERY";
     public static final String TIMESTAMP_HD_DELIVERED = "TIMESTAMP_HD_DELIVERED";
-
 
 
 

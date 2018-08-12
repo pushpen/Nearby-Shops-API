@@ -16,7 +16,7 @@ import java.util.List;
 
 
 @Singleton
-@Path("/Order")
+@Path("/api/Order")
 public class OrderResource {
 
 
@@ -24,6 +24,10 @@ public class OrderResource {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+
+
+
+
 
 
 //

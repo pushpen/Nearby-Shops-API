@@ -20,8 +20,6 @@ public class DAOUserNew {
     private HikariDataSource dataSource = Globals.getDataSource();
 
 
-
-
     // insert user : check if email or phone is verified
         // registerUsingEmail
         // RegisterUsingPhone
@@ -51,9 +49,6 @@ public class DAOUserNew {
 
     // check google ID | to check whether the person is registered or not
     // save google profile | create google account
-
-
-
 
 
 
@@ -228,11 +223,6 @@ public class DAOUserNew {
 
 
 
-
-
-
-
-
     public User getProfile(int userID)
     {
 
@@ -330,8 +320,6 @@ public class DAOUserNew {
 
         return user;
     }
-
-
 
 
 
@@ -466,9 +454,6 @@ public class DAOUserNew {
 
         return user;
     }
-
-
-
 
 
 
@@ -784,8 +769,6 @@ public class DAOUserNew {
 
 
 
-
-
     public int updateDriver(User user)
     {
 
@@ -870,9 +853,6 @@ public class DAOUserNew {
 
         return rowCountUpdated;
     }
-
-
-
 
 
 
@@ -963,13 +943,6 @@ public class DAOUserNew {
 
 
 
-
-
-
-
-
-
-
     public int updateToken(User user)
     {
 
@@ -1057,12 +1030,6 @@ public class DAOUserNew {
 
         return rowCountUpdated;
     }
-
-
-
-
-
-
 
 
 

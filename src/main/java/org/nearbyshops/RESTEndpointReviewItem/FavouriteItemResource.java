@@ -15,7 +15,7 @@ import java.util.List;
  * Created by sumeet on 9/8/16.
  */
 
-@Path("/v1/FavouriteItem")
+@Path("/api/v1/FavouriteItem")
 public class FavouriteItemResource {
 
 

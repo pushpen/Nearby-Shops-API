@@ -16,7 +16,7 @@ import java.util.List;
  * Created by sumeet on 9/8/16.
  */
 
-@Path("/v1/ShopReview")
+@Path("/api/v1/ShopReview")
 public class ShopReviewRESTEndpoint {
 
 

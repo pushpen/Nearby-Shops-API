@@ -7,6 +7,7 @@ import org.nearbyshops.Model.ItemCategory;
 import org.nearbyshops.Model.Shop;
 import org.nearbyshops.Model.ShopItem;
 import org.nearbyshops.ModelEndpoint.ItemEndPoint;
+import org.nearbyshops.ModelReviewItem.ItemReview;
 import org.nearbyshops.ModelStats.ItemStats;
 
 import java.sql.*;
@@ -417,11 +418,11 @@ public class ItemDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 		finally
-		
 		{
-			
+
+
+
 			try {
 			
 				if(statement!=null)
@@ -487,15 +488,15 @@ public class ItemDAO {
 				+ Item.TABLE_NAME + "." + Item.IMAGE_COPYRIGHTS + ","
 
 
-//				+  "avg(" + ItemReview.TABLE_NAME + "." + ItemReview.RATING + ") as avg_rating" + ","
-//				+  "count( DISTINCT " + ItemReview.TABLE_NAME + "." + ItemReview.END_USER_ID + ") as rating_count" + ","
-//				+  "(avg(" + ItemReview.TABLE_NAME + "." + ItemReview.RATING + ")* count( DISTINCT " + ItemReview.TABLE_NAME + "." + ItemReview.END_USER_ID + ") ) as popularity"
+				+  "avg(" + ItemReview.TABLE_NAME + "." + ItemReview.RATING + ") as avg_rating" + ","
+				+  "count( DISTINCT " + ItemReview.TABLE_NAME + "." + ItemReview.END_USER_ID + ") as rating_count" + ","
+				+  "(avg(" + ItemReview.TABLE_NAME + "." + ItemReview.RATING + ")* count( DISTINCT " + ItemReview.TABLE_NAME + "." + ItemReview.END_USER_ID + ") ) as popularity"
 
 				+ " FROM "
 				+ Shop.TABLE_NAME  + ","
 				+ ShopItem.TABLE_NAME + ","
-//				+ ItemReview.TABLE_NAME
-//				+ " RIGHT OUTER JOIN " + Item.TABLE_NAME + " ON (" + ItemReview.TABLE_NAME + "." + ItemReview.ITEM_ID + " = " + Item.TABLE_NAME + "." + Item.ITEM_ID + ")" + ","
+				+ ItemReview.TABLE_NAME
+				+ " RIGHT OUTER JOIN " + Item.TABLE_NAME + " ON (" + ItemReview.TABLE_NAME + "." + ItemReview.ITEM_ID + " = " + Item.TABLE_NAME + "." + Item.ITEM_ID + ")" + ","
 				+ ItemCategory.TABLE_NAME
 
 				+ " WHERE " + Shop.TABLE_NAME + "." + Shop.SHOP_ID + "=" + ShopItem.TABLE_NAME + "." + ShopItem.SHOP_ID

@@ -15,7 +15,7 @@ import java.util.List;
  * Created by sumeet on 9/8/16.
  */
 
-@Path("/v1/FavouriteShop")
+@Path("/api/v1/FavouriteShop")
 public class FavouriteShopResource {
 
 

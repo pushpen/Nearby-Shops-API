@@ -93,6 +93,7 @@ public class CartItem {
         this.itemID = itemID;
     }
 
+
     public int getItemQuantity() {
         return itemQuantity;
     }

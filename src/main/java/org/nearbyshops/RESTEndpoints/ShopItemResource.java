@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@Path("/v1/ShopItem")
+@Path("/api/v1/ShopItem")
 public class ShopItemResource {
 
 

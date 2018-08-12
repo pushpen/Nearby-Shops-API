@@ -12,7 +12,10 @@ import java.net.URI;
 import java.util.List;
 
 
-@Path("/DeliveryAddress")
+
+
+
+@Path("/api/DeliveryAddress")
 public class DeliveryAddressResource {
 
 
@@ -121,7 +124,6 @@ public class DeliveryAddressResource {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getDeliveryAddresses(@QueryParam("EndUserID")int endUserID)
-
 	{
 
 		//List<Cart> cartList = Globals.cartService.readCarts(endUserID,shopID);
@@ -150,7 +152,9 @@ public class DeliveryAddressResource {
 		}
 		
 	}
-	
+
+
+
 	
 	@GET
 	@Path("/{DeliveryAddressID}")

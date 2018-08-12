@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 /**
  * Created by sumeet on 19/6/16.
  */
-public class ServiceConfiguration {
+public class ServiceConfigurationLocal {
 
 
     // Table Name
@@ -60,43 +60,43 @@ public class ServiceConfiguration {
 
     // Create Table Statement
     public static final String createTablePostgres
-            = "CREATE TABLE IF NOT EXISTS " + ServiceConfiguration.TABLE_NAME + "("
-            + " " + ServiceConfiguration.SERVICE_CONFIGURATION_ID + " SERIAL PRIMARY KEY,"
+            = "CREATE TABLE IF NOT EXISTS " + ServiceConfigurationLocal.TABLE_NAME + "("
+            + " " + ServiceConfigurationLocal.SERVICE_CONFIGURATION_ID + " SERIAL PRIMARY KEY,"
 
-//            + " " + ServiceConfiguration.IMAGE_PATH + " text,"
-            + " " + ServiceConfiguration.LOGO_IMAGE_PATH + " text,"
-            + " " + ServiceConfiguration.BACKDROP_IMAGE_PATH + " text,"
+//            + " " + ServiceConfigurationLocal.IMAGE_PATH + " text,"
+            + " " + ServiceConfigurationLocal.LOGO_IMAGE_PATH + " text,"
+            + " " + ServiceConfigurationLocal.BACKDROP_IMAGE_PATH + " text,"
 
-            + " " + ServiceConfiguration.SERVICE_NAME + " text,"
-            + " " + ServiceConfiguration.HELPLINE_NUMBER + " text,"
+            + " " + ServiceConfigurationLocal.SERVICE_NAME + " text,"
+            + " " + ServiceConfigurationLocal.HELPLINE_NUMBER + " text,"
 
-            + " " + ServiceConfiguration.DESCRIPTION_SHORT + " text,"
-            + " " + ServiceConfiguration.DESCRIPTION_LONG + " text,"
+            + " " + ServiceConfigurationLocal.DESCRIPTION_SHORT + " text,"
+            + " " + ServiceConfigurationLocal.DESCRIPTION_LONG + " text,"
 
 
-            + " " + ServiceConfiguration.ADDRESS + " text,"
-            + " " + ServiceConfiguration.CITY + " text,"
-            + " " + ServiceConfiguration.PINCODE + " BIGINT,"
-            + " " + ServiceConfiguration.LANDMARK + " text,"
-            + " " + ServiceConfiguration.STATE + " text,"
-            + " " + ServiceConfiguration.COUNTRY + " text,"
+            + " " + ServiceConfigurationLocal.ADDRESS + " text,"
+            + " " + ServiceConfigurationLocal.CITY + " text,"
+            + " " + ServiceConfigurationLocal.PINCODE + " BIGINT,"
+            + " " + ServiceConfigurationLocal.LANDMARK + " text,"
+            + " " + ServiceConfigurationLocal.STATE + " text,"
+            + " " + ServiceConfigurationLocal.COUNTRY + " text,"
 
-            + " " + ServiceConfiguration.ISO_COUNTRY_CODE + " text,"
-            + " " + ServiceConfiguration.ISO_LANGUAGE_CODE + " text,"
-            + " " + ServiceConfiguration.ISO_CURRENCY_CODE + " text,"
+            + " " + ServiceConfigurationLocal.ISO_COUNTRY_CODE + " text,"
+            + " " + ServiceConfigurationLocal.ISO_LANGUAGE_CODE + " text,"
+            + " " + ServiceConfigurationLocal.ISO_CURRENCY_CODE + " text,"
 
-            + " " + ServiceConfiguration.SERVICE_TYPE + " INT,"
-//            + " " + ServiceConfiguration.SERVICE_LEVEL + " INT,"
+            + " " + ServiceConfigurationLocal.SERVICE_TYPE + " INT,"
+//            + " " + ServiceConfigurationLocal.SERVICE_LEVEL + " INT,"
 
-            + " " + ServiceConfiguration.LAT_CENTER + " FLOAT,"
-            + " " + ServiceConfiguration.LON_CENTER + " FLOAT,"
-            + " " + ServiceConfiguration.SERVICE_RANGE + " FLOAT,"
+            + " " + ServiceConfigurationLocal.LAT_CENTER + " FLOAT,"
+            + " " + ServiceConfigurationLocal.LON_CENTER + " FLOAT,"
+            + " " + ServiceConfigurationLocal.SERVICE_RANGE + " FLOAT,"
 
-            + " " + ServiceConfiguration.UPDATED + " timestamp with time zone,"
-            + " " + ServiceConfiguration.CREATED + " timestamp with time zone NOT NULL DEFAULT now(),"
+            + " " + ServiceConfigurationLocal.UPDATED + " timestamp with time zone,"
+            + " " + ServiceConfigurationLocal.CREATED + " timestamp with time zone NOT NULL DEFAULT now(),"
 
-            + " " + ServiceConfiguration.STYLE_URL + " text,"
-            + " " + ServiceConfiguration.MQTT_SERVER_ADDRESS + " text"
+            + " " + ServiceConfigurationLocal.STYLE_URL + " text,"
+            + " " + ServiceConfigurationLocal.MQTT_SERVER_ADDRESS + " text"
             + ")";
 
 
@@ -153,9 +153,9 @@ public class ServiceConfiguration {
 
 
 
-    public static ServiceConfiguration getDefaultConfig()
+    public static ServiceConfigurationLocal getDefaultConfig()
     {
-        ServiceConfiguration serviceConfig = new ServiceConfiguration();
+        ServiceConfigurationLocal serviceConfig = new ServiceConfigurationLocal();
 
         serviceConfig.setServiceID(1);
         serviceConfig.setServiceName("Service name not set !");

@@ -17,6 +17,11 @@ public class Cart {
     public static final String SHOP_ID = "SHOP_ID";
 
 
+
+
+
+
+
     // create table query
     public static final String createTableCartPostgres =
 
@@ -28,7 +33,6 @@ public class Cart {
             + " FOREIGN KEY(" + Cart.SHOP_ID +") REFERENCES " + Shop.TABLE_NAME + "(" + Shop.SHOP_ID + "),"
             + " UNIQUE (" + Cart.END_USER_ID + "," + Cart.SHOP_ID + ")"
             + ")";
-
 
 
 

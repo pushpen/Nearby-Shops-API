@@ -18,7 +18,7 @@ import java.util.List;
 
 
 @Singleton
-@Path("/Order/ShopStaff")
+@Path("/api/Order/ShopStaff")
 public class OrderEndpointShopStaff {
 
 

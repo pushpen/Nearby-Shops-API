@@ -722,6 +722,7 @@ public class ItemCategoryDAO {
 					continue;
 				}
 
+
 				itemCategory.setParentCategoryID(rs.getInt(ItemCategory.PARENT_CATEGORY_ID));
 				itemCategory.setIsLeafNode(rs.getBoolean(ItemCategory.IS_LEAF_NODE));
 				itemCategory.setImagePath(rs.getString(ItemCategory.IMAGE_PATH));

@@ -28,7 +28,7 @@ import java.util.List;
  * Created by sumeet on 28/2/17.
  */
 
-@Path("/v1/ItemImage")
+@Path("/api/v1/ItemImage")
 public class ItemImageResource {
 
     private ItemImagesDAO itemImagesDAO = Globals.itemImagesDAO;

@@ -63,6 +63,9 @@ public class Item {
 
 
 
+
+
+
 //	public static final String upgradeTableSchema =
 //			"ALTER TABLE IF EXISTS " + Item.TABLE_NAME
 //					+ " ADD COLUMN IF NOT EXISTS " + Item.GIDB_ITEM_ID + " int,"

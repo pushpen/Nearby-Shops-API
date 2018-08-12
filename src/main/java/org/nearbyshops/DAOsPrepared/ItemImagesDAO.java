@@ -46,7 +46,10 @@ public class ItemImagesDAO {
                 + ItemImage.IMAGE_ORDER + ","
                 + ItemImage.TIMESTAMP_UPDATED + ""
 
-                + ") VALUES(?,?,? ,?,?,? ,?,?,?)";
+                + ") VALUES(?,?,? ,?,?,? ,?)";
+
+
+
 
         try {
 
@@ -245,6 +248,10 @@ public class ItemImagesDAO {
 
         return rowCountDeleted;
     }
+
+
+
+
 
 
 

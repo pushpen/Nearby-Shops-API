@@ -89,6 +89,10 @@ public class PlaceOrderDAO {
                         + OrderItem.ITEM_PRICE_AT_ORDER + ","
                         + OrderItem.ITEM_QUANTITY + ") " +
 
+
+
+
+
                         " select " + " ? " + ","
                         + ShopItem.TABLE_NAME+ "." + ShopItem.ITEM_ID + ","
                         + ShopItem.TABLE_NAME + "." + ShopItem.ITEM_PRICE + ","

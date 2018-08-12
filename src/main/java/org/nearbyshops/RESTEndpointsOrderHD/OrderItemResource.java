@@ -16,7 +16,7 @@ import javax.ws.rs.core.Response.Status;
 import java.util.List;
 
 
-@Path("/OrderItem")
+@Path("/api/OrderItem")
 public class OrderItemResource {
 
 
@@ -246,5 +246,8 @@ public class OrderItemResource {
 				.entity(endPoint)
 				.build();
 	}
+
+
+
 
 }

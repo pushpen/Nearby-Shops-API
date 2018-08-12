@@ -13,7 +13,7 @@ import javax.ws.rs.core.Response.Status;
 import java.util.List;
 
 
-@Path("/CartItem")
+@Path("/api/CartItem")
 public class CartItemResource {
 
 

@@ -375,6 +375,7 @@ public class ItemDAOJoinOuter {
 				+ " FROM " + Item.TABLE_NAME;
 
 
+
 		String queryJoin = "SELECT "
 
 				+ "count( DISTINCT " + Item.TABLE_NAME + "." + Item.ITEM_ID + ") as item_count" + ""
@@ -400,6 +401,8 @@ public class ItemDAOJoinOuter {
 //					+ Item.ITEM_CATEGORY_ID + " = " + itemCategoryID;
 
 		}
+
+
 
 
 		if(parentIsNull!=null&& parentIsNull)

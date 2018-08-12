@@ -25,7 +25,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 
-@Path("/v1/ItemCategory")
+@Path("/api/v1/ItemCategory")
 public class ItemCategoryResource {
 
 
@@ -37,7 +37,10 @@ public class ItemCategoryResource {
 		super();
 		// TODO Auto-generated constructor stub
 	}                                 
-	
+
+
+
+
 	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -79,13 +82,14 @@ public class ItemCategoryResource {
 		{
 
 			return Response.status(Status.NOT_MODIFIED)
-					.entity(null)
 					.build();
 		}
 
 
 		return null;
 	}
+
+
 	
 	
 	@DELETE
@@ -715,6 +719,9 @@ public class ItemCategoryResource {
 
 
 
+
+
+
 	// Image MEthods
 
 	private static final java.nio.file.Path BASE_DIR = Paths.get("./images/ItemCategory");
@@ -906,6 +913,9 @@ public class ItemCategoryResource {
 
 		return response;
 	}
+
+
+
 
 
 }

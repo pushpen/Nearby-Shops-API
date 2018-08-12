@@ -40,6 +40,8 @@ public class ShopItem{
 
 
 
+
+
 	// create table statement
 
 	public static final String createTableShopItemPostgres = "CREATE TABLE IF NOT EXISTS " + ShopItem.TABLE_NAME + "("
@@ -54,8 +56,6 @@ public class ShopItem{
 			+ " FOREIGN KEY(" + ShopItem.ITEM_ID +") REFERENCES " + Item.TABLE_NAME + "(" + Item.ITEM_ID + "),"
 			+ " PRIMARY KEY (" + ShopItem.SHOP_ID + ", " + ShopItem.ITEM_ID + ")"
 			+ ")";
-
-
 
 
 	// Instance Variables

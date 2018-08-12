@@ -12,7 +12,7 @@ import javax.ws.rs.core.Response.Status;
 import java.util.List;
 
 
-@Path("/CartStats")
+@Path("/api/CartStats")
 public class CartStatsResource {
 
 	private ShopDAO shopDAO = Globals.shopDAO;

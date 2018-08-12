@@ -104,6 +104,9 @@ public class DAOShopStaff {
 
 
 
+
+
+
 	public void logMessage(String message)
 	{
 		System.out.println(message);

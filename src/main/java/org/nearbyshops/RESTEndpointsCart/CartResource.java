@@ -12,7 +12,7 @@ import java.net.URI;
 import java.util.List;
 
 
-@Path("/Cart")
+@Path("/api/Cart")
 public class CartResource {
 
 

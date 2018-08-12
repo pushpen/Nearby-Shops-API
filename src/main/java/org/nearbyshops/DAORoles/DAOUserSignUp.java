@@ -3,6 +3,7 @@ package org.nearbyshops.DAORoles;
 import com.zaxxer.hikari.HikariDataSource;
 import org.nearbyshops.Globals.GlobalConstants;
 import org.nearbyshops.Globals.Globals;
+import org.nearbyshops.Model.Shop;
 import org.nearbyshops.ModelBilling.Transaction;
 import org.nearbyshops.ModelRoles.EmailVerificationCode;
 import org.nearbyshops.ModelRoles.PhoneVerificationCode;
@@ -75,8 +76,13 @@ public class DAOUserSignUp {
 
 
 
-//        insertVehicle = " INSERT INTO " + Shop.TABLE_NAME + "(" + Shop.SHOP_ADMIN_ID + "" + ") " +
-//                " VALUES( ? )";
+
+
+        insertVehicle = " INSERT INTO " + Shop.TABLE_NAME
+                                        + "("
+                                        + Shop.SHOP_ADMIN_ID + ""
+                                        + ") " +
+                        " VALUES( ? )";
 
 
 
@@ -234,7 +240,7 @@ public class DAOUserSignUp {
 
         String insertItemSubmission = "";
 
-        String insertVehicle = "";
+        String insertShop = "";
 
         String updateDUES = "";
         String createTransaction = "";
@@ -274,17 +280,21 @@ public class DAOUserSignUp {
                 + ")";
 
 
-//
-//        insertVehicle = " INSERT INTO " + Vehicle.TABLE_NAME + "(" + Vehicle.DRIVER_ID + "" + ") " +
-//                " VALUES( ? )";
+
+
+
+        insertShop = " INSERT INTO " + Shop.TABLE_NAME
+                + "("
+                + Shop.SHOP_ADMIN_ID + ""
+                + ") " +
+                " VALUES( ? )";
 
 
 
 
         // add joining credit to the users account
         updateDUES =  " UPDATE " + User.TABLE_NAME
-                    + " SET "
-                    + User.SERVICE_ACCOUNT_BALANCE + " = " + User.SERVICE_ACCOUNT_BALANCE + " + ?"
+                    + " SET " + User.SERVICE_ACCOUNT_BALANCE + " = " + User.SERVICE_ACCOUNT_BALANCE + " + ?"
                     + " WHERE " + User.TABLE_NAME + "." + User.USER_ID + " = ? ";
 
 
@@ -452,7 +462,7 @@ public class DAOUserSignUp {
                 if (rowCountItems == 1)
                 {
 
-                    statementInsertVehicle = connection.prepareStatement(insertVehicle);
+                    statementInsertVehicle = connection.prepareStatement(insertShop);
                     i = 0;
 
                     statementInsertVehicle.setObject(++i,idOfInsertedRow);
@@ -743,8 +753,13 @@ public class DAOUserSignUp {
 
 
 
-//        insertShop = " INSERT INTO " + Shop.TABLE_NAME + "(" + Shop.SHOP_ADMIN_ID + "" + ") " +
-//                        " VALUES( ? )";
+        insertShop = " INSERT INTO " + Shop.TABLE_NAME
+                        + "(" + Shop.SHOP_ADMIN_ID + ","
+                              + Shop.SHOP_ENABLED + ","
+                                + Shop.SHOP_WAITLISTED + ""
+
+                        + ") " +
+                        " VALUES( ?,?,? )";
 
 
 
@@ -912,6 +927,9 @@ public class DAOUserSignUp {
                     i = 0;
 
                     statementInsertShop.setObject(++i,idOfInsertedRow);
+                    statementInsertShop.setObject(++i,false);
+                    statementInsertShop.setObject(++i,false);
+
                     statementInsertShop.executeUpdate();
                 }
             }
@@ -925,12 +943,13 @@ public class DAOUserSignUp {
                 i = 0;
 
                 statementUpdateDUES.setObject(++i,joiningCredit);
-                statementUpdateDUES.setObject(++i,joiningCredit);
-
-
+//                statementUpdateDUES.setObject(++i,joiningCredit);
                 statementUpdateDUES.setObject(++i,idOfInsertedRow);
 
                 rowCountItems = statementUpdateDUES.executeUpdate();
+
+
+
 
 
 
@@ -948,8 +967,7 @@ public class DAOUserSignUp {
                 i = 0;
 
                 statementUpdateDUESReferral.setObject(++i,referralCredit);
-                statementUpdateDUESReferral.setObject(++i,referralCredit);
-
+//                statementUpdateDUESReferral.setObject(++i,referralCredit);
 
                 statementUpdateDUESReferral.setObject(++i,user.getReferredBy());
                 rowCountItems = statementUpdateDUESReferral.executeUpdate();
