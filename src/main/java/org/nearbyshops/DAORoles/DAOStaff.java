@@ -32,6 +32,9 @@ public class DAOStaff {
     * */
 
 
+
+
+
     public int updateStaffProfile(User user)
     {
 
@@ -143,22 +146,27 @@ public class DAOStaff {
 
 
 
-
         String insertStaffPermissions =
 
                 "INSERT INTO " + StaffPermissions.TABLE_NAME
                         + "("
                         + StaffPermissions.STAFF_ID + ","
                         + StaffPermissions.DESIGNATION + ","
-//                        + StaffPermissions.PERMIT_TAXI_PROFILE_UPDATE + ","
-                        + StaffPermissions.PERMIT_TAXI_REGISTRATION_AND_RENEWAL + ""
-                        + ") values(?,?,?,?)"
+                        + StaffPermissions.PERMIT_CREATE_UPDATE_ITEM_CATEGORIES + ","
+                        + StaffPermissions.PERMIT_CREATE_UPDATE_ITEMS + ","
+                        + StaffPermissions.PERMIT_APPROVE_SHOPS + ","
+                        + StaffPermissions.MAX_EARNINGS_LIMIT + ""
+                        + ") values(?,?,?,?,?,?)"
                         + " ON CONFLICT (" + StaffPermissions.STAFF_ID + ")"
                         + " DO UPDATE "
                         + " SET "
                         + StaffPermissions.DESIGNATION + "= excluded." + StaffPermissions.DESIGNATION + " , "
-//                        + StaffPermissions.PERMIT_TAXI_PROFILE_UPDATE + "= excluded." + StaffPermissions.PERMIT_TAXI_PROFILE_UPDATE + " , "
-                        + StaffPermissions.PERMIT_TAXI_REGISTRATION_AND_RENEWAL + "= excluded." + StaffPermissions.PERMIT_TAXI_REGISTRATION_AND_RENEWAL;
+                        + StaffPermissions.PERMIT_CREATE_UPDATE_ITEM_CATEGORIES + "= excluded." + StaffPermissions.PERMIT_CREATE_UPDATE_ITEM_CATEGORIES + " , "
+                        + StaffPermissions.PERMIT_CREATE_UPDATE_ITEMS + "= excluded." + StaffPermissions.PERMIT_CREATE_UPDATE_ITEMS  + ","
+                        + StaffPermissions.PERMIT_APPROVE_SHOPS + "= excluded." + StaffPermissions.PERMIT_APPROVE_SHOPS  + ","
+                        + StaffPermissions.MAX_EARNINGS_LIMIT + "= excluded." + StaffPermissions.MAX_EARNINGS_LIMIT;
+
+
 
 
 
@@ -203,9 +211,10 @@ public class DAOStaff {
             {
                 statement.setObject(++i,user.getUserID());
                 statement.setString(++i,permissions.getDesignation());
-//                statement.setObject(++i,permissions.isPermitTaxiProfileUpdate());
-                statement.setObject(++i,permissions.isPermitTaxiRegistrationAndRenewal());
-
+                statement.setObject(++i,permissions.isPermitCreateUpdateItemCat());
+                statement.setObject(++i,permissions.isPermitCreateUpdateItems());
+                statement.setObject(++i,permissions.isPermitApproveShops());
+                statement.setObject(++i,permissions.getMaxEarnings());
 
                 statement.executeUpdate();
             }
@@ -354,6 +363,10 @@ public class DAOStaff {
 
 
 
+
+
+
+
     public StaffPermissions getStaffPermissions(int staffID)
     {
 
@@ -362,8 +375,9 @@ public class DAOStaff {
         String query = "SELECT "
 
                 + StaffPermissions.STAFF_ID + ","
-                + StaffPermissions.PERMIT_TAXI_REGISTRATION_AND_RENEWAL + ""
-//                + StaffPermissions.PERMIT_TAXI_PROFILE_UPDATE + ""
+                + StaffPermissions.PERMIT_CREATE_UPDATE_ITEM_CATEGORIES + ","
+                + StaffPermissions.PERMIT_CREATE_UPDATE_ITEMS + ","
+                + StaffPermissions.PERMIT_APPROVE_SHOPS + ""
 
                 + " FROM "  + StaffPermissions.TABLE_NAME
                 + " WHERE " + StaffPermissions.STAFF_ID  + " = ? ";
@@ -396,8 +410,9 @@ public class DAOStaff {
                 permissions = new StaffPermissions();
 
                 permissions.setStaffUserID(rs.getInt(StaffPermissions.STAFF_ID));
-                permissions.setPermitTaxiRegistrationAndRenewal(rs.getBoolean(StaffPermissions.PERMIT_TAXI_REGISTRATION_AND_RENEWAL));
-//                permissions.setPermitTaxiProfileUpdate(rs.getBoolean(StaffPermissions.PERMIT_TAXI_PROFILE_UPDATE));
+                permissions.setPermitCreateUpdateItemCat(rs.getBoolean(StaffPermissions.PERMIT_CREATE_UPDATE_ITEM_CATEGORIES));
+                permissions.setPermitCreateUpdateItems(rs.getBoolean(StaffPermissions.PERMIT_CREATE_UPDATE_ITEMS));
+                permissions.setPermitApproveShops(rs.getBoolean(StaffPermissions.PERMIT_APPROVE_SHOPS));
             }
 
 
@@ -451,8 +466,8 @@ public class DAOStaff {
 
     public UserEndpoint getStaffForAdmin(
             Double latPickUp, Double lonPickUp,
-            Boolean permitProfileUpdate,
-            Boolean permitRegistrationAndRenewal,
+            Boolean permitCreateUpdateItemCat,
+            Boolean permitCreateUpdateItems,
             Boolean gender,
             String sortBy,
             Integer limit, Integer offset,
@@ -490,7 +505,9 @@ public class DAOStaff {
                 + User.TABLE_NAME + "." + User.IS_VERIFIED + ","
 
                 + StaffPermissions.TABLE_NAME + "." + StaffPermissions.DESIGNATION + ","
-                + StaffPermissions.TABLE_NAME + "." + StaffPermissions.PERMIT_TAXI_REGISTRATION_AND_RENEWAL + ","
+                + StaffPermissions.TABLE_NAME + "." + StaffPermissions.PERMIT_CREATE_UPDATE_ITEM_CATEGORIES + ","
+                + StaffPermissions.TABLE_NAME + "." + StaffPermissions.PERMIT_CREATE_UPDATE_ITEMS + ","
+                + StaffPermissions.TABLE_NAME + "." + StaffPermissions.PERMIT_APPROVE_SHOPS + ""
 //                + StaffPermissions.TABLE_NAME + "." + StaffPermissions.PERMIT_TAXI_PROFILE_UPDATE + ""
 
                 + " FROM " + User.TABLE_NAME
@@ -510,16 +527,16 @@ public class DAOStaff {
 //
 
 
-        if(permitProfileUpdate!=null && permitProfileUpdate)
-        {
-//            queryJoin = queryJoin + " AND " + StaffPermissions.TABLE_NAME + "." + StaffPermissions.PERMIT_TAXI_PROFILE_UPDATE + " = TRUE ";
-        }
-
-
-        if(permitRegistrationAndRenewal !=null && permitRegistrationAndRenewal)
-        {
-            queryJoin = queryJoin + " AND " + StaffPermissions.TABLE_NAME + "." + StaffPermissions.PERMIT_TAXI_REGISTRATION_AND_RENEWAL + " = TRUE ";
-        }
+//        if(permitProfileUpdate!=null && permitProfileUpdate)
+//        {
+////            queryJoin = queryJoin + " AND " + StaffPermissions.TABLE_NAME + "." + StaffPermissions.PERMIT_TAXI_PROFILE_UPDATE + " = TRUE ";
+//        }
+//
+//
+//        if(permitRegistrationAndRenewal !=null && permitRegistrationAndRenewal)
+//        {
+//            queryJoin = queryJoin + " AND " + StaffPermissions.TABLE_NAME + "." + StaffPermissions.PERMIT_TAXI_REGISTRATION_AND_RENEWAL + " = TRUE ";
+//        }
 
 
 
@@ -644,8 +661,9 @@ public class DAOStaff {
                     StaffPermissions permissions = new StaffPermissions();
 
                     permissions.setDesignation(rs.getString(StaffPermissions.DESIGNATION));
-                    permissions.setPermitTaxiRegistrationAndRenewal(rs.getBoolean(StaffPermissions.PERMIT_TAXI_REGISTRATION_AND_RENEWAL));
-//                    permissions.setPermitTaxiProfileUpdate(rs.getBoolean(StaffPermissions.PERMIT_TAXI_PROFILE_UPDATE));
+                    permissions.setPermitCreateUpdateItemCat(rs.getBoolean(StaffPermissions.PERMIT_CREATE_UPDATE_ITEM_CATEGORIES));
+                    permissions.setPermitCreateUpdateItems(rs.getBoolean(StaffPermissions.PERMIT_CREATE_UPDATE_ITEMS));
+                    permissions.setPermitApproveShops(rs.getBoolean(StaffPermissions.PERMIT_APPROVE_SHOPS));
 
                     user.setRt_staff_permissions(permissions);
 
@@ -789,8 +807,9 @@ public class DAOStaff {
                 + User.TABLE_NAME + "." + User.IS_VERIFIED + ","
 
                 + StaffPermissions.TABLE_NAME + "." + StaffPermissions.DESIGNATION + ","
-                + StaffPermissions.TABLE_NAME + "." + StaffPermissions.PERMIT_TAXI_REGISTRATION_AND_RENEWAL + ","
-//                + StaffPermissions.TABLE_NAME + "." + StaffPermissions.PERMIT_TAXI_PROFILE_UPDATE + ""
+                + StaffPermissions.TABLE_NAME + "." + StaffPermissions.PERMIT_CREATE_UPDATE_ITEM_CATEGORIES + ","
+                + StaffPermissions.TABLE_NAME + "." + StaffPermissions.PERMIT_CREATE_UPDATE_ITEMS + ","
+                + StaffPermissions.TABLE_NAME + "." + StaffPermissions.PERMIT_APPROVE_SHOPS + ""
 
                 + " FROM " + User.TABLE_NAME
                 + " LEFT OUTER JOIN " + StaffPermissions.TABLE_NAME + " ON (" + StaffPermissions.TABLE_NAME + "." + StaffPermissions.STAFF_ID + " = " + User.TABLE_NAME + "." + User.USER_ID + ")"
@@ -812,16 +831,16 @@ public class DAOStaff {
 //
 
 
-        if(permitProfileUpdate!=null && permitProfileUpdate)
-        {
-//            queryJoin = queryJoin + " AND " + StaffPermissions.TABLE_NAME + "." + StaffPermissions.PERMIT_TAXI_PROFILE_UPDATE + " = TRUE ";
-        }
-
-
-        if(permitRegistrationAndRenewal !=null && permitRegistrationAndRenewal)
-        {
-            queryJoin = queryJoin + " AND " + StaffPermissions.TABLE_NAME + "." + StaffPermissions.PERMIT_TAXI_REGISTRATION_AND_RENEWAL + " = TRUE ";
-        }
+//        if(permitProfileUpdate!=null && permitProfileUpdate)
+//        {
+////            queryJoin = queryJoin + " AND " + StaffPermissions.TABLE_NAME + "." + StaffPermissions.PERMIT_TAXI_PROFILE_UPDATE + " = TRUE ";
+//        }
+//
+//
+//        if(permitRegistrationAndRenewal !=null && permitRegistrationAndRenewal)
+//        {
+//            queryJoin = queryJoin + " AND " + StaffPermissions.TABLE_NAME + "." + StaffPermissions.PERMIT_TAXI_REGISTRATION_AND_RENEWAL + " = TRUE ";
+//        }
 
 
 
@@ -947,8 +966,12 @@ public class DAOStaff {
                     StaffPermissions permissions = new StaffPermissions();
 
                     permissions.setDesignation(rs.getString(StaffPermissions.DESIGNATION));
-                    permissions.setPermitTaxiRegistrationAndRenewal(rs.getBoolean(StaffPermissions.PERMIT_TAXI_REGISTRATION_AND_RENEWAL));
-//                    permissions.setPermitTaxiProfileUpdate(rs.getBoolean(StaffPermissions.PERMIT_TAXI_PROFILE_UPDATE));
+
+                    permissions.setPermitCreateUpdateItemCat(rs.getBoolean(StaffPermissions.PERMIT_CREATE_UPDATE_ITEM_CATEGORIES));
+                    permissions.setPermitCreateUpdateItems(rs.getBoolean(StaffPermissions.PERMIT_CREATE_UPDATE_ITEMS));
+                    permissions.setPermitApproveShops(rs.getBoolean(StaffPermissions.PERMIT_APPROVE_SHOPS));
+
+
 
                     permissions.setRt_distance(rs.getFloat("distance"));
 

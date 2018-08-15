@@ -35,7 +35,7 @@ public class CartItemResource {
 	{
 
 
-		System.out.println("End User DELIVERY_GUY_SELF_ID : " + endUserID + " ShopID : " + shopID);
+//		System.out.println("End User DELIVERY_GUY_SELF_ID : " + endUserID + " ShopID : " + shopID);
 
 		if(endUserID>0 && shopID>0)
 		{
@@ -65,6 +65,15 @@ public class CartItemResource {
 		}
 
 		int rowCount = Globals.cartItemService.saveCartItem(cartItem);
+
+
+
+//
+//		try {
+//			Thread.sleep(1000);
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
 
 
 		if(rowCount == 1)
@@ -126,6 +135,15 @@ public class CartItemResource {
 		int rowCount = Globals.cartItemService.updateCartItem(cartItem);
 
 
+
+//		try {
+//			Thread.sleep(1000);
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
+
+
+
 		if(rowCount >= 1)
 		{
 			Response response = Response.status(Status.OK)
@@ -173,17 +191,25 @@ public class CartItemResource {
 
 
 
+
+//		try {
+//			Thread.sleep(1000);
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
+
+
 		if(rowCount>=1)
 		{
 
 			// if the cart item is the last item then delete the cart also.
 
 
-			System.out.println("Cart Items : " + cartID + " : " + Globals.cartItemService.getCartItem(cartID,0,0).size());
+//			System.out.println("Cart Items : " + cartID + " : " + Globals.cartItemService.getCartItem(cartID,0,0).size());
 
 			if(Globals.cartItemService.getCartItem(cartID,null,null).size() == 0)
 			{
-				System.out.println("Inside Cart Item Delete " + Globals.cartItemService.getCartItem(cartID,null,null).size());
+//				System.out.println("Inside Cart Item Delete " + Globals.cartItemService.getCartItem(cartID,null,null).size());
 
 				Globals.cartService.deleteCart(cartID);
 			}

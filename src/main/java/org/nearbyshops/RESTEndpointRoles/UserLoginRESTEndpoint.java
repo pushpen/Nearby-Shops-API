@@ -650,12 +650,14 @@ public class UserLoginRESTEndpoint {
             Files.deleteIfExists(BASE_DIR.resolve("three_hundred_" + fileName + ".jpg"));
             Files.deleteIfExists(BASE_DIR.resolve("five_hundred_" + fileName + ".jpg"));
 
-            
+
 
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+
+
 
 
         if(!deleteStatus)
