@@ -252,7 +252,9 @@ public class ShopItemDAO {
 
 		return updatedRows;
 	}
-	
+
+
+
 	
 	public int updateShopItem(ShopItem shopItem)
 	{

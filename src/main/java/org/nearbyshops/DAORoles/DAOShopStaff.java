@@ -57,7 +57,13 @@ public class DAOShopStaff {
 
 			rs = statement.executeQuery();
 
-			shopID = rs.getInt(ShopStaffPermissionsOld.SHOP_ID);
+
+			while(rs.next())
+			{
+				shopID = rs.getInt(ShopStaffPermissions.SHOP_ID);
+			}
+
+
 
 
 			//System.out.println("Total itemCategories queried " + itemCategoryList.size());
@@ -498,6 +504,10 @@ public class DAOShopStaff {
 
 
 
+
+
+
+
 	public ShopStaffPermissions getShopStaffPermissions(int staffID)
 	{
 
@@ -506,6 +516,7 @@ public class DAOShopStaff {
 		String query = "SELECT "
 
 				+ ShopStaffPermissions.STAFF_ID + ","
+				+ ShopStaffPermissions.SHOP_ID + ","
 
 				+ ShopStaffPermissions.ADD_REMOVE_ITEMS_FROM_SHOP + ","
 				+ ShopStaffPermissions.UPDATE_STOCK + ","
@@ -518,8 +529,8 @@ public class DAOShopStaff {
 				+ ShopStaffPermissions.ACCEPT_PAYMENTS_FROM_DELIVERY + ","
 				+ ShopStaffPermissions.ACCEPT_RETURNS + ""
 
-				+ " FROM "  + StaffPermissions.TABLE_NAME
-				+ " WHERE " + StaffPermissions.STAFF_ID  + " = ? ";
+				+ " FROM "  + ShopStaffPermissions.TABLE_NAME
+				+ " WHERE " + ShopStaffPermissions.STAFF_ID  + " = ? ";
 
 
 
@@ -548,7 +559,9 @@ public class DAOShopStaff {
 			{
 				permissions = new ShopStaffPermissions();
 
-				permissions.setStaffUserID(rs.getInt(StaffPermissions.STAFF_ID));
+				permissions.setStaffUserID(rs.getInt(ShopStaffPermissions.STAFF_ID));
+				permissions.setShopID(rs.getInt(ShopStaffPermissions.SHOP_ID));
+
 				permissions.setPermitAddRemoveItems(rs.getBoolean(ShopStaffPermissions.ADD_REMOVE_ITEMS_FROM_SHOP));
 				permissions.setPermitUpdateItemsInShop(rs.getBoolean(ShopStaffPermissions.UPDATE_STOCK));
 
@@ -599,6 +612,8 @@ public class DAOShopStaff {
 
 		return permissions;
 	}
+
+
 
 
 
@@ -664,7 +679,6 @@ public class DAOShopStaff {
 				+ " WHERE " + ShopStaffPermissions.TABLE_NAME + "." + ShopStaffPermissions.SHOP_ID + " = ? "
 				+ " AND ( " + User.TABLE_NAME + "." + User.ROLE + " = " + GlobalConstants.ROLE_SHOP_STAFF_CODE
 				+ " OR " + User.TABLE_NAME + "." + User.ROLE + " = " + GlobalConstants.ROLE_SHOP_ADMIN_CODE + " ) ";
-
 
 
 
@@ -920,6 +934,7 @@ public class DAOShopStaff {
 
 		return endPoint;
 	}
+
 
 
 

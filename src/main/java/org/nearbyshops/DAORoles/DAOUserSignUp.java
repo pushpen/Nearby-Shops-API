@@ -687,7 +687,6 @@ public class DAOUserSignUp {
 
 
 
-
     public int registerUsingPhone(User user, boolean getRowCount,
                                   double joiningCredit,
                                   double referralCredit,
@@ -1085,6 +1084,8 @@ public class DAOUserSignUp {
             return idOfInsertedRow;
         }
     }
+
+
 
 
 

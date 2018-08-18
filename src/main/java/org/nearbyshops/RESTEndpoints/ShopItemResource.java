@@ -8,6 +8,7 @@ import org.nearbyshops.Globals.Globals;
 import org.nearbyshops.Model.Shop;
 import org.nearbyshops.Model.ShopItem;
 import org.nearbyshops.ModelEndpoint.ShopItemEndPoint;
+import org.nearbyshops.ModelRoles.ShopStaffPermissions;
 import org.nearbyshops.ModelRoles.User;
 
 import javax.annotation.security.RolesAllowed;
@@ -59,11 +60,21 @@ public class ShopItemResource {
 		else if(shopAdmin.getRole()==GlobalConstants.ROLE_SHOP_STAFF_CODE)
 		{
 
-			Shop shop = Globals.shopDAO.getShopIDForShopAdmin(shopAdmin.getUserID());
+			int shopID = Globals.daoShopStaff.getShopIDforShopStaff(shopAdmin.getUserID());
+			ShopStaffPermissions permissions = Globals.daoShopStaff.getShopStaffPermissions(shopAdmin.getUserID());
+
+
+
+			if(!permissions.isPermitUpdateItemsInShop())
+			{
+				// staff member do not have this permission
+				throw new ForbiddenException("Not Permitted !");
+			}
+
 
 			for(ShopItem shopItem : itemList)
 			{
-				shopItem.setShopID(shop.getShopID());
+				shopItem.setShopID(shopID);
 				rowCountSum = rowCountSum + shopItemDAO.updateShopItem(shopItem);
 			}
 
@@ -172,14 +183,39 @@ public class ShopItemResource {
 //		}
 
 
+		User user = (User) Globals.accountApproved;
+
+		if(user.getRole()==GlobalConstants.ROLE_SHOP_STAFF_CODE) {
+
+			int shopID = Globals.daoShopStaff.getShopIDforShopStaff(user.getUserID());
+			ShopStaffPermissions permissions = Globals.daoShopStaff.getShopStaffPermissions(user.getUserID());
+
+
+			if (!permissions.isPermitAddRemoveItems()) {
+				// staff member do not have this permission
+				throw new ForbiddenException("Not Permitted !");
+			}
 
 
 
+			for(ShopItem shopItem : itemList)
+			{
+				shopItem.setShopID(shopID);
+				rowCountSum = rowCountSum + shopItemDAO.insertShopItem(shopItem);
+			}
 
-		for(ShopItem shopItem : itemList)
+
+		}
+		else if(user.getRole()==GlobalConstants.ROLE_SHOP_ADMIN_CODE)
 		{
-			shopItem.setShopID(shopItem.getShopID());
-			rowCountSum = rowCountSum + shopItemDAO.insertShopItem(shopItem);
+			int shopID = Globals.shopDAO.getShopIDForShopAdmin(user.getUserID()).getShopID();
+
+
+			for(ShopItem shopItem : itemList)
+			{
+				shopItem.setShopID(shopID);
+				rowCountSum = rowCountSum + shopItemDAO.insertShopItem(shopItem);
+			}
 		}
 
 
@@ -251,39 +287,47 @@ public class ShopItemResource {
 
 
 
+
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
-//	@RolesAllowed({GlobalConstants.ROLE_SHOP_ADMIN,GlobalConstants.ROLE_SHOP_STAFF})
+	@RolesAllowed({GlobalConstants.ROLE_SHOP_ADMIN,GlobalConstants.ROLE_SHOP_STAFF})
 	public Response updateShopItem(ShopItem shopItem)
 	{
 
 		System.out.println("Inside Resource Method !");
 
-
 		int rowCount = 0;
+
+		int shopID = 0;
 
 
 		User user = (User) Globals.accountApproved;
+
 
 		if(user.getRole()==GlobalConstants.ROLE_SHOP_ADMIN_CODE)
 		{
 
 			Shop shop = Globals.shopDAO.getShopIDForShopAdmin(user.getUserID());
-
-			shopItem.setShopID(shop.getShopID());
-			rowCount = shopItemDAO.updateShopItem(shopItem);
+			shopID = shop.getShopID();
 
 		}
 		else if (user.getRole()==GlobalConstants.ROLE_SHOP_STAFF_CODE)
 		{
 
-			int shopID = Globals.daoShopStaff.getShopIDforShopStaff(user.getUserID());
+			shopID = Globals.daoShopStaff.getShopIDforShopStaff(user.getUserID());
+			ShopStaffPermissions permissions = Globals.daoShopStaff.getShopStaffPermissions(user.getUserID());
 
-			shopItem.setShopID(shopID);
-			rowCount = shopItemDAO.updateShopItem(shopItem);
+
+			if (!permissions.isPermitUpdateItemsInShop()) {
+				// staff member do not have this permission
+				throw new ForbiddenException("Not Permitted !");
+			}
 		}
 
 
+
+		shopItem.setShopID(shopID);
+		rowCount = shopItemDAO.updateShopItem(shopItem);
 
 		
 		if(rowCount == 1)
@@ -301,6 +345,9 @@ public class ShopItemResource {
 
 		return null;
 	}
+
+
+
 
 
 
@@ -359,16 +406,37 @@ public class ShopItemResource {
 	
 	
 	@DELETE
-	@RolesAllowed({GlobalConstants.ROLE_SHOP_ADMIN})
+	@RolesAllowed({GlobalConstants.ROLE_SHOP_ADMIN,GlobalConstants.ROLE_SHOP_STAFF})
 	public Response deleteShopItem(@QueryParam("ShopID")int ShopID, @QueryParam("ItemID") int itemID)
 	{
 		int rowCount = 0;
+		int shopID = 0;
 
-		User shopAdmin = (User) Globals.accountApproved;
-		Shop shop = Globals.shopDAO.getShopIDForShopAdmin(shopAdmin.getUserID());
+		User user = (User) Globals.accountApproved;
 
-		ShopID = shop.getShopID();
-		rowCount =	shopItemDAO.deleteShopItem(ShopID, itemID);
+
+		if(user.getRole()==GlobalConstants.ROLE_SHOP_ADMIN_CODE)
+		{
+			Shop shop = Globals.shopDAO.getShopIDForShopAdmin(user.getUserID());
+			shopID = shop.getShopID();
+		}
+		else if (user.getRole()==GlobalConstants.ROLE_SHOP_STAFF_CODE)
+		{
+
+			shopID = Globals.daoShopStaff.getShopIDforShopStaff(user.getUserID());
+			ShopStaffPermissions permissions = Globals.daoShopStaff.getShopStaffPermissions(user.getUserID());
+
+			if (!permissions.isPermitUpdateItemsInShop()) {
+				// staff member do not have this permission
+				throw new ForbiddenException("Not Permitted !");
+			}
+		}
+
+
+
+
+
+		rowCount =	shopItemDAO.deleteShopItem(shopID, itemID);
 
 		
 		if(rowCount == 1)
@@ -390,6 +458,9 @@ public class ShopItemResource {
 	}
 
 
+
+
+
 	@POST
 	@Path("/DeleteBulk")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -400,46 +471,42 @@ public class ShopItemResource {
 
 		User user = (User) Globals.accountApproved;
 
+		int shopID = 0;
 
 		if(user.getRole()==GlobalConstants.ROLE_SHOP_ADMIN_CODE)
 		{
-			Shop shop = Globals.shopDAO.getShopIDForShopAdmin(user.getUserID());
+			 shopID = Globals.daoShopStaff.getShopIDforShopStaff(user.getUserID());
 
 
-			for(ShopItem shopItem : itemList)
-			{
-				shopItem.setShopID(shop.getShopID());
-				rowCountSum = rowCountSum + shopItemDAO
-						.deleteShopItem(shopItem.getShopID(),shopItem.getItemID());
-			}
 
 		}
 		else if (user.getRole()==GlobalConstants.ROLE_SHOP_STAFF_CODE)
 		{
 
-			User shopStaff = (User) Globals.accountApproved;
-
-//			if(!shopStaff.isAddRemoveItemsFromShop())
-//			{
-//				// staff member do not have permission
-//				throw new ForbiddenException("Not Permitted !");
-//			}
+			ShopStaffPermissions permissions = Globals.daoShopStaff.getShopStaffPermissions(user.getUserID());
 
 
-			int shopID = Globals.daoShopStaff.getShopIDforShopStaff(shopStaff.getUserID());
-
-
-			for(ShopItem shopItem : itemList)
+			if(!permissions.isPermitAddRemoveItems())
 			{
-				shopItem.setShopID(shopID);
-				rowCountSum = rowCountSum + shopItemDAO
-						.deleteShopItem(shopItem.getShopID(),shopItem.getItemID());
+				// staff member do not have permission
+				throw new ForbiddenException("Not Permitted !");
 			}
 
+
+			shopID = Globals.daoShopStaff.getShopIDforShopStaff(user.getUserID());
 		}
 
 
 
+
+
+		for(ShopItem shopItem : itemList)
+		{
+			shopItem.setShopID(shopID);
+
+			rowCountSum = rowCountSum + shopItemDAO
+					.deleteShopItem(shopItem.getShopID(),shopItem.getItemID());
+		}
 
 
 
@@ -596,6 +663,9 @@ public class ShopItemResource {
 				.entity(endPoint)
 				.build();
 	}
+
+
+
 
 
 

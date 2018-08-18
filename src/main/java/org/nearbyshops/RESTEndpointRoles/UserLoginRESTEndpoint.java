@@ -373,6 +373,9 @@ public class UserLoginRESTEndpoint {
 
 
 
+
+            
+
             if(user.getRole() == GlobalConstants.ROLE_STAFF_CODE)
             {
                 StaffPermissions permissions = Globals.daoStaff.getStaffPermissions(user.getUserID());
@@ -383,9 +386,14 @@ public class UserLoginRESTEndpoint {
 //                 if role is driver then add vehicle if it exists
 //                    user.setRt_vehicle(Globals.);
 
+//                System.out.println("SHOP STAFF PERMISSIONS ASSIGNED !");
+
                 ShopStaffPermissions permissions = Globals.daoShopStaff.getShopStaffPermissions(user.getUserID());
                 user.setRt_shop_staff_permissions(permissions);
             }
+
+
+
 
 
 
