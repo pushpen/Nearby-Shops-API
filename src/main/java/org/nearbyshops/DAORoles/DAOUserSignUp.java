@@ -7,6 +7,7 @@ import org.nearbyshops.Model.Shop;
 import org.nearbyshops.ModelBilling.Transaction;
 import org.nearbyshops.ModelRoles.EmailVerificationCode;
 import org.nearbyshops.ModelRoles.PhoneVerificationCode;
+import org.nearbyshops.ModelRoles.ShopStaffPermissions;
 import org.nearbyshops.ModelRoles.User;
 
 import java.sql.Connection;
@@ -1095,6 +1096,7 @@ public class DAOUserSignUp {
 
         Connection connection = null;
         PreparedStatement statement = null;
+        PreparedStatement statementPermissions = null;
 
 
         int idOfInsertedRow = -1;
@@ -1103,7 +1105,7 @@ public class DAOUserSignUp {
 
 
 
-        String insertItemSubmission = "INSERT INTO "
+        String insertUser = "INSERT INTO "
                 + User.TABLE_NAME
                 + "("
 
@@ -1132,6 +1134,16 @@ public class DAOUserSignUp {
 
 
 
+        String insertStaffPermissions =
+
+                "INSERT INTO " + ShopStaffPermissions.TABLE_NAME
+                        + "("
+                        + ShopStaffPermissions.STAFF_ID + ","
+                        + ShopStaffPermissions.SHOP_ID + ""
+                        + ") values(?,?)";
+
+
+
 
 
         // add referral charges to the user bill
@@ -1143,7 +1155,7 @@ public class DAOUserSignUp {
             connection.setAutoCommit(false);
 
 
-            statement = connection.prepareStatement(insertItemSubmission,PreparedStatement.RETURN_GENERATED_KEYS);
+            statement = connection.prepareStatement(insertUser,PreparedStatement.RETURN_GENERATED_KEYS);
             int i = 0;
 
 //            statement.setString(++i,user.getUsername());
@@ -1191,6 +1203,24 @@ public class DAOUserSignUp {
 
 
 
+            if(idOfInsertedRow!=-1)
+            {
+
+                statementPermissions = connection.prepareStatement(insertStaffPermissions,PreparedStatement.RETURN_GENERATED_KEYS);
+                i = 0;
+
+
+                ShopStaffPermissions permissions = user.getRt_shop_staff_permissions();
+
+                statementPermissions.setInt(++i,idOfInsertedRow);
+                statementPermissions.setInt(++i,permissions.getShopID());
+
+                rowCountItems = statementPermissions.executeUpdate();
+            }
+
+
+
+
             connection.commit();
 
         } catch (SQLException e) {
@@ -1215,6 +1245,16 @@ public class DAOUserSignUp {
             if (statement != null) {
                 try {
                     statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
+
+
+            if (statementPermissions != null) {
+                try {
+                    statementPermissions.close();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }

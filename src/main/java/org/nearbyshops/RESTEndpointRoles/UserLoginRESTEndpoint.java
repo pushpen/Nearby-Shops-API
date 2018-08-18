@@ -5,6 +5,7 @@ import org.nearbyshops.DAORoles.DAOUserNew;
 import org.nearbyshops.Globals.GlobalConstants;
 import org.nearbyshops.Globals.Globals;
 import org.nearbyshops.Model.Image;
+import org.nearbyshops.ModelRoles.ShopStaffPermissions;
 import org.nearbyshops.ModelRoles.StaffPermissions;
 import org.nearbyshops.ModelRoles.User;
 
@@ -32,7 +33,6 @@ import java.util.StringTokenizer;
 
 
 
-
 @Path("/api/v1/User")
 public class UserLoginRESTEndpoint {
 
@@ -41,6 +41,9 @@ public class UserLoginRESTEndpoint {
     /* Methods */
 
     // updateFirebaseID(String firebaseID)
+
+
+
 
 
 /* Update and Login */
@@ -89,17 +92,18 @@ public class UserLoginRESTEndpoint {
 
 
 
+
     @PUT
-    @Path("/UpdateProfileDriver")
+    @Path("/UpdateProfileShopAdmin")
     @Consumes(MediaType.APPLICATION_JSON)
     @RolesAllowed({GlobalConstants.ROLE_SHOP_ADMIN})
-    public Response updateProfileDriver(User user)
+    public Response updateProfileShopAdmin(User user)
     {
 //        /{UserID}
 //        , @PathParam("UserID")int userID
 
         user.setUserID(((User)Globals.accountApproved).getUserID());
-        int rowCount = daoUser.updateDriver(user);
+        int rowCount = daoUser.updateShopAdmin(user);
 
 
         if(rowCount >= 1)
@@ -117,6 +121,8 @@ public class UserLoginRESTEndpoint {
 
         return null;
     }
+
+
 
 
 
@@ -318,6 +324,8 @@ public class UserLoginRESTEndpoint {
 
 
 
+
+
     @GET
     @Path("/GetProfileWithLogin")
     @Produces(MediaType.APPLICATION_JSON)
@@ -370,12 +378,15 @@ public class UserLoginRESTEndpoint {
                 StaffPermissions permissions = Globals.daoStaff.getStaffPermissions(user.getUserID());
                 user.setRt_staff_permissions(permissions);
             }
-            else if (user.getRole() == GlobalConstants.ROLE_SHOP_ADMIN_CODE)
+            else if (user.getRole() == GlobalConstants.ROLE_SHOP_STAFF_CODE)
             {
+//                 if role is driver then add vehicle if it exists
+//                    user.setRt_vehicle(Globals.);
 
-                // if role is driver then add vehicle if it exists
-    //                user.setRt_vehicle(Globals.);
+                ShopStaffPermissions permissions = Globals.daoShopStaff.getShopStaffPermissions(user.getUserID());
+                user.setRt_shop_staff_permissions(permissions);
             }
+
 
 
 

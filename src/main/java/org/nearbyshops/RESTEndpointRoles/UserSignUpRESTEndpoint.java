@@ -7,6 +7,7 @@ import org.nearbyshops.Globals.Globals;
 import org.nearbyshops.Globals.SendSMS;
 import org.nearbyshops.ModelRoles.EmailVerificationCode;
 import org.nearbyshops.ModelRoles.PhoneVerificationCode;
+import org.nearbyshops.ModelRoles.ShopStaffPermissions;
 import org.nearbyshops.ModelRoles.User;
 
 import javax.annotation.security.RolesAllowed;
@@ -59,10 +60,11 @@ public class UserSignUpRESTEndpoint {
     @Path("/DeliveryGuyRegistration")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response createDeliveryGuy(User user)
+    public Response deliveryGuyRegistration(User user)
     {
         return userRegistration(user, GlobalConstants.ROLE_DELIVERY_GUY_CODE);
     }
+
 
 
 
@@ -70,9 +72,82 @@ public class UserSignUpRESTEndpoint {
     @Path("/ShopStaffRegistration")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response createShopStaff(User user)
+    @RolesAllowed({GlobalConstants.ROLE_SHOP_ADMIN})
+    public Response shopStaffRegistration(User user)
     {
-        return userRegistration(user, GlobalConstants.ROLE_SHOP_STAFF_CODE);
+
+        if(user==null)
+        {
+            throw new WebApplicationException();
+        }
+
+
+        User shopAdmin = ((User) Globals.accountApproved);
+
+        int shopID = Globals.shopDAO.getShopIDForShopAdmin(shopAdmin.getUserID()).getShopID();
+
+        user.setRole(GlobalConstants.ROLE_SHOP_STAFF_CODE);
+
+        ShopStaffPermissions permissions = new ShopStaffPermissions();
+        permissions.setShopID(shopID);
+        user.setRt_shop_staff_permissions(permissions);
+
+
+
+        int idOfInsertedRow =-1;
+
+
+
+        if(user.getRt_registration_mode()==User.REGISTRATION_MODE_EMAIL)
+        {
+
+        }
+        else if(user.getRt_registration_mode()==User.REGISTRATION_MODE_PHONE)
+        {
+            idOfInsertedRow = daoUser.registerUsingPhoneNoCredits(user,false);
+
+
+            System.out.println("Phone : " + user.getPhone()
+                    + "\nEmail : " + user.getEmail()
+                    + "\nPassword : " + user.getPassword()
+                    + "\nRegistration Mode : " + user.getRt_registration_mode()
+                    + "\nName : " + user.getName()
+                    + "\nInsert Count : " + idOfInsertedRow
+                    + "\nVerificationCode : " + user.getRt_phone_verification_code()
+            );
+
+            // send notification to the mobile number via SMS
+
+            if(idOfInsertedRow>=1)
+            {
+
+                SendSMS.sendSMS("Congratulations your account has been registered with Nearby Shops.",
+                        user.getPhone());
+            }
+
+        }
+
+
+        user.setUserID(idOfInsertedRow);
+
+
+        if(idOfInsertedRow >=1)
+        {
+
+            return Response.status(Response.Status.CREATED)
+                    .entity(user)
+                    .build();
+
+        }else if(idOfInsertedRow <= 0)
+        {
+
+            return Response.status(Response.Status.NOT_MODIFIED)
+                    .build();
+        }
+
+
+        return null;
+
     }
 
 

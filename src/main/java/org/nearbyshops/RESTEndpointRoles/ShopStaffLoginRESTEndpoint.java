@@ -4,6 +4,7 @@ package org.nearbyshops.RESTEndpointRoles;
 import org.nearbyshops.Globals.GlobalConstants;
 import org.nearbyshops.Globals.Globals;
 import org.nearbyshops.ModelRoles.Endpoints.UserEndpoint;
+import org.nearbyshops.ModelRoles.ShopStaffPermissions;
 import org.nearbyshops.ModelRoles.StaffPermissions;
 import org.nearbyshops.ModelRoles.User;
 
@@ -12,6 +13,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import static org.nearbyshops.Globals.Globals.daoShopStaff;
 import static org.nearbyshops.Globals.Globals.daoStaff;
 
 /**
@@ -19,22 +21,23 @@ import static org.nearbyshops.Globals.Globals.daoStaff;
  */
 
 
-@Path("/api/v1/User/StaffLogin")
-public class StaffLoginRESTEndpoint {
+@Path("/api/v1/User/ShopStaffLogin")
+public class ShopStaffLoginRESTEndpoint {
 
 
 
     @PUT
     @Path("/UpdateProfileStaff")
     @Consumes(MediaType.APPLICATION_JSON)
-    @RolesAllowed({GlobalConstants.ROLE_STAFF,GlobalConstants.ROLE_ADMIN})
+    @RolesAllowed({GlobalConstants.ROLE_SHOP_STAFF})
     public Response updateProfileStaff(User user)
     {
 //        /{UserID}
 //        @PathParam("UserID")int userID
 
         user.setUserID(((User) Globals.accountApproved).getUserID());
-        int rowCount = daoStaff.updateStaffProfile(user);
+        int rowCount = daoShopStaff.updateShopStaffProfile(user);
+
 
         if(rowCount >= 1)
         {
@@ -58,12 +61,12 @@ public class StaffLoginRESTEndpoint {
     @PUT
     @Path("/{UserID}")
     @Consumes(MediaType.APPLICATION_JSON)
-    @RolesAllowed({GlobalConstants.ROLE_ADMIN})
+    @RolesAllowed({GlobalConstants.ROLE_SHOP_ADMIN})
     public Response updateStaffByAdmin(User user, @PathParam("UserID")int userID)
     {
 
-        user.setUserID(userID);
-        int rowCount = daoStaff.updateStaffByAdmin(user);
+//        user.setUserID(userID);
+        int rowCount = daoShopStaff.updateShopStaffByAdmin(user);
 
 
         if(rowCount >= 1)
@@ -89,12 +92,12 @@ public class StaffLoginRESTEndpoint {
     @PUT
     @Path("/UpdateStaffLocation")
     @Consumes(MediaType.APPLICATION_JSON)
-    @RolesAllowed({GlobalConstants.ROLE_ADMIN,GlobalConstants.ROLE_STAFF})
-    public Response updateStaffLocation(StaffPermissions permissions)
+    @RolesAllowed({GlobalConstants.ROLE_SHOP_ADMIN,GlobalConstants.ROLE_SHOP_STAFF})
+    public Response updateStaffLocation(ShopStaffPermissions permissions)
     {
 
         permissions.setStaffUserID(((User)Globals.accountApproved).getUserID());
-        int rowCount = daoStaff.updateStaffLocation(permissions);
+        int rowCount = daoShopStaff.updateShopStaffLocation(permissions);
 
 
         if(rowCount >= 1)
@@ -117,10 +120,10 @@ public class StaffLoginRESTEndpoint {
 
 
     @GET
-    @Path("/GetStaffForAdmin")
+    @Path("/GetShopStaffForShopAdmin")
     @Produces(MediaType.APPLICATION_JSON)
-    @RolesAllowed({GlobalConstants.ROLE_ADMIN})
-    public Response getStaffForAdmin(
+    @RolesAllowed({GlobalConstants.ROLE_SHOP_ADMIN})
+    public Response getShopStaffForShopAdmin(
             @QueryParam("latCurrent") Double latPickUp, @QueryParam("lonCurrent") Double lonPickUp,
             @QueryParam("PermitProfileUpdate") Boolean permitProfileUpdate,
             @QueryParam("PermitRegistrationAndRenewal") Boolean permitRegistrationAndRenewal,
@@ -130,6 +133,13 @@ public class StaffLoginRESTEndpoint {
             @QueryParam("GetRowCount")boolean getRowCount,
             @QueryParam("MetadataOnly")boolean getOnlyMetaData)
     {
+
+
+        User user = (User) Globals.accountApproved;
+
+        int shopID = Globals.shopDAO.getShopIDForShopAdmin(user.getUserID()).getShopID();
+
+//        System.out.println("Get Shop Staff !");
 
 
         if(limit!=null)
@@ -151,10 +161,11 @@ public class StaffLoginRESTEndpoint {
 
 
 
-        UserEndpoint endPoint = daoStaff.getStaffForAdmin(
+        UserEndpoint endPoint = daoShopStaff.getShopStaffForShopAdmin(
                 latPickUp,lonPickUp,
                 permitProfileUpdate,permitRegistrationAndRenewal,
                 gender,
+                shopID,
                 sortBy,limit,offset,
                 getRowCount,getOnlyMetaData
         );
@@ -177,14 +188,8 @@ public class StaffLoginRESTEndpoint {
 
 
 
-
-
-
-
-
-
     @GET
-    @Path("/GetStaffListPublic")
+    @Path("/GetShopStaffListPublic")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getStaffListPublic(
             @QueryParam("latCurrent") Double latPickUp, @QueryParam("lonCurrent") Double lonPickUp,
@@ -214,7 +219,7 @@ public class StaffLoginRESTEndpoint {
 
 
 
-        UserEndpoint endPoint = daoStaff.getStaffListPublic(
+        UserEndpoint endPoint = daoShopStaff.getShopStaffListPublic(
                 latPickUp,lonPickUp,
                 permitProfileUpdate,
                 permitRegistrationAndRenewal,

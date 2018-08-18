@@ -2,42 +2,26 @@ package org.nearbyshops.ModelRoles;
 
 import org.nearbyshops.Model.Shop;
 
-import java.sql.Timestamp;
-
 /**
- * Created by sumeet on 29/5/16.
+ * Created by sumeet on 28/8/17.
  */
+
+
 public class ShopStaffPermissions {
 
-    // Table Name for Distributor
-    public static final String TABLE_NAME = "SHOP_STAFF";
+    // Table Name for User
+    public static final String TABLE_NAME = "SHOP_STAFF_PERMISSIONS";
 
-    // Column names for Distributor
 
+    // Column names
+    public static final String PERMISSION_ID = "PERMISSION_ID";
     public static final String STAFF_ID = "STAFF_ID";
-    public static final String STAFF_NAME = "STAFF_NAME";
-//    public static final String USER_NAME = "USER_NAME";
-    public static final String PASSWORD = "PASSWORD";
-
     public static final String SHOP_ID = "SHOP_ID";
 
-    public static final String ABOUT = "ABOUT";
-    public static final String PROFILE_IMAGE_URL = "PROFILE_IMAGE_URL";
-    public static final String PHONE_NUMBER = "PHONE_NUMBER";
     public static final String DESIGNATION = "DESIGNATION";
-
-    // to be Implemented
-    public static final String IS_ENABLED = "IS_ENABLED";
-
-    // privacy
-    // private accounts will be hidden from public displays in the end user app
-    public static final String ACCOUNT_PRIVATE = "ACCOUNT_PRIVATE";
-
-    public static final String GOVERNMENT_ID_NUMBER = "GOVERNMENT_ID_NUMBER";
-    public static final String GOVERNMENT_ID_NAME = "GOVERNMENT_ID_NAME";
-    public static final String TIMESTAMP_CREATED = "TIMESTAMP_CREATED";
-
-
+    public static final String LAT_CURRENT = "LAT_CURRENT";
+    public static final String LON_CURRENT = "LON_CURRENT";
+    
     // permissions General
     public static final String ADD_REMOVE_ITEMS_FROM_SHOP = "ADD_REMOVE_ITEMS_FROM_SHOP";
     public static final String UPDATE_STOCK = "UPDATE_STOCK";
@@ -51,160 +35,72 @@ public class ShopStaffPermissions {
     public static final String ACCEPT_PAYMENTS_FROM_DELIVERY = "ACCEPT_PAYMENTS_FROM_DELIVERY";
     public static final String ACCEPT_RETURNS = "ACCEPT_RETURNS";
 
-    // permissions : Pick from Shop
-    public static final String CANCEL_ORDERS_PFS = "CANCEL_ORDERS_PFS";
-
-    public static final String CONFIRM_ORDERS_PFS = "CONFIRM_ORDERS_PFS";
-    public static final String SET_ORDERS_PACKED_PFS = "SET_ORDERS_PACKED_PFS";
-    public static final String SET_READY_FOR_PICKUP_PFS = "SET_READY_FOR_PICKUP_PFS";
-    public static final String SET_PAYMENT_RECEIVED_PFS = "SET_PAYMENT_RECEIVED_PFS";
-    public static final String MARK_DELIVERED_PFS = "MARK_DELIVERED_PFS";
-
-
-
-
 
 
     // Create Table CurrentServiceConfiguration Provider
-    public static final String createTableShopStaffPostgres =
-            "CREATE TABLE IF NOT EXISTS " + ShopStaffPermissions.TABLE_NAME + "("
-            + " " + ShopStaffPermissions.STAFF_ID + " INT UNIQUE NOT NULL,"
-            + " " + ShopStaffPermissions.STAFF_NAME + " text,"
+    public static final String createTablePostgres =
 
-            + " " + ShopStaffPermissions.SHOP_ID + " INT NOT NULL,"
+            "CREATE TABLE IF NOT EXISTS "
+                    + ShopStaffPermissions.TABLE_NAME + "("
+                    + " " + ShopStaffPermissions.PERMISSION_ID + " SERIAL PRIMARY KEY,"
+                    + " " + ShopStaffPermissions.STAFF_ID + " int UNIQUE NOT NULL ,"
+                    + " " + ShopStaffPermissions.SHOP_ID + " INT NOT NULL,"
 
-            + " " + ShopStaffPermissions.ABOUT + " text,"
-            + " " + ShopStaffPermissions.PROFILE_IMAGE_URL + " text,"
+                    + " " + ShopStaffPermissions.DESIGNATION + " text,"
 
-            + " " + ShopStaffPermissions.PHONE_NUMBER + " text,"
-            + " " + ShopStaffPermissions.DESIGNATION + " text,"
-            + " " + ShopStaffPermissions.IS_ENABLED + " boolean NOT NULL,"
-            + " " + ShopStaffPermissions.ACCOUNT_PRIVATE + " boolean,"
+                    + " " + ShopStaffPermissions.LAT_CURRENT + " float not null default 0,"
+                    + " " + ShopStaffPermissions.LON_CURRENT + " float not null default 0,"
 
-            + " " + ShopStaffPermissions.GOVERNMENT_ID_NAME + " text,"
-            + " " + ShopStaffPermissions.GOVERNMENT_ID_NUMBER + " text,"
-            + " " + ShopStaffPermissions.TIMESTAMP_CREATED + " timestamp with time zone NOT NULL DEFAULT now(),"
+                    + " " + ShopStaffPermissions.ADD_REMOVE_ITEMS_FROM_SHOP + " boolean NOT NULL default 'f',"
+                    + " " + ShopStaffPermissions.UPDATE_STOCK + " boolean NOT NULL default 'f',"
 
-            + " " + ShopStaffPermissions.ADD_REMOVE_ITEMS_FROM_SHOP + " boolean ,"
-            + " " + ShopStaffPermissions.UPDATE_STOCK + " boolean ,"
+                    + " " + ShopStaffPermissions.CANCEL_ORDERS + " boolean NOT NULL default 'f',"
+                    + " " + ShopStaffPermissions.CONFIRM_ORDERS + " boolean NOT NULL default 'f',"
+                    + " " + ShopStaffPermissions.SET_ORDERS_PACKED + " boolean NOT NULL default 'f',"
+                    + " " + ShopStaffPermissions.HANDOVER_TO_DELIVERY + " boolean NOT NULL default 'f',"
+                    + " " + ShopStaffPermissions.MARK_ORDERS_DELIVERED + " boolean NOT NULL default 'f',"
+                    + " " + ShopStaffPermissions.ACCEPT_PAYMENTS_FROM_DELIVERY + " boolean NOT NULL default 'f',"
+                    + " " + ShopStaffPermissions.ACCEPT_RETURNS + " boolean NOT NULL default 'f',"
 
-            + " " + ShopStaffPermissions.CANCEL_ORDERS + " boolean ,"
-            + " " + ShopStaffPermissions.CONFIRM_ORDERS + " boolean ,"
-            + " " + ShopStaffPermissions.SET_ORDERS_PACKED + " boolean ,"
-            + " " + ShopStaffPermissions.HANDOVER_TO_DELIVERY + " boolean ,"
-            + " " + ShopStaffPermissions.MARK_ORDERS_DELIVERED + " boolean ,"
-            + " " + ShopStaffPermissions.ACCEPT_PAYMENTS_FROM_DELIVERY + " boolean ,"
-            + " " + ShopStaffPermissions.ACCEPT_RETURNS + " boolean ,"
+//                    + " " + StaffPermissions.PERMIT_TAXI_PROFILE_UPDATE + " boolean NOT NULL default 'f',"
+//                    + " " + StaffPermissions.PERMIT_ACCEPT_PAYMENTS + " boolean NOT NULL default 'f',"
+//                    + " " + StaffPermissions.PERMIT_ADD_EDIT_TAXI_IMAGES + " boolean NOT NULL default 'f',"
+//                    + " " + StaffPermissions.PERMIT_APPROVE_TAXI_IMAGES + " boolean NOT NULL default 'f',"
 
-            + " " + ShopStaffPermissions.CANCEL_ORDERS_PFS + " boolean ,"
-            + " " + ShopStaffPermissions.CONFIRM_ORDERS_PFS + " boolean ,"
-            + " " + ShopStaffPermissions.SET_ORDERS_PACKED_PFS + " boolean ,"
-            + " " + ShopStaffPermissions.SET_READY_FOR_PICKUP_PFS + " boolean ,"
-            + " " + ShopStaffPermissions.SET_PAYMENT_RECEIVED_PFS + " boolean ,"
-            + " " + ShopStaffPermissions.MARK_DELIVERED_PFS + " boolean ,"
-
-            + " FOREIGN KEY(" + ShopStaffPermissions.SHOP_ID +") REFERENCES " + Shop.TABLE_NAME + "(" + Shop.SHOP_ID + "),"
-            + " FOREIGN KEY(" + ShopStaffPermissions.STAFF_ID +") REFERENCES " + User.TABLE_NAME + "(" + User.USER_ID + ")"
-            + ")";
+                    + " FOREIGN KEY(" + ShopStaffPermissions.SHOP_ID +") REFERENCES " + Shop.TABLE_NAME + "(" + Shop.SHOP_ID + ") ON DELETE CASCADE,"
+                    + " FOREIGN KEY(" + ShopStaffPermissions.STAFF_ID +") REFERENCES " + User.TABLE_NAME + "(" + User.USER_ID + ") ON DELETE CASCADE "
+                    + ")";
 
 
-    
-    // Instance Variables
-    private int staffID;
 
-    private String staffName;
-    private String username;
-    private String password;
-
+    // instance variables
+    private int permissionID;
+    private int staffUserID;
     private int shopID;
 
-    private String about;
-    private String profileImageURL;
-
-    private String phone;
     private String designation;
 
-    private Boolean isEnabled;
-    private boolean accountPrivate;
+    private double latCurrent;
+    private double lonCurrent;
 
-    private String govtIDName;
-    private String govtIDNumber;
-    private Timestamp timestampCreated;
+    private boolean permitAddRemoveItems;
+    private boolean permitUpdateItemsInShop;
 
-    // permissions General
-    private boolean addRemoveItemsFromShop;
-    private boolean updateStock;
+    private boolean permitCancelOrders;
+    private boolean permitConfirmOrders;
+    private boolean permitSetOrdersPacked;
+    private boolean permitHandoverToDelivery;
+    private boolean permitMarkOrdersDelivered;
+    private boolean permitAcceptPaymentsFromDelivery;
+    private boolean permitAcceptReturns;
 
-    // permissions home delivery orders
-    private boolean cancelOrders;
-    private boolean confirmOrders;
-    private boolean setOrdersPacked;
-    private boolean handoverToDelivery;
-    private boolean markOrdersDelivered;
-    private boolean acceptPaymentsFromDelivery;
-    private boolean acceptReturns;
 
-    // permissions pick from shop orders
-    private boolean permitCancelOrdersPFS;
-
-    private boolean permitConfirmOrdersPFS;
-    private boolean permitSetOrdersPackedPFS;
-    private boolean permitSetReadyForPickupPFS;
-    private boolean permitSetPaymentReceivedPFS;
-    private boolean permitMarkDeliveredPFS;
+    private double rt_distance;
 
 
 
-    // Getter and Setters
+    // getter and setters
 
-
-    public boolean isPermitCancelOrdersPFS() {
-        return permitCancelOrdersPFS;
-    }
-
-    public void setPermitCancelOrdersPFS(boolean permitCancelOrdersPFS) {
-        this.permitCancelOrdersPFS = permitCancelOrdersPFS;
-    }
-
-    public boolean isPermitConfirmOrdersPFS() {
-        return permitConfirmOrdersPFS;
-    }
-
-    public void setPermitConfirmOrdersPFS(boolean permitConfirmOrdersPFS) {
-        this.permitConfirmOrdersPFS = permitConfirmOrdersPFS;
-    }
-
-    public boolean isPermitSetOrdersPackedPFS() {
-        return permitSetOrdersPackedPFS;
-    }
-
-    public void setPermitSetOrdersPackedPFS(boolean permitSetOrdersPackedPFS) {
-        this.permitSetOrdersPackedPFS = permitSetOrdersPackedPFS;
-    }
-
-    public boolean isPermitSetReadyForPickupPFS() {
-        return permitSetReadyForPickupPFS;
-    }
-
-    public void setPermitSetReadyForPickupPFS(boolean permitSetReadyForPickupPFS) {
-        this.permitSetReadyForPickupPFS = permitSetReadyForPickupPFS;
-    }
-
-    public boolean isPermitSetPaymentReceivedPFS() {
-        return permitSetPaymentReceivedPFS;
-    }
-
-    public void setPermitSetPaymentReceivedPFS(boolean permitSetPaymentReceivedPFS) {
-        this.permitSetPaymentReceivedPFS = permitSetPaymentReceivedPFS;
-    }
-
-    public boolean isPermitMarkDeliveredPFS() {
-        return permitMarkDeliveredPFS;
-    }
-
-    public void setPermitMarkDeliveredPFS(boolean permitMarkDeliveredPFS) {
-        this.permitMarkDeliveredPFS = permitMarkDeliveredPFS;
-    }
 
     public int getShopID() {
         return shopID;
@@ -214,93 +110,116 @@ public class ShopStaffPermissions {
         this.shopID = shopID;
     }
 
-    public boolean isAddRemoveItemsFromShop() {
-        return addRemoveItemsFromShop;
+    public boolean isPermitAddRemoveItems() {
+        return permitAddRemoveItems;
     }
 
-    public void setAddRemoveItemsFromShop(boolean addRemoveItemsFromShop) {
-        this.addRemoveItemsFromShop = addRemoveItemsFromShop;
+    public void setPermitAddRemoveItems(boolean permitAddRemoveItems) {
+        this.permitAddRemoveItems = permitAddRemoveItems;
     }
 
-    public boolean isUpdateStock() {
-        return updateStock;
+    public boolean isPermitUpdateItemsInShop() {
+        return permitUpdateItemsInShop;
     }
 
-    public void setUpdateStock(boolean updateStock) {
-        this.updateStock = updateStock;
+    public void setPermitUpdateItemsInShop(boolean permitUpdateItemsInShop) {
+        this.permitUpdateItemsInShop = permitUpdateItemsInShop;
     }
 
-    public boolean isCancelOrders() {
-        return cancelOrders;
+    public boolean isPermitCancelOrders() {
+        return permitCancelOrders;
     }
 
-    public void setCancelOrders(boolean cancelOrders) {
-        this.cancelOrders = cancelOrders;
+    public void setPermitCancelOrders(boolean permitCancelOrders) {
+        this.permitCancelOrders = permitCancelOrders;
     }
 
-    public boolean isConfirmOrders() {
-        return confirmOrders;
+    public boolean isPermitConfirmOrders() {
+        return permitConfirmOrders;
     }
 
-    public void setConfirmOrders(boolean confirmOrders) {
-        this.confirmOrders = confirmOrders;
+    public void setPermitConfirmOrders(boolean permitConfirmOrders) {
+        this.permitConfirmOrders = permitConfirmOrders;
     }
 
-    public boolean isSetOrdersPacked() {
-        return setOrdersPacked;
+    public boolean isPermitSetOrdersPacked() {
+        return permitSetOrdersPacked;
     }
 
-    public void setSetOrdersPacked(boolean setOrdersPacked) {
-        this.setOrdersPacked = setOrdersPacked;
+    public void setPermitSetOrdersPacked(boolean permitSetOrdersPacked) {
+        this.permitSetOrdersPacked = permitSetOrdersPacked;
     }
 
-    public boolean isHandoverToDelivery() {
-        return handoverToDelivery;
+    public boolean isPermitHandoverToDelivery() {
+        return permitHandoverToDelivery;
     }
 
-    public void setHandoverToDelivery(boolean handoverToDelivery) {
-        this.handoverToDelivery = handoverToDelivery;
+    public void setPermitHandoverToDelivery(boolean permitHandoverToDelivery) {
+        this.permitHandoverToDelivery = permitHandoverToDelivery;
     }
 
-    public boolean isMarkOrdersDelivered() {
-        return markOrdersDelivered;
+    public boolean isPermitMarkOrdersDelivered() {
+        return permitMarkOrdersDelivered;
     }
 
-    public void setMarkOrdersDelivered(boolean markOrdersDelivered) {
-        this.markOrdersDelivered = markOrdersDelivered;
+    public void setPermitMarkOrdersDelivered(boolean permitMarkOrdersDelivered) {
+        this.permitMarkOrdersDelivered = permitMarkOrdersDelivered;
     }
 
-    public boolean isAcceptPaymentsFromDelivery() {
-        return acceptPaymentsFromDelivery;
+    public boolean isPermitAcceptPaymentsFromDelivery() {
+        return permitAcceptPaymentsFromDelivery;
     }
 
-    public void setAcceptPaymentsFromDelivery(boolean acceptPaymentsFromDelivery) {
-        this.acceptPaymentsFromDelivery = acceptPaymentsFromDelivery;
+    public void setPermitAcceptPaymentsFromDelivery(boolean permitAcceptPaymentsFromDelivery) {
+        this.permitAcceptPaymentsFromDelivery = permitAcceptPaymentsFromDelivery;
     }
 
-    public boolean isAcceptReturns() {
-        return acceptReturns;
+    public boolean isPermitAcceptReturns() {
+        return permitAcceptReturns;
     }
 
-    public void setAcceptReturns(boolean acceptReturns) {
-        this.acceptReturns = acceptReturns;
+    public void setPermitAcceptReturns(boolean permitAcceptReturns) {
+        this.permitAcceptReturns = permitAcceptReturns;
     }
 
-    public boolean isAccountPrivate() {
-        return accountPrivate;
+    public double getRt_distance() {
+        return rt_distance;
     }
 
-    public void setAccountPrivate(boolean accountPrivate) {
-        this.accountPrivate = accountPrivate;
+    public void setRt_distance(double rt_distance) {
+        this.rt_distance = rt_distance;
     }
 
-
-    public String getPhone() {
-        return phone;
+    public double getLatCurrent() {
+        return latCurrent;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setLatCurrent(double latCurrent) {
+        this.latCurrent = latCurrent;
+    }
+
+    public double getLonCurrent() {
+        return lonCurrent;
+    }
+
+    public void setLonCurrent(double lonCurrent) {
+        this.lonCurrent = lonCurrent;
+    }
+
+    public int getPermissionID() {
+        return permissionID;
+    }
+
+    public void setPermissionID(int permissionID) {
+        this.permissionID = permissionID;
+    }
+
+    public int getStaffUserID() {
+        return staffUserID;
+    }
+
+    public void setStaffUserID(int staffUserID) {
+        this.staffUserID = staffUserID;
     }
 
     public String getDesignation() {
@@ -311,84 +230,4 @@ public class ShopStaffPermissions {
         this.designation = designation;
     }
 
-    public String getGovtIDName() {
-        return govtIDName;
-    }
-
-    public void setGovtIDName(String govtIDName) {
-        this.govtIDName = govtIDName;
-    }
-
-    public String getGovtIDNumber() {
-        return govtIDNumber;
-    }
-
-    public void setGovtIDNumber(String govtIDNumber) {
-        this.govtIDNumber = govtIDNumber;
-    }
-
-    public Timestamp getTimestampCreated() {
-        return timestampCreated;
-    }
-
-    public void setTimestampCreated(Timestamp timestampCreated) {
-        this.timestampCreated = timestampCreated;
-    }
-
-    public String getAbout() {
-        return about;
-    }
-
-    public void setAbout(String about) {
-        this.about = about;
-    }
-
-    public String getProfileImageURL() {
-        return profileImageURL;
-    }
-
-    public void setProfileImageURL(String profileImageURL) {
-        this.profileImageURL = profileImageURL;
-    }
-
-    public Boolean getEnabled() {
-        return isEnabled;
-    }
-
-    public void setEnabled(Boolean enabled) {
-        isEnabled = enabled;
-    }
-
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public int getStaffID() {
-        return staffID;
-    }
-
-    public void setStaffID(int staffID) {
-        this.staffID = staffID;
-    }
-
-    public String getStaffName() {
-        return staffName;
-    }
-
-    public void setStaffName(String staffName) {
-        this.staffName = staffName;
-    }
 }

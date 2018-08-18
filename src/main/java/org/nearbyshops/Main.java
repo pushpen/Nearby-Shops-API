@@ -19,10 +19,7 @@ import org.nearbyshops.ModelReviewItem.ItemReviewThanks;
 import org.nearbyshops.ModelReviewShop.FavouriteShop;
 import org.nearbyshops.ModelReviewShop.ShopReview;
 import org.nearbyshops.ModelReviewShop.ShopReviewThanks;
-import org.nearbyshops.ModelRoles.EmailVerificationCode;
-import org.nearbyshops.ModelRoles.PhoneVerificationCode;
-import org.nearbyshops.ModelRoles.StaffPermissions;
-import org.nearbyshops.ModelRoles.User;
+import org.nearbyshops.ModelRoles.*;
 import org.nearbyshops.ModelSettings.ServiceConfigurationLocal;
 
 import java.io.File;
@@ -121,6 +118,7 @@ public class Main {
             statement.executeUpdate(Shop.createTableShopPostgres);
             statement.executeUpdate(ShopItem.createTableShopItemPostgres);
 
+            statement.executeUpdate(ShopStaffPermissions.createTablePostgres);
 
 
             statement.executeUpdate(Cart.createTableCartPostgres);

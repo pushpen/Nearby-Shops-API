@@ -144,6 +144,8 @@ public class User {
     private int rt_registration_mode; // 1 for registration by email 2 for registration by phone
 //    private Vehicle rt_vehicle;
     private StaffPermissions rt_staff_permissions;
+    private ShopStaffPermissions rt_shop_staff_permissions;
+
     private String rt_oneSignalPlayerID;
 
 
@@ -155,6 +157,14 @@ public class User {
 
     // Getters and Setters
 
+
+    public ShopStaffPermissions getRt_shop_staff_permissions() {
+        return rt_shop_staff_permissions;
+    }
+
+    public void setRt_shop_staff_permissions(ShopStaffPermissions rt_shop_staff_permissions) {
+        this.rt_shop_staff_permissions = rt_shop_staff_permissions;
+    }
 
     public String getRt_oneSignalPlayerID() {
         return rt_oneSignalPlayerID;

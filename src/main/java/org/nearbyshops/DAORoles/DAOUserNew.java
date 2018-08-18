@@ -683,6 +683,8 @@ public class DAOUserNew {
 
 
 
+
+
     public int updateEndUser(User user)
     {
 
@@ -769,7 +771,9 @@ public class DAOUserNew {
 
 
 
-    public int updateDriver(User user)
+
+
+    public int updateShopAdmin(User user)
     {
 
         String updateStatement = "UPDATE " + User.TABLE_NAME
@@ -781,8 +785,8 @@ public class DAOUserNew {
 //                + User.E_MAIL + "=?,"
 
 //                + User.PHONE + "=?,"
-//                + User.NAME + "=?,"
-//                + User.GENDER + "=?,"
+                + User.NAME + "=?,"
+                + User.GENDER + "=?,"
 
                 + User.PROFILE_IMAGE_URL + "=?,"
                 + User.IS_ACCOUNT_PRIVATE + "=?,"
@@ -808,8 +812,9 @@ public class DAOUserNew {
 //            statement.setString(++i,user.getEmail());
 
 //            statement.setString(++i,user.getPhone());
-//            statement.setString(++i,user.getName());
-//            statement.setObject(++i,user.getGender());
+
+            statement.setString(++i,user.getName());
+            statement.setObject(++i,user.getGender());
 
             statement.setString(++i,user.getProfileImagePath());
             statement.setObject(++i,user.isAccountPrivate());
@@ -1030,6 +1035,9 @@ public class DAOUserNew {
 
         return rowCountUpdated;
     }
+
+
+
 
 
 

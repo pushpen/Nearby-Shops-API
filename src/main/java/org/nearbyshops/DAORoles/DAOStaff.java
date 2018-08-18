@@ -122,10 +122,6 @@ public class DAOStaff {
 
 
 
-
-
-
-
     public int updateStaffByAdmin(User user)
     {
 
@@ -452,12 +448,6 @@ public class DAOStaff {
 
         return permissions;
     }
-
-
-
-
-
-
 
 
 
