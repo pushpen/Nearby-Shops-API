@@ -102,7 +102,6 @@ public class ServiceConfigurationLocal {
 
 
 
-
     // Instance Variables
     private int serviceID;
 

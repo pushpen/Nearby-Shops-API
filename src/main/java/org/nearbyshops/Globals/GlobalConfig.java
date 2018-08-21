@@ -1,5 +1,6 @@
 package org.nearbyshops.Globals;
 
+import org.apache.commons.configuration2.Configuration;
 import org.apache.commons.configuration2.FileBasedConfiguration;
 import org.apache.commons.configuration2.PropertiesConfiguration;
 import org.apache.commons.configuration2.builder.FileBasedConfigurationBuilder;
@@ -15,7 +16,7 @@ public class GlobalConfig {
     public static void loadGlobalConfiguration()
     {
 
-        org.apache.commons.configuration2.Configuration configuration = getConfiguration();
+        Configuration configuration = getConfiguration();
 
 
         if(configuration==null)
@@ -52,9 +53,7 @@ public class GlobalConfig {
         GlobalConstants.max_limit = configuration.getInt("max_limit");
 
         GlobalConstants.MIN_TAX_ACCOUNT_BALANCE = configuration.getInt("min_tax_account_balance");
-
         GlobalConstants.MIN_SERVICE_ACCOUNT_BALANCE = configuration.getInt("min_service_account_balance");
-
         GlobalConstants.NOTIFICATION_SERVER_HOST_MQTT = configuration.getString("mqtt_server_address");
 
 
@@ -142,7 +141,7 @@ public class GlobalConfig {
 
 
 
-    private static org.apache.commons.configuration2.Configuration configuration;
+    private static Configuration configuration;
 
 
     public static org.apache.commons.configuration2.Configuration getConfiguration() {

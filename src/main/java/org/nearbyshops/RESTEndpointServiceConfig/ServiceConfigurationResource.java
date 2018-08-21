@@ -27,6 +27,7 @@ import java.util.List;
 
 
 
+
 @Path("/api/ServiceConfiguration")
 public class ServiceConfigurationResource {
 
@@ -38,7 +39,9 @@ public class ServiceConfigurationResource {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
+
+
+
 	
 //	@POST
 //	@Consumes(MediaType.APPLICATION_JSON)
@@ -177,7 +180,15 @@ public class ServiceConfigurationResource {
 		
 	}
 	
-	
+
+
+
+
+
+
+
+
+
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getService(@QueryParam("latCenter")Double latCenter,

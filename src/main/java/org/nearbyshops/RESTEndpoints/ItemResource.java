@@ -706,6 +706,8 @@ public class ItemResource {
 	private static final double MAX_IMAGE_SIZE_MB = 2;
 
 
+
+
 	@POST
 	@Path("/Image")
 	@Consumes({MediaType.APPLICATION_OCTET_STREAM})
