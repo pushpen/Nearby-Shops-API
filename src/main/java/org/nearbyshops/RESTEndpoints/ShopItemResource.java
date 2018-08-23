@@ -40,27 +40,26 @@ public class ShopItemResource {
 	@RolesAllowed({GlobalConstants.ROLE_SHOP_ADMIN, GlobalConstants.ROLE_SHOP_STAFF})
 	public Response updateShopItemBulk(List<ShopItem> itemList)
 	{
+
+
 		int rowCountSum = 0;
+		int shopID = 0;
 
 
 		User shopAdmin = (User) Globals.accountApproved;
+
 
 		if(shopAdmin.getRole()==GlobalConstants.ROLE_SHOP_ADMIN_CODE)
 		{
 
 			Shop shop = Globals.shopDAO.getShopIDForShopAdmin(shopAdmin.getUserID());
-
-			for(ShopItem shopItem : itemList)
-			{
-				shopItem.setShopID(shop.getShopID());
-				rowCountSum = rowCountSum + shopItemDAO.updateShopItem(shopItem);
-			}
+			shopID = shop.getShopID();
 
 		}
 		else if(shopAdmin.getRole()==GlobalConstants.ROLE_SHOP_STAFF_CODE)
 		{
 
-			int shopID = Globals.daoShopStaff.getShopIDforShopStaff(shopAdmin.getUserID());
+			shopID = Globals.daoShopStaff.getShopIDforShopStaff(shopAdmin.getUserID());
 			ShopStaffPermissions permissions = Globals.daoShopStaff.getShopStaffPermissions(shopAdmin.getUserID());
 
 
@@ -71,16 +70,20 @@ public class ShopItemResource {
 				throw new ForbiddenException("Not Permitted !");
 			}
 
-
-			for(ShopItem shopItem : itemList)
-			{
-				shopItem.setShopID(shopID);
-				rowCountSum = rowCountSum + shopItemDAO.updateShopItem(shopItem);
-			}
-
 		}
 
-//
+
+
+
+		for(ShopItem shopItem : itemList)
+		{
+			shopItem.setShopID(shopID);
+			rowCountSum = rowCountSum + shopItemDAO.updateShopItem(shopItem);
+		}
+
+
+
+
 //		if(Globals.accountApproved instanceof ShopStaff)
 //		{
 //			ShopStaff shopStaff = (ShopStaff) Globals.accountApproved;
@@ -294,7 +297,7 @@ public class ShopItemResource {
 	public Response updateShopItem(ShopItem shopItem)
 	{
 
-		System.out.println("Inside Resource Method !");
+//		System.out.println("Inside Resource Method !");
 
 		int rowCount = 0;
 
@@ -360,7 +363,7 @@ public class ShopItemResource {
 	public Response updateShop(ShopItem shopItem)
 	{
 
-		System.out.println("Inside Resource Method | Update by shop !");
+//		System.out.println("Inside Resource Method | Update by shop !");
 
 
 		User staff = (User) Globals.accountApproved;
@@ -475,9 +478,7 @@ public class ShopItemResource {
 
 		if(user.getRole()==GlobalConstants.ROLE_SHOP_ADMIN_CODE)
 		{
-			 shopID = Globals.daoShopStaff.getShopIDforShopStaff(user.getUserID());
-
-
+			 shopID = Globals.shopDAO.getShopIDForShopAdmin(user.getUserID()).getShopID();
 
 		}
 		else if (user.getRole()==GlobalConstants.ROLE_SHOP_STAFF_CODE)
@@ -495,7 +496,6 @@ public class ShopItemResource {
 
 			shopID = Globals.daoShopStaff.getShopIDforShopStaff(user.getUserID());
 		}
-
 
 
 

@@ -202,7 +202,7 @@ public class ItemSpecValueResource {
         if(itemSpecValue !=null && rowCount>=1)
         {
             // delete successful delete the image also
-            System.out.println("Image FIle : " + itemSpecValue.getImageFilename());
+//            System.out.println("Image FIle : " + itemSpecValue.getImageFilename());
             deleteImageFileInternal(itemSpecValue.getImageFilename());
         }
 
@@ -349,7 +349,7 @@ public class ItemSpecValueResource {
     {
         boolean deleteStatus = false;
 
-        System.out.println("Filename: " + fileName);
+//        System.out.println("Filename: " + fileName);
 
         try {
 
@@ -410,7 +410,7 @@ public class ItemSpecValueResource {
         // if the directory does not exist, create it
         if (!theDir.exists()) {
 
-            System.out.println("Creating directory: " + BASE_DIR.toString());
+//            System.out.println("Creating directory: " + BASE_DIR.toString());
 
             boolean result = false;
 
@@ -422,7 +422,7 @@ public class ItemSpecValueResource {
                 //handle it
             }
             if(result) {
-                System.out.println("DIR created");
+//                System.out.println("DIR created");
             }
         }
 
@@ -499,7 +499,7 @@ public class ItemSpecValueResource {
         // if the directory does not exist, create it
         if (!theDir.exists()) {
 
-            System.out.println("Creating directory: " + BASE_DIR.toString());
+//            System.out.println("Creating directory: " + BASE_DIR.toString());
 
             boolean result = false;
 
@@ -511,7 +511,7 @@ public class ItemSpecValueResource {
                 //handle it
             }
             if(result) {
-                System.out.println("DIR created");
+//                System.out.println("DIR created");
             }
         }
 
@@ -605,7 +605,7 @@ public class ItemSpecValueResource {
 
         boolean deleteStatus = false;
         Response response;
-        System.out.println("Filename: " + fileName);
+//        System.out.println("Filename: " + fileName);
 
         try {
 

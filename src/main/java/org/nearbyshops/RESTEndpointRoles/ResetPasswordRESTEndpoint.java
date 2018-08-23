@@ -42,12 +42,12 @@ public class ResetPasswordRESTEndpoint {
 
         //        @Path("/ResetPassword")
 
-        System.out.println(
-                "Email : " + user.getEmail() +
-                        "Phone : " + user.getPhone() +
-                        "\nReset Code : " + user.getPasswordResetCode() +
-                        "\nResult : "
-        );
+//        System.out.println(
+//                "Email : " + user.getEmail() +
+//                        "Phone : " + user.getPhone() +
+//                        "\nReset Code : " + user.getPasswordResetCode() +
+//                        "\nResult : "
+//        );
 
         int rowCount = Globals.daoResetPassword.resetPassword(user);
 
@@ -95,22 +95,20 @@ public class ResetPasswordRESTEndpoint {
 
         boolean result = Globals.daoResetPassword.checkPasswordResetCode(emailOrPhone,resetCode);
 
-
-
-        System.out.println(
-                "EmailOrPhone : " + emailOrPhone +
-                        "\nReset Code : " + resetCode +
-                        "\nResult : " + Boolean.toString(result)
-        );
+//        System.out.println(
+//                "EmailOrPhone : " + emailOrPhone +
+//                        "\nReset Code : " + resetCode +
+//                        "\nResult : " + Boolean.toString(result)
+//        );
 
 
 //        System.out.println(email);
 
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            Thread.sleep(1000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
 
 
         if(result)

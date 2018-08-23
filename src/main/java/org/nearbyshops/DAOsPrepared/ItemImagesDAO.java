@@ -164,7 +164,7 @@ public class ItemImagesDAO {
 
 
             rowCountUpdated = statement.executeUpdate();
-            System.out.println("Total rows updated: " + rowCountUpdated);
+//            System.out.println("Total rows updated: " + rowCountUpdated);
 
 
         } catch (SQLException e) {
@@ -216,7 +216,7 @@ public class ItemImagesDAO {
 
             rowCountDeleted = statement.executeUpdate();
 
-            System.out.println("Rows Deleted: " + rowCountDeleted);
+//            System.out.println("Rows Deleted: " + rowCountDeleted);
 
         } catch (SQLException e) {
             // TODO Auto-generated catch block
@@ -369,7 +369,7 @@ public class ItemImagesDAO {
             }
 
 
-            System.out.println(query);
+//            System.out.println(query);
             rs = statement.executeQuery();
 
             while(rs.next())
@@ -391,7 +391,7 @@ public class ItemImagesDAO {
 
 
 
-            System.out.println("Item By CategoryID " + itemImagesList.size());
+//            System.out.println("Item By CategoryID " + itemImagesList.size());
 
         } catch (SQLException e) {
             // TODO Auto-generated catch block
@@ -496,7 +496,7 @@ public class ItemImagesDAO {
                 endPoint.setItemCount(rs.getInt("item_count"));
             }
 
-            System.out.println("Item Count : " + endPoint.getItemCount());
+//            System.out.println("Item Count : " + endPoint.getItemCount());
 
         } catch (SQLException e) {
             // TODO Auto-generated catch block
@@ -585,7 +585,7 @@ public class ItemImagesDAO {
             statement.setObject(++i,imageID);
 
 
-            System.out.println(query);
+//            System.out.println(query);
             rs = statement.executeQuery();
 
             while(rs.next())

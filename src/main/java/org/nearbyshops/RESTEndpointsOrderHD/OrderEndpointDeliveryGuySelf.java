@@ -59,7 +59,7 @@ public class OrderEndpointDeliveryGuySelf {
 	{
 		Order order = Globals.orderService.readStatusHomeDelivery(orderID);
 
-		System.out.println("Accept OrderPFS : ShopID : OrderPFS : " + order.getShopID());
+//		System.out.println("Accept OrderPFS : ShopID : OrderPFS : " + order.getShopID());
 
 		User user = (User) Globals.accountApproved;
 
@@ -128,7 +128,7 @@ public class OrderEndpointDeliveryGuySelf {
 	{
 		Order order = Globals.orderService.readStatusHomeDelivery(orderID);
 
-		System.out.println("Return OrderPFS : ShopID : OrderPFS : " + order.getShopID());
+//		System.out.println("Return OrderPFS : ShopID : OrderPFS : " + order.getShopID());
 
 //		if(Globals.accountApproved instanceof DeliveryGuySelf)
 //		{
@@ -180,7 +180,7 @@ public class OrderEndpointDeliveryGuySelf {
 	{
 		Order order = Globals.orderService.readStatusHomeDelivery(orderID);
 
-		System.out.println("Handover OrderPFS : ShopID : OrderPFS : " + order.getShopID());
+//		System.out.println("Handover OrderPFS : ShopID : OrderPFS : " + order.getShopID());
 
 //		if(Globals.accountApproved instanceof DeliveryGuySelf)
 //		{

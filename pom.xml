@@ -166,13 +166,16 @@
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.springframework/spring-core -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-core</artifactId>
-            <version>4.3.9.RELEASE</version>
-        </dependency>
+
+        <!--<dependency>-->
+            <!--<groupId>org.springframework</groupId>-->
+            <!--<artifactId>spring-core</artifactId>-->
+            <!--<version>4.3.9.RELEASE</version>-->
+        <!--</dependency>-->
 
         <!-- https://mvnrepository.com/artifact/commons-beanutils/commons-beanutils -->
+
+
         <dependency>
             <groupId>commons-beanutils</groupId>
             <artifactId>commons-beanutils</artifactId>
@@ -182,6 +185,16 @@
 
         <!-- Dependencies for apache commons configuration : Ends -->
 
+
+        <!--Spring Dependency -->
+        <dependency>
+            <groupId>org.glassfish.jersey.ext</groupId>
+            <artifactId>jersey-spring4</artifactId>
+            <version>2.27</version>
+        </dependency>
+
+        
+        <!--Spring Dependency Ends-->
 
         <dependency>
             <groupId>junit</groupId>

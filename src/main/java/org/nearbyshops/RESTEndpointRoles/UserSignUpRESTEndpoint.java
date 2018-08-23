@@ -313,14 +313,14 @@ public class UserSignUpRESTEndpoint {
 
         boolean result = daoUser.checkUsernameExists(username);
 
-        System.out.println(username);
+//        System.out.println(username);
 
 
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            Thread.sleep(1000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
 
 
         if(result)
@@ -353,14 +353,14 @@ public class UserSignUpRESTEndpoint {
 
         boolean result = Globals.daoEmailVerificationCodes.checkEmailVerificationCode(email,verificationCode);
 
-        System.out.println(email);
+//        System.out.println(email);
 
 
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            Thread.sleep(1000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
 
 
         if(result)
@@ -549,14 +549,14 @@ public class UserSignUpRESTEndpoint {
 
         boolean result = Globals.daoPhoneVerificationCodes.checkPhoneVerificationCode(phone,verificationCode);
 
-        System.out.println(phone);
-
-
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+//        System.out.println(phone);
+//
+//
+//        try {
+//            Thread.sleep(1000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
 
 
         if(result)

@@ -331,7 +331,7 @@ public class ItemResource {
 		if(item!=null && rowCount>=1)
 		{
 			// delete successful delete the image also
-			System.out.println("Image FIle : " + item.getItemImageURL());
+//			System.out.println("Image FIle : " + item.getItemImageURL());
 			deleteImageFileInternal(item.getItemImageURL());
 		}
 
@@ -583,7 +583,7 @@ public class ItemResource {
 	{
 		boolean deleteStatus = false;
 
-		System.out.println("Filename: " + fileName);
+//		System.out.println("Filename: " + fileName);
 
 		try {
 
@@ -645,7 +645,7 @@ public class ItemResource {
 		// if the directory does not exist, create it
 		if (!theDir.exists()) {
 
-			System.out.println("Creating directory: " + BASE_DIR.toString());
+//			System.out.println("Creating directory: " + BASE_DIR.toString());
 
 			boolean result = false;
 
@@ -657,7 +657,7 @@ public class ItemResource {
 				//handle it
 			}
 			if(result) {
-				System.out.println("DIR created");
+//				System.out.println("DIR created");
 			}
 		}
 
@@ -744,7 +744,7 @@ public class ItemResource {
 		// if the directory does not exist, create it
 		if (!theDir.exists()) {
 
-			System.out.println("Creating directory: " + BASE_DIR.toString());
+//			System.out.println("Creating directory: " + BASE_DIR.toString());
 
 			boolean result = false;
 
@@ -756,7 +756,7 @@ public class ItemResource {
 				//handle it
 			}
 			if(result) {
-				System.out.println("DIR created");
+//				System.out.println("DIR created");
 			}
 		}
 
@@ -874,7 +874,7 @@ public class ItemResource {
 
 		boolean deleteStatus = false;
 		Response response;
-		System.out.println("Filename: " + fileName);
+//		System.out.println("Filename: " + fileName);
 
 		try {
 

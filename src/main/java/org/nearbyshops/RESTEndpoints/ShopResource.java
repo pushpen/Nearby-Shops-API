@@ -717,7 +717,7 @@ public class ShopResource {
 		// if the directory does not exist, create it
 		if (!theDir.exists()) {
 
-			System.out.println("Creating directory: " + BASE_DIR.toString());
+//			System.out.println("Creating directory: " + BASE_DIR.toString());
 
 			boolean result = false;
 
@@ -729,7 +729,7 @@ public class ShopResource {
 				//handle it
 			}
 			if(result) {
-				System.out.println("DIR created");
+//				System.out.println("DIR created");
 			}
 		}
 
@@ -824,7 +824,8 @@ public class ShopResource {
 
 		Response response;
 
-		System.out.println("Filename: " + fileName);
+//		System.out.println("Filename: " + fileName);
+
 
 		try {
 

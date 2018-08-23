@@ -197,14 +197,14 @@ public class ItemImageResource {
 
         int rowCount = itemImagesDAO.deleteItemImage(itemImage.getImageID());
 
-        System.out.println("Image FIle : " + itemImage.getImageFilename());
+//        System.out.println("Image FIle : " + itemImage.getImageFilename());
 
 
 
         if(itemImage !=null && rowCount>=1)
         {
             // delete successful delete the image also
-            System.out.println("Image FIle : " + itemImage.getImageFilename());
+//            System.out.println("Image FIle : " + itemImage.getImageFilename());
 
             deleteImageFileInternal(itemImage.getImageFilename());
         }
@@ -322,7 +322,7 @@ public class ItemImageResource {
     {
         boolean deleteStatus = false;
 
-        System.out.println("Filename: " + fileName);
+//        System.out.println("Filename: " + fileName);
 
         try {
 
@@ -387,7 +387,7 @@ public class ItemImageResource {
         // if the directory does not exist, create it
         if (!theDir.exists()) {
 
-            System.out.println("Creating directory: " + BASE_DIR.toString());
+//            System.out.println("Creating directory: " + BASE_DIR.toString());
 
             boolean result = false;
 
@@ -399,7 +399,7 @@ public class ItemImageResource {
                 //handle it
             }
             if(result) {
-                System.out.println("DIR created");
+//                System.out.println("DIR created");
             }
         }
 
@@ -480,7 +480,7 @@ public class ItemImageResource {
         // if the directory does not exist, create it
         if (!theDir.exists()) {
 
-            System.out.println("Creating directory: " + BASE_DIR.toString());
+//            System.out.println("Creating directory: " + BASE_DIR.toString());
 
             boolean result = false;
 
@@ -492,7 +492,7 @@ public class ItemImageResource {
                 //handle it
             }
             if(result) {
-                System.out.println("DIR created");
+//                System.out.println("DIR created");
             }
         }
 
@@ -597,7 +597,7 @@ public class ItemImageResource {
 
         boolean deleteStatus = false;
         Response response;
-        System.out.println("Filename: " + fileName);
+//        System.out.println("Filename: " + fileName);
 
         try {
 

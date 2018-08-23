@@ -314,7 +314,7 @@ public class ItemDAOJoinOuter {
 			
 			
 			
-			System.out.println("Item By CategoryID " + itemList.size());	
+//			System.out.println("Item By CategoryID " + itemList.size());
 			
 		}
 		catch (SQLException e) {
@@ -322,6 +322,8 @@ public class ItemDAOJoinOuter {
 			e.printStackTrace();
 		}
 		
+
+
 
 		finally
 		
@@ -469,7 +471,8 @@ public class ItemDAOJoinOuter {
 				endPoint.setItemCount(rs.getInt("item_count"));
 			}
 
-			System.out.println("Item Count : " + endPoint.getItemCount());
+//			System.out.println("Item Count : " + endPoint.getItemCount());
+
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

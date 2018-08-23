@@ -179,7 +179,7 @@ public class ItemDAO {
 			statement.setInt(2,item.getItemID());
 
 			rowCountUpdated = statement.executeUpdate();
-			System.out.println("Total rows updated: " + rowCountUpdated);
+//			System.out.println("Total rows updated: " + rowCountUpdated);
 
 
 		} catch (SQLException e) {
@@ -269,7 +269,7 @@ public class ItemDAO {
 				rowCountUpdated = rowCountUpdated + i;
 			}
 
-			System.out.println("Total rows updated: UPDATE BULK " + rowCountUpdated);
+//			System.out.println("Total rows updated: UPDATE BULK " + rowCountUpdated);
 
 
 		} catch (SQLException e) {
@@ -360,7 +360,7 @@ public class ItemDAO {
 
 
 			rowCountUpdated = statement.executeUpdate();
-			System.out.println("Total rows updated: " + rowCountUpdated);
+//			System.out.println("Total rows updated: " + rowCountUpdated);
 
 
 		} catch (SQLException e) {
@@ -412,7 +412,7 @@ public class ItemDAO {
 
 			rowCountDeleted = statement.executeUpdate();
 			
-			System.out.println("Rows Deleted: " + rowCountDeleted);
+//			System.out.println("Rows Deleted: " + rowCountDeleted);
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -833,7 +833,7 @@ public class ItemDAO {
 			
 			
 			
-			System.out.println("Item By CategoryID " + itemList.size());	
+//			System.out.println("Item By CategoryID " + itemList.size());
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -1167,7 +1167,7 @@ public class ItemDAO {
 				endPoint.setItemCount(rs.getInt("item_count"));
 			}
 
-			System.out.println("Item Count : " + endPoint.getItemCount());
+//			System.out.println("Item Count : " + endPoint.getItemCount());
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

@@ -245,7 +245,7 @@ public class ItemCategoryDAOStaff {
 
 //			conn.close();
 
-            System.out.println("Total itemCategories queried " + itemCategoryList.size());
+//            System.out.println("Total itemCategories queried " + itemCategoryList.size());
 
         }
 

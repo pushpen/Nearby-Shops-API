@@ -63,7 +63,7 @@ public class ItemCategoryResource {
 
 
 
-		System.out.println(itemCategory.getCategoryName() + " | " + itemCategory.getCategoryDescription());
+//		System.out.println(itemCategory.getCategoryName() + " | " + itemCategory.getCategoryDescription());
 	
 		int idOfInsertedRow = itemCategoryDAO.saveItemCategory(itemCategory,false);
 		itemCategory.setItemCategoryID(idOfInsertedRow);
@@ -123,7 +123,7 @@ public class ItemCategoryResource {
 		if(itemCategory!=null && rowCount>=1)
 		{
 			// delete successful delete the image also
-			System.out.println("Image FIle Deleted : " + itemCategory.getImagePath());
+//			System.out.println("Image FIle Deleted : " + itemCategory.getImagePath());
 			deleteImageFileInternal(itemCategory.getImagePath());
 		}
 
@@ -175,8 +175,8 @@ public class ItemCategoryResource {
 
 		itemCategory.setItemCategoryID(itemCategoryID);
 
-		System.out.println("ItemCategoryID: " + itemCategoryID + " " + itemCategory.getCategoryName()
-				+ " " + itemCategory.getCategoryDescription() + " Parent DELIVERY_GUY_SELF_ID : " +  itemCategory.getParentCategoryID());
+//		System.out.println("ItemCategoryID: " + itemCategoryID + " " + itemCategory.getCategoryName()
+//				+ " " + itemCategory.getCategoryDescription() + " Parent DELIVERY_GUY_SELF_ID : " +  itemCategory.getParentCategoryID());
 
 		int rowCount = itemCategoryDAO.changeParent(itemCategory);
 
@@ -285,8 +285,8 @@ public class ItemCategoryResource {
 
 		itemCategory.setItemCategoryID(itemCategoryID);
 
-		System.out.println("ItemCategoryID: " + itemCategoryID + " " + itemCategory.getCategoryName()
-				+ " " + itemCategory.getCategoryDescription() + " Parent DELIVERY_GUY_SELF_ID : " +  itemCategory.getParentCategoryID());
+//		System.out.println("ItemCategoryID: " + itemCategoryID + " " + itemCategory.getCategoryName()
+//				+ " " + itemCategory.getCategoryDescription() + " Parent DELIVERY_GUY_SELF_ID : " +  itemCategory.getParentCategoryID());
 
 		int rowCount = itemCategoryDAO.updateItemCategory(itemCategory);
 
@@ -599,7 +599,7 @@ public class ItemCategoryResource {
 	{
 		boolean deleteStatus = false;
 
-		System.out.println("Filename: " + fileName);
+//		System.out.println("Filename: " + fileName);
 
 		try {
 
@@ -637,7 +637,7 @@ public class ItemCategoryResource {
 			okhttp3.Response response = null;
 			response = client.newCall(request).execute();
 			response.body().byteStream();
-			System.out.println();
+//			System.out.println();
 
 			return uploadNewImage(response.body().byteStream());
 
@@ -661,7 +661,7 @@ public class ItemCategoryResource {
 		// if the directory does not exist, create it
 		if (!theDir.exists()) {
 
-			System.out.println("Creating directory: " + BASE_DIR.toString());
+//			System.out.println("Creating directory: " + BASE_DIR.toString());
 
 			boolean result = false;
 
@@ -673,7 +673,7 @@ public class ItemCategoryResource {
 				//handle it
 			}
 			if(result) {
-				System.out.println("DIR created");
+//				System.out.println("DIR created");
 			}
 		}
 
@@ -762,7 +762,7 @@ public class ItemCategoryResource {
 		// if the directory does not exist, create it
 		if (!theDir.exists()) {
 
-			System.out.println("Creating directory: " + BASE_DIR.toString());
+//			System.out.println("Creating directory: " + BASE_DIR.toString());
 
 			boolean result = false;
 
@@ -774,7 +774,7 @@ public class ItemCategoryResource {
 				//handle it
 			}
 			if(result) {
-				System.out.println("DIR created");
+//				System.out.println("DIR created");
 			}
 		}
 
@@ -883,7 +883,7 @@ public class ItemCategoryResource {
 
 		Response response;
 
-		System.out.println("Filename: " + fileName);
+//		System.out.println("Filename: " + fileName);
 
 		try {
 

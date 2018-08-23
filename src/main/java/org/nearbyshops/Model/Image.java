@@ -2,7 +2,7 @@ package org.nearbyshops.Model;
 
 public class Image {
 	
-	String path;
+	private String path;
 
 	public String getPath() {
 		return path;

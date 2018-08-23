@@ -341,7 +341,7 @@ public class ShopItemByItemDAO {
 
 	//		queryNormal = queryNormal + queryPartDeliveryRange;
 
-			System.out.println("Delivery Range Min : "  + deliveryRangeMin + " Max : " + deliveryRangeMax);
+//			System.out.println("Delivery Range Min : "  + deliveryRangeMin + " Max : " + deliveryRangeMax);
 
 			queryJoin = queryJoin + " AND " + queryPartDeliveryRange;
 
@@ -574,7 +574,7 @@ public class ShopItemByItemDAO {
 
 				}
 
-				System.out.println("Total ShopItems queried = " + shopItemList.size());
+//				System.out.println("Total ShopItems queried = " + shopItemList.size());
 
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -888,7 +888,7 @@ public class ShopItemByItemDAO {
 
 //		queryNormal = queryNormal + queryPartDeliveryRange;
 
-			System.out.println("Delivery Range Min : "  + deliveryRangeMin + " Max : " + deliveryRangeMax);
+//			System.out.println("Delivery Range Min : "  + deliveryRangeMin + " Max : " + deliveryRangeMax);
 
 			queryJoin = queryJoin + " AND " + queryPartDeliveryRange;
 
@@ -1005,7 +1005,7 @@ public class ShopItemByItemDAO {
 				endPoint.setItemCount(rs.getInt("item_count"));
 			}
 
-			System.out.println("Total ShopItem Count = " + endPoint.getItemCount());
+//			System.out.println("Total ShopItem Count = " + endPoint.getItemCount());
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

@@ -61,7 +61,7 @@ public class OrderEndpointShopStaff {
 	{
 		Order order = Globals.orderService.readStatusHomeDelivery(orderID);
 
-		System.out.println("Set Confirmed : ShopID : Order : " + order.getShopID());
+//		System.out.println("Set Confirmed : ShopID : Order : " + order.getShopID());
 
 //		if(Globals.accountApproved instanceof ShopAdmin)
 //		{

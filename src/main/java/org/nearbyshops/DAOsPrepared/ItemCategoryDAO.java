@@ -211,7 +211,8 @@ public class ItemCategoryDAO {
 			rowCount = statement.executeUpdate();
 
 
-			System.out.println("Total rows updated: " + rowCount);
+
+//			System.out.println("Total rows updated: " + rowCount);
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -325,8 +326,7 @@ public class ItemCategoryDAO {
 				rowCount = rowCount + rows;
 			}
 
-
-			System.out.println("Total rows updated: CHANGE PARENT BULK " + rowCount);
+//			System.out.println("Total rows updated: CHANGE PARENT BULK " + rowCount);
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -440,7 +440,7 @@ public class ItemCategoryDAO {
 			rowCount = statement.executeUpdate();
 
 
-			System.out.println("Total rows updated: " + rowCount);
+//			System.out.println("Total rows updated: " + rowCount);
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -493,8 +493,9 @@ public class ItemCategoryDAO {
 			statement.setInt(1,itemCategoryID);
 
 			rowCountDeleted = statement.executeUpdate();
-			System.out.println("row Count Deleted: " + rowCountDeleted);	
-			
+//			System.out.println("row Count Deleted: " + rowCountDeleted);
+
+
 			connection.close();
 			
 		} catch (SQLException e) {
@@ -746,7 +747,7 @@ public class ItemCategoryDAO {
 			// cast to the pg extension interface
 			org.postgresql.PGStatement pgstmt = statement.unwrap(org.postgresql.PGStatement.class);
 			boolean usingServerPrepare = pgstmt.isUseServerPrepare();
-			System.out.println("Used server side: " + usingServerPrepare + " | Prepare threshold : " + pgstmt.getPrepareThreshold());
+//			System.out.println("Used server side: " + usingServerPrepare + " | Prepare threshold : " + pgstmt.getPrepareThreshold());
 
 
 			if(rootRemoved && endPoint.getItemCount()!=0)
@@ -754,7 +755,7 @@ public class ItemCategoryDAO {
 				endPoint.setItemCount(endPoint.getItemCount()-1);
 			}
 
-			System.out.println("Total itemCategories queried " + itemCategoryList.size());
+//			System.out.println("Total itemCategories queried " + itemCategoryList.size());
 
 
 			endPoint.setResults(itemCategoryList);
@@ -999,7 +1000,7 @@ public class ItemCategoryDAO {
 
 //			conn.close();
 
-			System.out.println("Total itemCategories queried " + itemCategoryList.size());
+//			System.out.println("Total itemCategories queried " + itemCategoryList.size());
 
 
 			endPoint.setResults(itemCategoryList);
@@ -1444,7 +1445,7 @@ public class ItemCategoryDAO {
 
 //			conn.close();
 
-			System.out.println("Total itemCategories queried " + itemCategoryList.size());	
+//			System.out.println("Total itemCategories queried " + itemCategoryList.size());
 			
 		}
 
@@ -1729,7 +1730,7 @@ public class ItemCategoryDAO {
 
 //			conn.close();
 
-			System.out.println("Total itemCategories queried " + itemCategoryList.size());
+//			System.out.println("Total itemCategories queried " + itemCategoryList.size());
 
 		}
 

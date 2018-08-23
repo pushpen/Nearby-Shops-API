@@ -17,8 +17,6 @@ public class CartItem {
 
 
 
-
-
     // create table statement
     public static final String createtableCartItemPostgres = "CREATE TABLE IF NOT EXISTS " + CartItem.TABLE_NAME + "("
             + " " + CartItem.ITEM_ID + " INT,"

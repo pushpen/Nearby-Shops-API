@@ -704,8 +704,6 @@ public class PlaceOrderDAO {
 
 
 
-
-
     public int updateOrder(Order order)
     {
         String updateStatement = "UPDATE " + Order.TABLE_NAME
