@@ -96,9 +96,8 @@ public class AuthenticationFilter implements ContainerRequestFilter {
 
             Globals.accountApproved = isUserAllowed(username, password, rolesSet);
 
-
+            
             }
-
     }
 
 
@@ -146,9 +145,17 @@ public class AuthenticationFilter implements ContainerRequestFilter {
         {
 //                System.out.println("Shop Admin null ...");
 
+
             if(role.equals(GlobalConstants.ROLE_ADMIN))
             {
                 roleID = GlobalConstants.ROLE_ADMIN_CODE;
+
+                if(user.getRole()==GlobalConstants.ROLE_ADMIN_CODE ||
+                        user.getRole()==GlobalConstants.ROLE_STAFF_CODE)
+                {
+                    return user;
+                }
+
             }
             else if(role.equals(GlobalConstants.ROLE_STAFF))
             {
@@ -157,6 +164,14 @@ public class AuthenticationFilter implements ContainerRequestFilter {
             else if(role.equals(GlobalConstants.ROLE_SHOP_ADMIN))
             {
                 roleID = GlobalConstants.ROLE_SHOP_ADMIN_CODE;
+
+                if(user.getRole()==GlobalConstants.ROLE_SHOP_ADMIN_CODE ||
+                        user.getRole()==GlobalConstants.ROLE_SHOP_STAFF_CODE ||
+                        user.getRole()==GlobalConstants.ROLE_DELIVERY_GUY_CODE)
+                {
+                    return user;
+                }
+
             }
             else if(role.equals(GlobalConstants.ROLE_SHOP_STAFF))
             {
@@ -168,8 +183,17 @@ public class AuthenticationFilter implements ContainerRequestFilter {
             }
             else if(role.equals(GlobalConstants.ROLE_END_USER))
             {
+
                 roleID = GlobalConstants.ROLE_END_USER_CODE;
+
+                // any role can login in place of end user
+                return user;
             }
+
+
+
+
+
 
 
 
@@ -200,9 +224,14 @@ public class AuthenticationFilter implements ContainerRequestFilter {
         }
 
 
+
+
 //        System.out.println("Access Denied  : Role not allowed ");
         throw new NotAuthorizedException("Access is Denied ! We are not able to Identify you. ");
     }
+
+
+
 
 
 

@@ -387,10 +387,6 @@ public class PlaceOrderDAO {
 
 
 
-
-
-
-
     public Order placeOrder(Order order, int cartID)
     {
 
