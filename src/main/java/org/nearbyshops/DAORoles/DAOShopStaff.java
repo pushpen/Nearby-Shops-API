@@ -123,8 +123,6 @@ public class DAOShopStaff {
 
 
 
-
-
 	public int updateShopStaffProfile(User user)
 	{
 
@@ -208,7 +206,6 @@ public class DAOShopStaff {
 
 		return rowCountUpdated;
 	}
-
 
 
 
@@ -402,8 +399,6 @@ public class DAOShopStaff {
 
 		return rowCountUpdated;
 	}
-
-
 
 
 

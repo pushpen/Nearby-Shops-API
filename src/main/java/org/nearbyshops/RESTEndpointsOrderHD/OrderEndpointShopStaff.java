@@ -243,7 +243,7 @@ public class OrderEndpointShopStaff {
 	@PUT
 	@Path("/HandoverToDelivery/{DeliveryGuySelfID}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	@RolesAllowed({GlobalConstants.ROLE_SHOP_ADMIN})
+	@RolesAllowed({GlobalConstants.ROLE_SHOP_ADMIN,GlobalConstants.ROLE_SHOP_STAFF})
 	public Response handoverToDelivery(@PathParam("DeliveryGuySelfID")int deliveryGuyID, List<Order> ordersList)
 	{
 
@@ -1252,6 +1252,9 @@ public class OrderEndpointShopStaff {
 				.entity(endPoint)
 				.build();
 	}
+
+
+
 
 
 

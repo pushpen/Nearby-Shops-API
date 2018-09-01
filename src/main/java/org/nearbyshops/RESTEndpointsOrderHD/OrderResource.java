@@ -65,6 +65,7 @@ public class OrderResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response createOrder(Order order, @QueryParam("CartID") int cartID)
+
 	{
 
 //		Order orderResult = Globals.orderService.placeOrder(order,cartID);
