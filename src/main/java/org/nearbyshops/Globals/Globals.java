@@ -18,6 +18,7 @@ import org.nearbyshops.DAOPreparedReviewShop.FavoriteBookDAOPrepared;
 import org.nearbyshops.DAOPreparedReviewShop.ShopReviewDAOPrepared;
 import org.nearbyshops.DAOPreparedReviewShop.ShopReviewThanksDAOPrepared;
 import org.nearbyshops.DAOPreparedSettings.ServiceConfigurationDAOPrepared;
+import org.nearbyshops.DAOPushNotifications.DAOOneSignal;
 import org.nearbyshops.DAORoles.*;
 import org.nearbyshops.DAOsPrepared.*;
 import org.nearbyshops.RESTEndpointRoles.UserSignUpRESTEndpoint;

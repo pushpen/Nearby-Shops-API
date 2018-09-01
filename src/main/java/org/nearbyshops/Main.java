@@ -13,6 +13,7 @@ import org.nearbyshops.ModelDelivery.DeliveryAddress;
 import org.nearbyshops.ModelItemSpecification.ItemSpecificationItem;
 import org.nearbyshops.ModelItemSpecification.ItemSpecificationName;
 import org.nearbyshops.ModelItemSpecification.ItemSpecificationValue;
+import org.nearbyshops.ModelOneSignal.OneSignalIDs;
 import org.nearbyshops.ModelReviewItem.FavouriteItem;
 import org.nearbyshops.ModelReviewItem.ItemReview;
 import org.nearbyshops.ModelReviewItem.ItemReviewThanks;
@@ -99,6 +100,7 @@ public class Main {
             statement = connection.createStatement();
 
             statement.executeUpdate(User.createTable);
+            statement.executeUpdate(OneSignalIDs.createTable);
             statement.executeUpdate(StaffPermissions.createTablePostgres);
             statement.executeUpdate(EmailVerificationCode.createTablePostgres);
             statement.executeUpdate(PhoneVerificationCode.createTablePostgres);

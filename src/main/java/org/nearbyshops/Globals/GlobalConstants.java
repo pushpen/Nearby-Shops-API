@@ -33,11 +33,15 @@ public class GlobalConstants {
     public static int JOINING_CREDIT_FOR_DRIVER; // credit applied when a driver joins the platform
     public static int JOINING_CREDIT_FOR_END_USER; // credit applied when a end user joins the platform
 
-    public static String ONE_SIGNAL_API_KEY_DRIVER;
-    public static String ONE_SIGNAL_APP_ID_DRIVER;
 
-    public static String ONE_SIGNAL_API_KEY_USER;
-    public static String ONE_SIGNAL_APP_ID_USER;
+    public static String ONE_SIGNAL_API_KEY_ADMIN_APP;
+    public static String ONE_SIGNAL_APP_ID_ADMIN_APP;
+
+    public static String ONE_SIGNAL_API_KEY_SHOP_OWNER_APP;
+    public static String ONE_SIGNAL_APP_ID_SHOP_OWNER_APP;
+
+    public static String ONE_SIGNAL_API_KEY_END_USER_APP;
+    public static String ONE_SIGNAL_APP_ID_END_USER_APP;
 
 
 
@@ -76,6 +80,9 @@ public class GlobalConstants {
     public static final int ROLE_SHOP_STAFF_CODE = 4;
     public static final int ROLE_DELIVERY_GUY_CODE = 5;
     public static final int ROLE_END_USER_CODE = 6;
+
+
+
 
 
 

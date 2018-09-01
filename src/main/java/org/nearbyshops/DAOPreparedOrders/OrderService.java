@@ -705,17 +705,19 @@ public class OrderService {
 
     //    Boolean getDeliveryAddress,
 //    Boolean getStats
-    public ArrayList<Order> readOrders(Integer orderID, Integer endUserID, Integer shopID,
-                                       Boolean pickFromShop,
-                                       Integer homeDeliveryStatus, Integer pickFromShopStatus,
-                                       Integer deliveryGuyID,
-                                       Boolean paymentsReceived,
-                                       Boolean deliveryReceived,
-                                       Double latCenter, Double lonCenter,
-                                       Boolean pendingOrders,
-                                       String searchString,
-                                       String sortBy,
-                                       Integer limit, Integer offset)
+    public ArrayList<Order> readOrders(
+                   Integer orderID, Integer endUserID, Integer shopID,
+                   Boolean pickFromShop,
+                   Integer homeDeliveryStatus, Integer pickFromShopStatus,
+                   Integer deliveryGuyID,
+                   Boolean paymentsReceived,
+                   Boolean deliveryReceived,
+                   Double latCenter, Double lonCenter,
+                   Boolean pendingOrders,
+                   String searchString,
+                   String sortBy,
+                   Integer limit, Integer offset
+    )
     {
 
 
@@ -1632,9 +1634,7 @@ public class OrderService {
     public int updateDeliveryReceived(Order order)
     {
         String updateStatement = "UPDATE " + Order.TABLE_NAME
-
-                + " SET "
-                + " " + Order.DELIVERY_RECEIVED + " = ?"
+                + " SET " + " " + Order.DELIVERY_RECEIVED + " = ?"
                 + " WHERE " + Order.ORDER_ID + " = ?";
 
 
@@ -1690,11 +1690,9 @@ public class OrderService {
 
     public int updatePaymentReceived(Order order)
     {
-        String updateStatement = "UPDATE " + Order.TABLE_NAME
-
-                + " SET "
-                + " " + Order.PAYMENT_RECEIVED + " = ?"
-                + " WHERE " + Order.ORDER_ID + " = ?";
+        String updateStatement =  " UPDATE " + Order.TABLE_NAME
+                                + " SET " + " " + Order.PAYMENT_RECEIVED + " = ?"
+                                + " WHERE " + Order.ORDER_ID + " = ?";
 
 
 
@@ -1744,6 +1742,8 @@ public class OrderService {
 
         return updatedRows;
     }
+
+
 
 
 
@@ -1798,7 +1798,6 @@ public class OrderService {
             e.printStackTrace();
         }
         finally
-
         {
 
             try {
@@ -1819,6 +1818,8 @@ public class OrderService {
                 e.printStackTrace();
             }
         }
+
+
 
         return updatedRows;
     }

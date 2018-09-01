@@ -3,6 +3,8 @@ package org.nearbyshops.DAORoles;
 import com.zaxxer.hikari.HikariDataSource;
 import org.nearbyshops.Globals.GlobalConstants;
 import org.nearbyshops.Globals.Globals;
+import org.nearbyshops.Model.Shop;
+import org.nearbyshops.ModelOneSignal.OneSignalIDs;
 import org.nearbyshops.ModelRoles.Endpoints.UserEndpoint;
 import org.nearbyshops.ModelRoles.ShopStaffPermissions;
 import org.nearbyshops.ModelRoles.ShopStaffPermissionsOld;
@@ -27,6 +29,9 @@ public class DAOShopStaff {
 		// TODO Auto-generated method stub
 		super.finalize();
 	}
+
+
+
 
 
 
@@ -203,11 +208,6 @@ public class DAOShopStaff {
 
 		return rowCountUpdated;
 	}
-
-
-
-
-
 
 
 
@@ -501,13 +501,6 @@ public class DAOShopStaff {
 
 
 
-
-
-
-
-
-
-
 	public ShopStaffPermissions getShopStaffPermissions(int staffID)
 	{
 
@@ -612,10 +605,6 @@ public class DAOShopStaff {
 
 		return permissions;
 	}
-
-
-
-
 
 
 
@@ -934,10 +923,6 @@ public class DAOShopStaff {
 
 		return endPoint;
 	}
-
-
-
-
 
 
 
@@ -1262,9 +1247,6 @@ public class DAOShopStaff {
 
 		return endPoint;
 	}
-
-
-
 
 
 }

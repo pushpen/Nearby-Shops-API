@@ -113,6 +113,8 @@ public class OrderItemResource {
 //
 
 
+
+
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@RolesAllowed({GlobalConstants.ROLE_SHOP_ADMIN, GlobalConstants.ROLE_SHOP_STAFF, GlobalConstants.ROLE_END_USER})
@@ -128,38 +130,39 @@ public class OrderItemResource {
 
 		User user = (User) Globals.accountApproved;
 
-		if(user.getRole()==GlobalConstants.ROLE_SHOP_ADMIN_CODE)
-		{
-			Shop shop = Globals.shopDAO.getShopIDForShopAdmin(user.getUserID());
 
-			if(order.getShopID()!=shop.getShopID())
-			{
-				throw new ForbiddenException("Not Permitted !");
-			}
-
-		}
-		else if(user.getRole()==GlobalConstants.ROLE_SHOP_STAFF_CODE)
-		{
-			int shopIDForStaff = Globals.daoShopStaff.getShopIDforShopStaff(user.getUserID());
-
-			if(order.getShopID()!=shopIDForStaff)
-			{
-				throw new ForbiddenException("Not Permitted !");
-			}
-		}
-		else if(user.getRole()==GlobalConstants.ROLE_END_USER_CODE)
-		{
-
-			if(order.getEndUserID()!=user.getUserID())
-			{
-				throw new ForbiddenException("Not Permitted !");
-			}
-
-		}
-		else
-		{
-			throw new ForbiddenException("Not Permitted !");
-		}
+//		if(user.getRole()==GlobalConstants.ROLE_SHOP_ADMIN_CODE)
+//		{
+//			Shop shop = Globals.shopDAO.getShopIDForShopAdmin(user.getUserID());
+//
+//			if(order.getShopID()!=shop.getShopID())
+//			{
+//				throw new ForbiddenException("Not Permitted !");
+//			}
+//
+//		}
+//		else if(user.getRole()==GlobalConstants.ROLE_SHOP_STAFF_CODE)
+//		{
+//			int shopIDForStaff = Globals.daoShopStaff.getShopIDforShopStaff(user.getUserID());
+//
+//			if(order.getShopID()!=shopIDForStaff)
+//			{
+//				throw new ForbiddenException("Not Permitted !");
+//			}
+//		}
+//		else if(user.getRole()==GlobalConstants.ROLE_END_USER_CODE)
+//		{
+//
+//			if(order.getEndUserID()!=user.getUserID())
+//			{
+//				throw new ForbiddenException("Not Permitted !");
+//			}
+//
+//		}
+//		else
+//		{
+//			throw new ForbiddenException("Not Permitted !");
+//		}
 
 //		System.out.println("Entered ...");
 

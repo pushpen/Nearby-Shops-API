@@ -38,6 +38,19 @@ public class GlobalConfig {
         GlobalConstants.FIREBASE_DRIVER_KEY = configuration.getString("firebase.driverkey");
         GlobalConstants.FIREBASE_END_USER_KEY = configuration.getString("firebase.enduserkey");
 
+
+
+        GlobalConstants.ONE_SIGNAL_API_KEY_ADMIN_APP = configuration.getString("one_signal_rest_api_key_admin");
+        GlobalConstants.ONE_SIGNAL_APP_ID_ADMIN_APP = configuration.getString("one_signal_app_id_admin");
+
+        GlobalConstants.ONE_SIGNAL_API_KEY_SHOP_OWNER_APP = configuration.getString("one_signal_rest_api_key_shop_owner");
+        GlobalConstants.ONE_SIGNAL_APP_ID_SHOP_OWNER_APP = configuration.getString("one_signal_app_id_shop_owner");
+
+        GlobalConstants.ONE_SIGNAL_API_KEY_END_USER_APP = configuration.getString("one_signal_rest_api_key_end_user");
+        GlobalConstants.ONE_SIGNAL_APP_ID_END_USER_APP = configuration.getString("one_signal_app_id_end_user");
+
+
+
         GlobalConstants.REFERRAL_CREDIT_FOR_END_USER_REGISTRATION = configuration.getInt("referralcredit.enduser.registration");
         GlobalConstants.REFERRAL_CREDIT_FOR_DRIVER_REGISTRATION = configuration.getInt("referralcredit.driver.registration");
 

@@ -6,6 +6,7 @@ import org.nearbyshops.Model.Order;
 import org.nearbyshops.Model.Shop;
 import org.nearbyshops.ModelEndpoint.OrderEndPoint;
 import org.nearbyshops.ModelOrderStatus.OrderStatusHomeDelivery;
+import org.nearbyshops.ModelRoles.ShopStaffPermissions;
 import org.nearbyshops.ModelRoles.User;
 
 import javax.annotation.security.RolesAllowed;
@@ -63,12 +64,14 @@ public class OrderEndpointShopStaff {
 
 //		System.out.println("Set Confirmed : ShopID : Order : " + order.getShopID());
 
-//		if(Globals.accountApproved instanceof ShopAdmin)
+		User user = (User) Globals.accountApproved;
+
+//		if(user.getRole()==GlobalConstants.ROLE_SHOP_ADMIN_CODE)
 //		{
-//			ShopAdmin shopAdmin = (ShopAdmin) Globals.accountApproved;
-//			Shop shop = Globals.shopDAO.getShopIDForShopAdmin(shopAdmin.getShopAdminID());
 //
-//			System.out.println("ShopID : Order : " + order.getShopID() + "ShopID : Shop : " + shop.getShopID());
+//			Shop shop = Globals.shopDAO.getShopIDForShopAdmin(user.getUserID());
+//
+////			System.out.println("ShopID : Order : " + order.getShopID() + "ShopID : Shop : " + shop.getShopID());
 //
 //			if(order.getShopID()!=shop.getShopID())
 //			{
@@ -76,25 +79,26 @@ public class OrderEndpointShopStaff {
 //				throw new ForbiddenException("An attempt to update order for shop you do not own !");
 //			}
 //		}
-//		else if(Globals.accountApproved instanceof ShopStaff)
-//		{
-//			ShopStaff shopStaff = (ShopStaff) Globals.accountApproved;
-//
-//			if(!shopStaff.isConfirmOrders())
-//			{
-//				throw new ForbiddenException("Not Permitted !");
-//			}
-//
-//			if(order.getShopID()!=shopStaff.getShopID())
-//			{
-//				// An attempt to update an order for shop you do not own
-//				throw new ForbiddenException("An attempt to update order for shop you do not own !");
-//			}
-//		}
 //		else
-//		{
-//			throw new ForbiddenException("Not Permitted !");
-//		}
+//
+
+ 		if(user.getRole()==GlobalConstants.ROLE_SHOP_STAFF_CODE)
+		{
+			ShopStaffPermissions permissions = Globals.daoShopStaff.getShopStaffPermissions(user.getUserID());
+
+			if(!permissions.isPermitConfirmOrders())
+			{
+				throw new ForbiddenException("Not Permitted !");
+			}
+
+			if(order.getShopID()!=permissions.getShopID())
+			{
+				// An attempt to update an order for shop you do not own
+				throw new ForbiddenException("An attempt to update order for shop you do not own !");
+			}
+		}
+
+
 
 
 		if(order.getStatusHomeDelivery()== OrderStatusHomeDelivery.ORDER_PLACED)
@@ -131,6 +135,9 @@ public class OrderEndpointShopStaff {
 
 
 
+
+
+
 	@PUT
 	@Path("/SetOrderPacked/{OrderID}")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -138,6 +145,8 @@ public class OrderEndpointShopStaff {
 	public Response setOrderPacked(@PathParam("OrderID")int orderID)
 	{
 		Order order = Globals.orderService.readStatusHomeDelivery(orderID);
+
+		User user = (User) Globals.accountApproved;
 
 //		if(Globals.accountApproved instanceof ShopAdmin)
 //		{
@@ -169,6 +178,31 @@ public class OrderEndpointShopStaff {
 //		{
 //			throw new ForbiddenException("Not Permitted !");
 //		}
+
+
+
+
+
+		if(user.getRole()==GlobalConstants.ROLE_SHOP_STAFF_CODE)
+		{
+			ShopStaffPermissions permissions = Globals.daoShopStaff.getShopStaffPermissions(user.getUserID());
+
+			if(!permissions.isPermitSetOrdersPacked())
+			{
+				throw new ForbiddenException("Not Permitted !");
+			}
+
+			if(order.getShopID()!=permissions.getShopID())
+			{
+				// An attempt to update an order for shop you do not own
+				throw new ForbiddenException("An attempt to update order for shop you do not own !");
+			}
+		}
+
+
+
+
+
 
 
 		if(order.getStatusHomeDelivery()== OrderStatusHomeDelivery.ORDER_CONFIRMED)
@@ -321,6 +355,8 @@ public class OrderEndpointShopStaff {
 	{
 		Order order = Globals.orderService.readStatusHomeDelivery(orderID);
 
+		User user = (User) Globals.accountApproved;
+
 
 //		if(Globals.accountApproved instanceof ShopAdmin)
 //		{
@@ -352,6 +388,26 @@ public class OrderEndpointShopStaff {
 //		{
 //			throw new ForbiddenException("Not Permitted !");
 //		}
+
+
+
+
+		if(user.getRole()==GlobalConstants.ROLE_SHOP_STAFF_CODE)
+		{
+			ShopStaffPermissions permissions = Globals.daoShopStaff.getShopStaffPermissions(user.getUserID());
+
+			if(!permissions.isPermitHandoverToDelivery())
+			{
+				throw new ForbiddenException("Not Permitted !");
+			}
+
+			if(order.getShopID()!=permissions.getShopID())
+			{
+				// An attempt to update an order for shop you do not own
+				throw new ForbiddenException("An attempt to update order for shop you do not own !");
+			}
+		}
+
 
 
 		if(order.getStatusHomeDelivery()== OrderStatusHomeDelivery.PENDING_HANDOVER)
@@ -432,6 +488,25 @@ public class OrderEndpointShopStaff {
 //			throw new ForbiddenException("Not Permitted !");
 //		}
 
+
+
+		User user = (User) Globals.accountApproved;
+
+		if(user.getRole()==GlobalConstants.ROLE_SHOP_STAFF_CODE)
+		{
+			ShopStaffPermissions permissions = Globals.daoShopStaff.getShopStaffPermissions(user.getUserID());
+
+			if(!permissions.isPermitMarkOrdersDelivered())
+			{
+				throw new ForbiddenException("Not Permitted !");
+			}
+
+			if(order.getShopID()!=permissions.getShopID())
+			{
+				// An attempt to update an order for shop you do not own
+				throw new ForbiddenException("An attempt to update order for shop you do not own !");
+			}
+		}
 
 
 
@@ -517,6 +592,25 @@ public class OrderEndpointShopStaff {
 //		}
 
 
+		User user = (User) Globals.accountApproved;
+
+
+		if(user.getRole()==GlobalConstants.ROLE_SHOP_STAFF_CODE)
+		{
+			ShopStaffPermissions permissions = Globals.daoShopStaff.getShopStaffPermissions(user.getUserID());
+
+			if(!permissions.isPermitHandoverToDelivery())
+			{
+				throw new ForbiddenException("Not Permitted !");
+			}
+
+			if(order.getShopID()!=permissions.getShopID())
+			{
+				// An attempt to update an order for shop you do not own
+				throw new ForbiddenException("An attempt to update order for shop you do not own !");
+			}
+		}
+
 
 
 
@@ -600,6 +694,22 @@ public class OrderEndpointShopStaff {
 //		{
 //			throw new ForbiddenException("Not Permitted !");
 //		}
+
+
+
+
+		User user = (User) Globals.accountApproved;
+
+		if(user.getRole()==GlobalConstants.ROLE_SHOP_STAFF_CODE)
+		{
+			ShopStaffPermissions permissions = Globals.daoShopStaff.getShopStaffPermissions(user.getUserID());
+
+			if(!permissions.isPermitHandoverToDelivery())
+			{
+				throw new ForbiddenException("Not Permitted !");
+			}
+
+		}
 
 
 
@@ -691,6 +801,30 @@ public class OrderEndpointShopStaff {
 //		}
 
 
+		User user = (User) Globals.accountApproved;
+
+
+		if(user.getRole()==GlobalConstants.ROLE_SHOP_STAFF_CODE)
+		{
+			ShopStaffPermissions permissions = Globals.daoShopStaff.getShopStaffPermissions(user.getUserID());
+
+			if(!permissions.isPermitHandoverToDelivery())
+			{
+				throw new ForbiddenException("Not Permitted !");
+			}
+
+			if(order.getShopID()!=permissions.getShopID())
+			{
+				// An attempt to update an order for shop you do not own
+				throw new ForbiddenException("An attempt to update order for shop you do not own !");
+			}
+		}
+
+
+
+
+
+
 
 		int rowCount = Globals.orderService.orderCancelledByShop(orderID);
 
@@ -756,6 +890,25 @@ public class OrderEndpointShopStaff {
 //		{
 //			throw new ForbiddenException("Not Permitted !");
 //		}
+
+
+		User user = (User) Globals.accountApproved;
+
+		if(user.getRole()==GlobalConstants.ROLE_SHOP_STAFF_CODE)
+		{
+			ShopStaffPermissions permissions = Globals.daoShopStaff.getShopStaffPermissions(user.getUserID());
+
+			if(!permissions.isPermitAcceptReturns())
+			{
+				throw new ForbiddenException("Not Permitted !");
+			}
+
+			if(order.getShopID()!=permissions.getShopID())
+			{
+				// An attempt to update an order for shop you do not own
+				throw new ForbiddenException("An attempt to update order for shop you do not own !");
+			}
+		}
 
 
 
@@ -838,6 +991,28 @@ public class OrderEndpointShopStaff {
 
 
 
+
+		User user = (User) Globals.accountApproved;
+
+		if(user.getRole()==GlobalConstants.ROLE_SHOP_STAFF_CODE)
+		{
+			ShopStaffPermissions permissions = Globals.daoShopStaff.getShopStaffPermissions(user.getUserID());
+
+			if(!permissions.isPermitAcceptReturns())
+			{
+				throw new ForbiddenException("Not Permitted !");
+			}
+
+			if(order.getShopID()!=permissions.getShopID())
+			{
+				// An attempt to update an order for shop you do not own
+				throw new ForbiddenException("An attempt to update order for shop you do not own !");
+			}
+		}
+
+
+
+
 		if(order.getStatusHomeDelivery()== OrderStatusHomeDelivery.CANCELLED_BY_USER_RETURN_PENDING)
 		{
 			order.setStatusHomeDelivery(OrderStatusHomeDelivery.CANCELLED_BY_USER);
@@ -914,6 +1089,27 @@ public class OrderEndpointShopStaff {
 //		{
 //			throw new ForbiddenException("Not Permitted !");
 //		}
+
+
+
+		User user = (User) Globals.accountApproved;
+
+		if(user.getRole()==GlobalConstants.ROLE_SHOP_STAFF_CODE)
+		{
+			ShopStaffPermissions permissions = Globals.daoShopStaff.getShopStaffPermissions(user.getUserID());
+
+			if(!permissions.isPermitAcceptReturns())
+			{
+				throw new ForbiddenException("Not Permitted !");
+			}
+
+			if(order.getShopID()!=permissions.getShopID())
+			{
+				// An attempt to update an order for shop you do not own
+				throw new ForbiddenException("An attempt to update order for shop you do not own !");
+			}
+		}
+
 
 
 		if(order.getStatusHomeDelivery()== OrderStatusHomeDelivery.RETURN_PENDING)

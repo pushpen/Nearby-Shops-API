@@ -33,6 +33,10 @@ public class ItemCategoryDAO {
 
 
 
+
+
+
+
 	public int saveItemCategory(ItemCategory itemCategory, boolean getRowCount)
 	{
 
@@ -1110,6 +1114,9 @@ public class ItemCategoryDAO {
 			queryJoin = queryJoin + " AND " + Shop.TABLE_NAME + "." + Shop.IS_OPEN + " = TRUE "
 					+ " AND " + Shop.TABLE_NAME + "." + Shop.SHOP_ENABLED + " = TRUE "
 					+ " AND " + ShopItem.TABLE_NAME + "." + ShopItem.ITEM_PRICE + " > 0 ";
+
+//			+ " AND " + ShopItem.TABLE_NAME + "." + ShopItem.AVAILABLE_ITEM_QUANTITY + " > 0 "
+
 		}
 
 		
@@ -1165,7 +1172,20 @@ public class ItemCategoryDAO {
 					+ " + sin( radians(" + latCenter + ")) * sin(radians(lat_center))) <= delivery_range ";
 
 
-			queryJoin = queryJoin + " AND " + queryPartlatLonCenter;
+
+			String queryPartlatLonCenterNew = "";
+
+			queryPartlatLonCenterNew = queryPartlatLonCenterNew
+					+ " (6371.01 * acos(cos( radians(" + latCenter + ")) * cos( radians("
+					+ Shop.LAT_CENTER + " )) * cos(radians( "
+					+ Shop.LON_CENTER + ") - radians(" + lonCenter + "))"
+					+ " + sin( radians(" + latCenter + ")) * sin(radians(" + Shop.LAT_CENTER
+					+ ")))) <= " + Shop.DELIVERY_RANGE ;
+
+
+
+
+			queryJoin = queryJoin + " AND " + queryPartlatLonCenterNew;
 
 
 		}

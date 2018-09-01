@@ -32,7 +32,6 @@ public class OneSignalIDs {
 
     // getter and setters
 
-
     public int getUserID() {
         return userID;
     }

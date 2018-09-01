@@ -13,6 +13,7 @@ import org.nearbyshops.Globals.Globals;
 import org.nearbyshops.Model.Image;
 import org.nearbyshops.Model.Item;
 import org.nearbyshops.ModelEndpoint.ItemEndPoint;
+import org.nearbyshops.ModelRoles.StaffPermissions;
 import org.nearbyshops.ModelRoles.User;
 
 import javax.annotation.security.RolesAllowed;
@@ -49,18 +50,21 @@ public class ItemResource {
 	public Response createItem(Item item)
 	{
 
-//		if(Globals.accountApproved instanceof Staff) {
-//
-//			// checking permission
-//			Staff staff = (Staff) Globals.accountApproved;
-//
-//			if (!staff.isCreateUpdateItems())
-//			{
-//				// the staff member doesnt have persmission to post Item Category
-//
-//				throw new ForbiddenException("Not Permitted");
-//			}
-//		}
+
+		User user = (User) Globals.accountApproved;
+
+		if(user.getRole()==GlobalConstants.ROLE_STAFF_CODE) {
+
+			StaffPermissions permissions = Globals.daoStaff.getStaffPermissions(user.getUserID());
+
+			if (!permissions.isPermitCreateUpdateItems())
+			{
+				// the staff member doesnt have persmission to post Item Category
+
+				throw new ForbiddenException("Not Permitted");
+			}
+		}
+
 
 
 		int idOfInsertedRow = itemDAO.saveItem(item,false);
@@ -98,18 +102,19 @@ public class ItemResource {
 	public Response changeParent(Item item, @PathParam("ItemID")int itemID)
 	{
 
+		User user = (User) Globals.accountApproved;
 
-//		if(Globals.accountApproved instanceof Staff) {
-//
-//			Staff staff = (Staff) Globals.accountApproved;
-//
-//			if (!staff.isCreateUpdateItems())
-//			{
-//				// the staff member doesnt have persmission to post Item Category
-//
-//				throw new ForbiddenException("Not Permitted");
-//			}
-//		}
+		if(user.getRole()==GlobalConstants.ROLE_STAFF_CODE) {
+
+			StaffPermissions permissions = Globals.daoStaff.getStaffPermissions(user.getUserID());
+
+			if (!permissions.isPermitCreateUpdateItems())
+			{
+				// the staff member doesnt have persmission to post Item Category
+
+				throw new ForbiddenException("Not Permitted");
+			}
+		}
 
 
 
@@ -151,17 +156,19 @@ public class ItemResource {
 	{
 
 
-//		if(Globals.accountApproved instanceof Staff) {
-//
-//			Staff staff = (Staff) Globals.accountApproved;
-//
-//			if (!staff.isCreateUpdateItems())
-//			{
-//				// the staff member doesnt have persmission to post Item Category
-//
-//				throw new ForbiddenException("Not Permitted");
-//			}
-//		}
+		User user = (User) Globals.accountApproved;
+
+		if(user.getRole()==GlobalConstants.ROLE_STAFF_CODE) {
+
+			StaffPermissions permissions = Globals.daoStaff.getStaffPermissions(user.getUserID());
+
+			if (!permissions.isPermitCreateUpdateItems())
+			{
+				// the staff member doesnt have persmission to post Item Category
+
+				throw new ForbiddenException("Not Permitted");
+			}
+		}
 
 
 
@@ -212,16 +219,18 @@ public class ItemResource {
 	{
 
 
-//		if(Globals.accountApproved instanceof Staff) {
-//
-//			Staff staff = (Staff) Globals.accountApproved;
-//
-//			if (!staff.isCreateUpdateItems())
-//			{
-//				// the staff member doesnt have persmission to post Item Category
-//				throw new ForbiddenException("Not Permitted");
-//			}
-//		}
+		User user = (User) Globals.accountApproved;
+
+		if(user.getRole()==GlobalConstants.ROLE_STAFF_CODE) {
+
+			StaffPermissions permissions = Globals.daoStaff.getStaffPermissions(user.getUserID());
+
+			if (!permissions.isPermitCreateUpdateItems())
+			{
+				// the staff member doesnt have persmission to post Item Category
+				throw new ForbiddenException("Not Permitted");
+			}
+		}
 
 
 			
@@ -311,16 +320,19 @@ public class ItemResource {
 	public Response deleteItem(@PathParam("ItemID")int itemID)
 	{
 
-//		if(Globals.accountApproved instanceof Staff) {
-//
-//			// checking permission
-//			Staff staff = (Staff) Globals.accountApproved;
-//			if (!staff.isCreateUpdateItems())
-//			{
-//				// the staff member doesnt have persmission to post Item Category
-//				throw new ForbiddenException("Not Permitted");
-//			}
-//		}
+
+		User user = (User) Globals.accountApproved;
+
+		if(user.getRole()==GlobalConstants.ROLE_STAFF_CODE) {
+
+			StaffPermissions permissions = Globals.daoStaff.getStaffPermissions(user.getUserID());
+
+			if (!permissions.isPermitCreateUpdateItems())
+			{
+				// the staff member doesnt have persmission to post Item Category
+				throw new ForbiddenException("Not Permitted");
+			}
+		}
 		
 //		int rowCount = itemDAO.deleteItem(itemID);
 
@@ -423,6 +435,9 @@ public class ItemResource {
             @QueryParam("Limit")Integer limit, @QueryParam("Offset")Integer offset,
             @QueryParam("metadata_only")Boolean metaonly)
 	{
+
+
+
 
 		int set_limit = 30;
 		int set_offset = 0;

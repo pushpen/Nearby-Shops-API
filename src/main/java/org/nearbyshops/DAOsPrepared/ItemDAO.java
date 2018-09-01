@@ -492,6 +492,7 @@ public class ItemDAO {
 				+  "count( DISTINCT " + ItemReview.TABLE_NAME + "." + ItemReview.END_USER_ID + ") as rating_count" + ","
 				+  "(avg(" + ItemReview.TABLE_NAME + "." + ItemReview.RATING + ")* count( DISTINCT " + ItemReview.TABLE_NAME + "." + ItemReview.END_USER_ID + ") ) as popularity"
 
+
 				+ " FROM "
 				+ Shop.TABLE_NAME  + ","
 				+ ShopItem.TABLE_NAME + ","
@@ -505,6 +506,8 @@ public class ItemDAO {
 				+ " AND " + Shop.TABLE_NAME + "." + Shop.IS_OPEN + " = TRUE "
 				+ " AND " + Shop.TABLE_NAME + "." + Shop.SHOP_ENABLED + " = TRUE "
 				+ " AND " + ShopItem.TABLE_NAME + "." + ShopItem.ITEM_PRICE + " > 0 ";
+
+//		+ " AND " + ShopItem.TABLE_NAME + "." + ShopItem.AVAILABLE_ITEM_QUANTITY + " > 0 "
 
 
 		
@@ -581,7 +584,18 @@ public class ItemDAO {
 
 
 
-			queryJoin = queryJoin + " AND " + queryPartlatLonCenter;
+
+			String queryPartlatLonCenterNew = "";
+
+			queryPartlatLonCenterNew = queryPartlatLonCenterNew
+					+ " (6371.01 * acos(cos( radians(" + latCenter + ")) * cos( radians("
+					+ Shop.LAT_CENTER + " )) * cos(radians( "
+					+ Shop.LON_CENTER + ") - radians(" + lonCenter + "))"
+					+ " + sin( radians(" + latCenter + ")) * sin(radians(" + Shop.LAT_CENTER
+					+ ")))) <= " + Shop.DELIVERY_RANGE ;
+
+
+			queryJoin = queryJoin + " AND " + queryPartlatLonCenterNew;
 		}
 
 

@@ -1,8 +1,10 @@
 package org.nearbyshops.RESTEndpointsOrderHD;
 
+import org.nearbyshops.DAOPushNotifications.DAOOneSignal;
 import org.nearbyshops.Globals.GlobalConstants;
 import org.nearbyshops.Globals.Globals;
 import org.nearbyshops.Model.Order;
+import org.nearbyshops.Model.Shop;
 import org.nearbyshops.ModelEndpoint.OrderEndPoint;
 import org.nearbyshops.ModelRoles.User;
 
@@ -12,7 +14,10 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
+import java.util.ArrayList;
 import java.util.List;
+
+import static org.nearbyshops.Globals.Globals.oneSignalNotifications;
 
 
 @Singleton
@@ -64,29 +69,110 @@ public class OrderResource {
 
 //		Order orderResult = Globals.orderService.placeOrder(order,cartID);
 
-		int orderId = Globals.pladeOrderDAO.placeOrderNew(order,cartID);
 
-		if(orderId!=-1)
-		{
-			Order orderResult = Globals.orderService.readOrder(orderId);
+			int orderId = Globals.pladeOrderDAO.placeOrderNew(order, cartID);
+
+			if (orderId != -1) {
+
+				Order orderResult = Globals.orderService.readOrder(orderId);
 
 //			Globals.broadcastMessageToShop("Order Number : " + String.valueOf(orderId) + " Has been received !",orderResult.getShopID());
 
-			return Response.status(Status.CREATED)
-//					.entity(orderResult)
-					.build();
-			
-		}
-		else
-		{
 
-			//Response.status(Status.CREATED).location(arg0)
-			
-			return Response.status(Status.NOT_MODIFIED)
-					.build();
-		}
+				oneSignalNotifications.sendNotificationToEndUser(
+						orderResult.getEndUserID(),
+						"https://i1.wp.com/nearbyshops.org/wp-content/uploads/2017/02/cropped-backdrop_play_store-1.png?w=250&ssl=1",
+						null,
+						null,
+						10,
+						"Order Placed",
+						"Your order has been sent successfully !",
+						1,
+						DAOOneSignal.ORDER_PLACED,
+						null
+				);
+
+
+
+
+
+
+				try
+				{
+
+					System.out.println("Shop ID : " + orderResult.getShopID());
+
+//					int shopAdminID = Globals.daoShopStaff.getAdminIDforShop(orderResult.getShopID());
+//					String shopAdminPlayerID = oneSignalNotifications.getPlayerID(shopAdminID).getRt_oneSignalPlayerID();
+
+
+					String shopAdminPlayerID = oneSignalNotifications.getPlayerIDforShopAdmin(orderResult.getShopID());
+					ArrayList<String> playerIDs =  Globals.oneSignalNotifications.getPlayerIDsForShopStaff(orderResult.getShopID());
+
+					playerIDs.add(shopAdminPlayerID);
+
+
+
+
+
+					Globals.oneSignalNotifications.sendNotificationToUser(
+							playerIDs,
+							GlobalConstants.ONE_SIGNAL_APP_ID_SHOP_OWNER_APP,
+							GlobalConstants.ONE_SIGNAL_API_KEY_SHOP_OWNER_APP,
+							"https://i1.wp.com/nearbyshops.org/wp-content/uploads/2017/02/cropped-backdrop_play_store-1.png?w=250&ssl=1",
+							null,
+							null,
+							10,
+							"Order Received",
+							"Your have received an order !",
+							1,
+							DAOOneSignal.ORDER_PLACED,
+							null
+					);
+
+
+
+				}
+				catch (Exception ex)
+				{
+					ex.printStackTrace();
+				}
+
+
+
+
+				return Response.status(Status.CREATED)
+//					.entity(orderResult)
+						.build();
+
+
+			} else {
+
+				//Response.status(Status.CREATED).location(arg0)
+
+				return Response.status(Status.NOT_MODIFIED)
+						.build();
+			}
+
+//		}
+//		catch (Exception ex)
+//		{
+//
+//			ex.printStackTrace();
+//
+//		}
+//		finally {
+//
+//			return Response.status(Status.NOT_MODIFIED)
+//					.build();
+//
+//		}
 		
 	}
+
+
+
+
 
 
 
@@ -110,16 +196,18 @@ public class OrderResource {
 	{
 		//							  @QueryParam("EndUserID")Integer endUserID,
 
+
 		int endUserID = ((User)Globals.accountApproved).getUserID();
 
 		// *********************** second Implementation
 
+//		User user = (User) Globals.accountApproved;
 
-//		if(Globals.accountApproved instanceof EndUser)
+//		if(user.getRole()==GlobalConstants.ROLE_END_USER_CODE)
 //		{
-//			EndUser endUser = (EndUser) Globals.accountApproved;
-////			Shop shop = Globals.shopDAO.getShopIDForShopAdmin(shopAdmin.getShopAdminID());
-////			shopID = shop.getShopID();
+//
+//			Shop shop = Globals.shopDAO.getShopIDForShopAdmin(shopAdmin.getShopAdminID());
+//			shopID = shop.getShopID();
 //			endUserID = endUser.getEndUserID();
 //		}
 //		else
@@ -204,7 +292,10 @@ public class OrderResource {
 	{
 		Order order = Globals.orderService.readStatusHomeDelivery(orderID);
 
-//		if(Globals.accountApproved instanceof EndUser)
+		User user = (User) Globals.accountApproved;
+
+
+//		if(user.getRole()==GlobalConstants.ROLE_END_USER_CODE)
 //		{
 //			EndUser endUser = (EndUser) Globals.accountApproved;
 //

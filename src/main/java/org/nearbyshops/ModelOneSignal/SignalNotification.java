@@ -8,9 +8,6 @@ import java.util.ArrayList;
 public class SignalNotification {
 
 
-
-
-
     private String app_id;
     private ArrayList<String> include_player_ids = new ArrayList<>();
     private String large_icon;
@@ -20,11 +17,7 @@ public class SignalNotification {
     private Title headings;
     private Message contents;
 
-
     private Object data;
-
-
-
 
 
     // getter and setter

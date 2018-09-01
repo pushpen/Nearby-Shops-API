@@ -59,6 +59,38 @@ public class UserLoginRESTEndpoint {
 
     //    GlobalConstants.ROLE_ADMIN,GlobalConstants.ROLE_STAFF,GlobalConstants.ROLE_END_USER
 
+//
+//    @PUT
+//    @Path("/UpdateOneSignalID/{OneSignalID}")
+//    @RolesAllowed({GlobalConstants.ROLE_END_USER,GlobalConstants.ROLE_SHOP_ADMIN,GlobalConstants.ROLE_STAFF,GlobalConstants.ROLE_ADMIN})
+//    public Response updateOneSignalID(@PathParam("OneSignalID") String oneSignalID)
+//    {
+//
+//        User user = (User) Globals.accountApproved;
+//        user.setRt_oneSignalPlayerID(oneSignalID);
+//
+//        int rowCount = Globals.oneSignalNotifications.updateOneSignalID(
+//                user.getUserID(),
+//                user.getRt_oneSignalPlayerID());
+//
+//
+//        if(rowCount >= 1)
+//        {
+//
+//            return Response.status(Response.Status.OK)
+//                    .build();
+//        }
+//        if(rowCount == 0)
+//        {
+//
+//            return Response.status(Response.Status.NOT_MODIFIED)
+//                    .build();
+//        }
+//
+//
+//        return null;
+//    }
+
 
 
     @PUT
@@ -177,9 +209,10 @@ public class UserLoginRESTEndpoint {
         int rowCount = 0;
 
 
-//        rowCount = Globals.oneSignalNotifications.updateOneSignalID(
-//                                    user.getUserID(),
-//                                    user.getRt_oneSignalPlayerID());
+
+        rowCount = Globals.oneSignalNotifications.updateOneSignalID(
+                                    user.getUserID(),
+                                    user.getRt_oneSignalPlayerID());
 
 
         if(rowCount >= 1)
