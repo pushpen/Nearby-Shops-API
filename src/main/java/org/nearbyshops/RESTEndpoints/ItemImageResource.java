@@ -155,7 +155,7 @@ public class ItemImageResource {
     @Path("/{ImageID}")
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed({GlobalConstants.ROLE_ADMIN, GlobalConstants.ROLE_STAFF})
-    public Response deleteItem(@PathParam("ImageID")int imageID)
+    public Response deleteImage(@PathParam("ImageID")int imageID)
     {
 
 
