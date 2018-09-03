@@ -5,10 +5,7 @@ import org.nearbyshops.Globals.GlobalConstants;
 import org.nearbyshops.Globals.Globals;
 import org.nearbyshops.Model.Shop;
 import org.nearbyshops.ModelBilling.Transaction;
-import org.nearbyshops.ModelRoles.EmailVerificationCode;
-import org.nearbyshops.ModelRoles.PhoneVerificationCode;
-import org.nearbyshops.ModelRoles.ShopStaffPermissions;
-import org.nearbyshops.ModelRoles.User;
+import org.nearbyshops.ModelRoles.*;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -220,6 +217,7 @@ public class DAOUserSignUp {
 
 
 
+    // adds joining credit and referral credit
     public int registerUsingEmail(User user, boolean getRowCount)
     {
 
@@ -687,6 +685,8 @@ public class DAOUserSignUp {
 
 
 
+
+
     public int registerUsingPhone(User user, boolean getRowCount,
                                   double joiningCredit,
                                   double referralCredit,
@@ -1098,6 +1098,7 @@ public class DAOUserSignUp {
         Connection connection = null;
         PreparedStatement statement = null;
         PreparedStatement statementPermissions = null;
+        PreparedStatement statementDeliveryGuyData = null;
 
 
         int idOfInsertedRow = -1;
@@ -1135,13 +1136,26 @@ public class DAOUserSignUp {
 
 
 
-        String insertStaffPermissions =
+
+
+        String insertShopStaffPermissions =
 
                 "INSERT INTO " + ShopStaffPermissions.TABLE_NAME
                         + "("
                         + ShopStaffPermissions.STAFF_ID + ","
                         + ShopStaffPermissions.SHOP_ID + ""
                         + ") values(?,?)";
+
+
+        String insertDeliveryGuyData =
+
+                "INSERT INTO " + DeliveryGuyData.TABLE_NAME
+                        + "("
+                        + DeliveryGuyData.STAFF_USER_ID + ","
+                        + DeliveryGuyData.IS_EMPLOYED_BY_SHOP + ","
+                        + DeliveryGuyData.SHOP_ID + ""
+                        + ") values(?,?)";
+
 
 
 
@@ -1204,10 +1218,10 @@ public class DAOUserSignUp {
 
 
 
-            if(idOfInsertedRow!=-1)
+            if(idOfInsertedRow!=-1 && user.getRole()==GlobalConstants.ROLE_SHOP_STAFF_CODE)
             {
 
-                statementPermissions = connection.prepareStatement(insertStaffPermissions,PreparedStatement.RETURN_GENERATED_KEYS);
+                statementPermissions = connection.prepareStatement(insertShopStaffPermissions,PreparedStatement.RETURN_GENERATED_KEYS);
                 i = 0;
 
 
@@ -1219,6 +1233,32 @@ public class DAOUserSignUp {
                 rowCountItems = statementPermissions.executeUpdate();
             }
 
+
+
+
+
+
+
+            if(idOfInsertedRow!=-1)
+            {
+
+                if( (user.getRole()== GlobalConstants.ROLE_DELIVERY_GUY_SELF_CODE || user.getRole() ==GlobalConstants.ROLE_DELIVERY_GUY_CODE))
+                {
+                    statementDeliveryGuyData = connection.prepareStatement(insertDeliveryGuyData,PreparedStatement.RETURN_GENERATED_KEYS);
+                    i = 0;
+
+
+
+                    DeliveryGuyData deliveryGuyData = user.getRt_delivery_guy_data();
+
+                    statementDeliveryGuyData.setInt(++i,idOfInsertedRow);
+                    statementDeliveryGuyData.setBoolean(++i,deliveryGuyData.isEmployedByShop());
+                    statementDeliveryGuyData.setInt(++i,deliveryGuyData.getShopID());
+
+                    rowCountItems = statementDeliveryGuyData.executeUpdate();
+
+                }
+            }
 
 
 
@@ -1256,6 +1296,15 @@ public class DAOUserSignUp {
             if (statementPermissions != null) {
                 try {
                     statementPermissions.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
+
+            if (statementDeliveryGuyData != null) {
+                try {
+                    statementDeliveryGuyData.close();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }

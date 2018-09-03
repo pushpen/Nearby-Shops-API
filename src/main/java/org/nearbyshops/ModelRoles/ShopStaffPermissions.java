@@ -28,13 +28,15 @@ public class ShopStaffPermissions {
 
     // permissions : Home Delivery
     public static final String CANCEL_ORDERS = "CANCEL_ORDERS";
+
     public static final String CONFIRM_ORDERS = "CONFIRM_ORDERS";
     public static final String SET_ORDERS_PACKED = "SET_ORDERS_PACKED";
     public static final String HANDOVER_TO_DELIVERY = "HANDOVER_TO_DELIVERY";
-    public static final String MARK_ORDERS_DELIVERED = "MARK_ORDERS_DELIVERED";
+
     public static final String ACCEPT_PAYMENTS_FROM_DELIVERY = "ACCEPT_PAYMENTS_FROM_DELIVERY";
     public static final String ACCEPT_RETURNS = "ACCEPT_RETURNS";
 
+    public static final String MARK_ORDERS_DELIVERED = "MARK_ORDERS_DELIVERED";
 
 
     // Create Table CurrentServiceConfiguration Provider

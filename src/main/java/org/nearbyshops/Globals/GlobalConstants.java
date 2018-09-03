@@ -76,22 +76,21 @@ public class GlobalConstants {
     // role codes
     public static final int ROLE_ADMIN_CODE = 1;
     public static final int ROLE_STAFF_CODE = 2;
-    public static final int ROLE_SHOP_ADMIN_CODE = 3;
-    public static final int ROLE_SHOP_STAFF_CODE = 4;
-    public static final int ROLE_DELIVERY_GUY_CODE = 5;
-    public static final int ROLE_END_USER_CODE = 6;
-
-
-
+    public static final int ROLE_DELIVERY_GUY_CODE = 3;
+    public static final int ROLE_SHOP_ADMIN_CODE = 4;
+    public static final int ROLE_SHOP_STAFF_CODE = 5;
+    public static final int ROLE_DELIVERY_GUY_SELF_CODE = 6;
+    public static final int ROLE_END_USER_CODE = 7;
 
 
 
     // Constants for the Roles in the Application
     public static final String ROLE_ADMIN = "ADMIN";
     public static final String ROLE_STAFF = "STAFF";
+    public static final String ROLE_DELIVERY_GUY = "ROLE_DELIVERY_GUY";
     public static final String ROLE_SHOP_ADMIN = "ROLE_SHOP_ADMIN";
     public static final String ROLE_SHOP_STAFF = "SHOP_STAFF";
-    public static final String ROLE_DELIVERY_GUY = "ROLE_DELIVERY_GUY";
+    public static final String ROLE_DELIVERY_GUY_SELF = "ROLE_DELIVERY_GUY_SELF";
     public static final String ROLE_END_USER = "END_USER";
 
 }

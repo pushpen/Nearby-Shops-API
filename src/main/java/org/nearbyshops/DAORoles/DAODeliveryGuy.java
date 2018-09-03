@@ -3,11 +3,8 @@ package org.nearbyshops.DAORoles;
 import com.zaxxer.hikari.HikariDataSource;
 import org.nearbyshops.Globals.GlobalConstants;
 import org.nearbyshops.Globals.Globals;
-import org.nearbyshops.Model.Shop;
-import org.nearbyshops.ModelOneSignal.OneSignalIDs;
 import org.nearbyshops.ModelRoles.Endpoints.UserEndpoint;
 import org.nearbyshops.ModelRoles.ShopStaffPermissions;
-import org.nearbyshops.ModelRoles.ShopStaffPermissionsOld;
 import org.nearbyshops.ModelRoles.StaffPermissions;
 import org.nearbyshops.ModelRoles.User;
 
@@ -18,7 +15,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 
-public class DAOShopStaff {
+public class DAODeliveryGuy {
 
 
 	private HikariDataSource dataSource = Globals.getDataSource();
@@ -34,7 +31,7 @@ public class DAOShopStaff {
 
 
 
-	public int getShopIDforShopStaff(int shopStaffID) {
+	public int getShopIDforDeliveryGuy(int shopStaffID) {
 
 		String query = "SELECT " + ShopStaffPermissions.SHOP_ID + ""
 					+ " FROM "   + ShopStaffPermissions.TABLE_NAME

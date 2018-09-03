@@ -145,6 +145,7 @@ public class User {
 //    private Vehicle rt_vehicle;
     private StaffPermissions rt_staff_permissions;
     private ShopStaffPermissions rt_shop_staff_permissions;
+    private DeliveryGuyData rt_delivery_guy_data;
 
     private String rt_oneSignalPlayerID;
 
@@ -155,8 +156,19 @@ public class User {
 
 
 
+
+
+
     // Getters and Setters
 
+
+    public DeliveryGuyData getRt_delivery_guy_data() {
+        return rt_delivery_guy_data;
+    }
+
+    public void setRt_delivery_guy_data(DeliveryGuyData rt_delivery_guy_data) {
+        this.rt_delivery_guy_data = rt_delivery_guy_data;
+    }
 
     public ShopStaffPermissions getRt_shop_staff_permissions() {
         return rt_shop_staff_permissions;
