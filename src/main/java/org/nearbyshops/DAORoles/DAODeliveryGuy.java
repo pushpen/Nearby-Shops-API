@@ -3,6 +3,7 @@ package org.nearbyshops.DAORoles;
 import com.zaxxer.hikari.HikariDataSource;
 import org.nearbyshops.Globals.GlobalConstants;
 import org.nearbyshops.Globals.Globals;
+import org.nearbyshops.ModelRoles.DeliveryGuyData;
 import org.nearbyshops.ModelRoles.Endpoints.UserEndpoint;
 import org.nearbyshops.ModelRoles.ShopStaffPermissions;
 import org.nearbyshops.ModelRoles.StaffPermissions;
@@ -31,11 +32,12 @@ public class DAODeliveryGuy {
 
 
 
-	public int getShopIDforDeliveryGuy(int shopStaffID) {
 
-		String query = "SELECT " + ShopStaffPermissions.SHOP_ID + ""
-					+ " FROM "   + ShopStaffPermissions.TABLE_NAME
-					+ " WHERE "  + ShopStaffPermissions.STAFF_ID + " = ?";
+	public int getShopIDforDeliveryGuy(int staffUserID) {
+
+		String query = "SELECT " + DeliveryGuyData.SHOP_ID + ""
+					+ " FROM "   + DeliveryGuyData.TABLE_NAME
+					+ " WHERE "  + DeliveryGuyData.STAFF_USER_ID + " = ?";
 
 
 
@@ -52,7 +54,7 @@ public class DAODeliveryGuy {
 			connection = dataSource.getConnection();
 			statement = connection.prepareStatement(query);
 
-			statement.setObject(1,shopStaffID);
+			statement.setObject(1,staffUserID);
 
 			rs = statement.executeQuery();
 
@@ -117,7 +119,7 @@ public class DAODeliveryGuy {
 
 
 
-	public int updateShopStaffProfile(User user)
+	public int updateDeliveryGuyBySelf(User user)
 	{
 
 		String updateStatement = "UPDATE " + User.TABLE_NAME
@@ -204,7 +206,9 @@ public class DAODeliveryGuy {
 
 
 
-	public int updateShopStaffByAdmin(User user)
+
+
+	public int updateDeliveryGuyByAdmin(User user)
 	{
 
 		String updateStatement = "UPDATE " + User.TABLE_NAME
@@ -224,69 +228,20 @@ public class DAODeliveryGuy {
 
 
 
-		String updatePermissions = "UPDATE " + ShopStaffPermissions.TABLE_NAME
+		String updatePermissions = "UPDATE " + DeliveryGuyData.TABLE_NAME
 				+ " SET "
-				+ ShopStaffPermissions.DESIGNATION + "=?,"
-				+ ShopStaffPermissions.ADD_REMOVE_ITEMS_FROM_SHOP + "=?,"
+				+ DeliveryGuyData.LAT_CURRENT + "=?,"
+				+ DeliveryGuyData.LON_CURRENT + "=?,"
+				+ DeliveryGuyData.CURRENT_BALANCE + "=?"
 
-				+ ShopStaffPermissions.UPDATE_STOCK + "=?,"
-				+ ShopStaffPermissions.CANCEL_ORDERS + "=?,"
-				+ ShopStaffPermissions.CONFIRM_ORDERS + "=?,"
-
-				+ ShopStaffPermissions.SET_ORDERS_PACKED + "=?,"
-				+ ShopStaffPermissions.HANDOVER_TO_DELIVERY + "=?,"
-				+ ShopStaffPermissions.MARK_ORDERS_DELIVERED + "=?,"
-
-				+ ShopStaffPermissions.ACCEPT_PAYMENTS_FROM_DELIVERY + "=?,"
-				+ ShopStaffPermissions.ACCEPT_RETURNS + "=?"
-
-				+ " WHERE " + ShopStaffPermissions.STAFF_ID + " = ?";
-
-
-
-
-
-//		String insertStaffPermissions =
-//
-//				"INSERT INTO " + ShopStaffPermissions.TABLE_NAME
-//						+ "("
-//						+ ShopStaffPermissions.STAFF_ID + ","
-//						+ ShopStaffPermissions.DESIGNATION + ","
-//						+ ShopStaffPermissions.ADD_REMOVE_ITEMS_FROM_SHOP + ","
-//
-//						+ ShopStaffPermissions.UPDATE_STOCK + ","
-//						+ ShopStaffPermissions.CANCEL_ORDERS + ","
-//						+ ShopStaffPermissions.CONFIRM_ORDERS + ","
-//
-//						+ ShopStaffPermissions.SET_ORDERS_PACKED + ","
-//						+ ShopStaffPermissions.HANDOVER_TO_DELIVERY + ","
-//						+ ShopStaffPermissions.MARK_ORDERS_DELIVERED + ","
-//
-//						+ ShopStaffPermissions.ACCEPT_PAYMENTS_FROM_DELIVERY + ","
-//						+ ShopStaffPermissions.ACCEPT_RETURNS + ""
-//						+ ") values(?,?,?, ?,?,?, ?,?,?, ?,?)"
-//						+ " ON CONFLICT (" + ShopStaffPermissions.STAFF_ID + ")"
-//						+ " DO UPDATE "
-//						+ " SET "
-//						+ ShopStaffPermissions.DESIGNATION + "= excluded." + ShopStaffPermissions.DESIGNATION + " , "
-//						+ ShopStaffPermissions.ADD_REMOVE_ITEMS_FROM_SHOP + "= excluded." + ShopStaffPermissions.ADD_REMOVE_ITEMS_FROM_SHOP + " , "
-//						+ ShopStaffPermissions.UPDATE_STOCK + "= excluded." + ShopStaffPermissions.UPDATE_STOCK  + ","
-//						+ ShopStaffPermissions.CANCEL_ORDERS + "= excluded." + ShopStaffPermissions.CANCEL_ORDERS  + ","
-//						+ ShopStaffPermissions.CONFIRM_ORDERS + "= excluded." + ShopStaffPermissions.CONFIRM_ORDERS  + ","
-//						+ ShopStaffPermissions.SET_ORDERS_PACKED + "= excluded." + ShopStaffPermissions.SET_ORDERS_PACKED  + ","
-//						+ ShopStaffPermissions.HANDOVER_TO_DELIVERY + "= excluded." + ShopStaffPermissions.HANDOVER_TO_DELIVERY  + ","
-//						+ ShopStaffPermissions.MARK_ORDERS_DELIVERED + "= excluded." + ShopStaffPermissions.MARK_ORDERS_DELIVERED  + ","
-//						+ ShopStaffPermissions.ACCEPT_PAYMENTS_FROM_DELIVERY + "= excluded." + ShopStaffPermissions.ACCEPT_PAYMENTS_FROM_DELIVERY  + ","
-//						+ ShopStaffPermissions.ACCEPT_RETURNS + "= excluded." + ShopStaffPermissions.ACCEPT_RETURNS;
-//
-
+				+ " WHERE " + DeliveryGuyData.STAFF_USER_ID + " = ?";
 
 
 
 
 		Connection connection = null;
 		PreparedStatement statement = null;
-		PreparedStatement statementUpdatePermissions = null;
+		PreparedStatement statementDeliveryGuyData = null;
 
 		int rowCountUpdated = 0;
 
@@ -316,33 +271,21 @@ public class DAODeliveryGuy {
 			System.out.println("Total rows updated: " + rowCountUpdated);
 
 
-			statementUpdatePermissions = connection.prepareStatement(updatePermissions,PreparedStatement.RETURN_GENERATED_KEYS);
+			statementDeliveryGuyData = connection.prepareStatement(updatePermissions,PreparedStatement.RETURN_GENERATED_KEYS);
 			i = 0;
 
-			ShopStaffPermissions permissions = user.getRt_shop_staff_permissions();
+			DeliveryGuyData data = user.getRt_delivery_guy_data();
 
 
-			if(permissions!=null)
+			if(data!=null)
 			{
+				statementDeliveryGuyData.setObject(++i,data.getLatCurrent());
+				statementDeliveryGuyData.setObject(++i,data.getLonCurrent());
+				statementDeliveryGuyData.setObject(++i,data.getCurrentBalance());
 
+				statementDeliveryGuyData.setObject(++i,user.getUserID());
 
-				statementUpdatePermissions.setString(++i,permissions.getDesignation());
-				statementUpdatePermissions.setObject(++i,permissions.isPermitAddRemoveItems());
-
-				statementUpdatePermissions.setObject(++i,permissions.isPermitUpdateItemsInShop());
-				statementUpdatePermissions.setObject(++i,permissions.isPermitCancelOrders());
-				statementUpdatePermissions.setObject(++i,permissions.isPermitConfirmOrders());
-
-				statementUpdatePermissions.setObject(++i,permissions.isPermitSetOrdersPacked());
-				statementUpdatePermissions.setObject(++i,permissions.isPermitHandoverToDelivery());
-				statementUpdatePermissions.setObject(++i,permissions.isPermitMarkOrdersDelivered());
-
-				statementUpdatePermissions.setObject(++i,permissions.isPermitAcceptPaymentsFromDelivery());
-				statementUpdatePermissions.setObject(++i,permissions.isPermitAcceptReturns());
-
-				statementUpdatePermissions.setObject(++i,user.getUserID());
-
-				statementUpdatePermissions.executeUpdate();
+				statementDeliveryGuyData.executeUpdate();
 			}
 
 
@@ -397,23 +340,32 @@ public class DAODeliveryGuy {
 
 
 
-	public int updateShopStaffLocation(ShopStaffPermissions permissions)
+	public int updateDeliveryGuyLocation(DeliveryGuyData data)
 	{
 
 
-		String insertStaffPermissions =
+		String updateLocation = "UPDATE " + DeliveryGuyData.TABLE_NAME
+				             + " SET " + DeliveryGuyData.LAT_CURRENT + "=?,"
+									  + DeliveryGuyData.LON_CURRENT + "=?"
+							 + " WHERE " + DeliveryGuyData.STAFF_USER_ID + " = ?";
 
-				"INSERT INTO " + ShopStaffPermissions.TABLE_NAME
-						+ "("
-						+ ShopStaffPermissions.STAFF_ID + ","
-						+ ShopStaffPermissions.LAT_CURRENT + ","
-						+ ShopStaffPermissions.LON_CURRENT + ""
-						+ ") values(?,?,?)"
-						+ " ON CONFLICT (" + ShopStaffPermissions.STAFF_ID + ")"
-						+ " DO UPDATE "
-						+ " SET "
-						+ ShopStaffPermissions.LAT_CURRENT + "= excluded." + ShopStaffPermissions.LAT_CURRENT + " , "
-						+ ShopStaffPermissions.LON_CURRENT + "= excluded." + ShopStaffPermissions.LON_CURRENT;
+
+
+
+
+//		String insertStaffPermissions =
+//
+//				"INSERT INTO " + DeliveryGuyData.TABLE_NAME
+//						+ "("
+//						+ ShopStaffPermissions.STAFF_ID + ","
+//						+ ShopStaffPermissions.LAT_CURRENT + ","
+//						+ ShopStaffPermissions.LON_CURRENT + ""
+//						+ ") values(?,?,?)"
+//						+ " ON CONFLICT (" + ShopStaffPermissions.STAFF_ID + ")"
+//						+ " DO UPDATE "
+//						+ " SET "
+//						+ ShopStaffPermissions.LAT_CURRENT + "= excluded." + ShopStaffPermissions.LAT_CURRENT + " , "
+//						+ ShopStaffPermissions.LON_CURRENT + "= excluded." + ShopStaffPermissions.LON_CURRENT;
 
 
 
@@ -429,15 +381,15 @@ public class DAODeliveryGuy {
 			connection.setAutoCommit(false);
 
 
-			statement = connection.prepareStatement(insertStaffPermissions,PreparedStatement.RETURN_GENERATED_KEYS);
+			statement = connection.prepareStatement(updateLocation,PreparedStatement.RETURN_GENERATED_KEYS);
 			int i = 0;
 
 
-			if(permissions!=null)
+			if(data!=null)
 			{
-				statement.setObject(++i,permissions.getStaffUserID());
-				statement.setObject(++i,permissions.getLatCurrent());
-				statement.setObject(++i,permissions.getLonCurrent());
+				statement.setObject(++i,data.getLatCurrent());
+				statement.setObject(++i,data.getLonCurrent());
+				statement.setObject(++i,data.getStaffUserID());
 
 				rowCountUpdated = statement.executeUpdate();
 			}
@@ -490,29 +442,21 @@ public class DAODeliveryGuy {
 
 
 
-	public ShopStaffPermissions getShopStaffPermissions(int staffID)
+	public DeliveryGuyData getDeliveryGuyData(int userID)
 	{
 
 		boolean isFirst = true;
 
 		String query = "SELECT "
 
-				+ ShopStaffPermissions.STAFF_ID + ","
-				+ ShopStaffPermissions.SHOP_ID + ","
+				+ DeliveryGuyData.LAT_CURRENT + ","
+				+ DeliveryGuyData.LON_CURRENT + ","
+				+ DeliveryGuyData.IS_EMPLOYED_BY_SHOP + ","
+				+ DeliveryGuyData.SHOP_ID + ","
+				+ DeliveryGuyData.CURRENT_BALANCE + ","
 
-				+ ShopStaffPermissions.ADD_REMOVE_ITEMS_FROM_SHOP + ","
-				+ ShopStaffPermissions.UPDATE_STOCK + ","
-
-				+ ShopStaffPermissions.CANCEL_ORDERS + ","
-				+ ShopStaffPermissions.CONFIRM_ORDERS + ","
-				+ ShopStaffPermissions.SET_ORDERS_PACKED + ","
-				+ ShopStaffPermissions.HANDOVER_TO_DELIVERY + ","
-				+ ShopStaffPermissions.MARK_ORDERS_DELIVERED + ","
-				+ ShopStaffPermissions.ACCEPT_PAYMENTS_FROM_DELIVERY + ","
-				+ ShopStaffPermissions.ACCEPT_RETURNS + ""
-
-				+ " FROM "  + ShopStaffPermissions.TABLE_NAME
-				+ " WHERE " + ShopStaffPermissions.STAFF_ID  + " = ? ";
+				+ " FROM "  + DeliveryGuyData.TABLE_NAME
+				+ " WHERE " + DeliveryGuyData.STAFF_USER_ID  + " = ? ";
 
 
 
@@ -522,7 +466,7 @@ public class DAODeliveryGuy {
 
 
 		//Distributor distributor = null;
-		ShopStaffPermissions permissions = null;
+		DeliveryGuyData deliveryGuyData = null;
 
 		try {
 
@@ -532,28 +476,22 @@ public class DAODeliveryGuy {
 			int i = 0;
 
 
-			statement.setObject(++i,staffID); // username
+			statement.setObject(++i,userID); // username
 
 
 			rs = statement.executeQuery();
 
 			while(rs.next())
 			{
-				permissions = new ShopStaffPermissions();
+				deliveryGuyData = new DeliveryGuyData();
 
-				permissions.setStaffUserID(rs.getInt(ShopStaffPermissions.STAFF_ID));
-				permissions.setShopID(rs.getInt(ShopStaffPermissions.SHOP_ID));
+				deliveryGuyData.setLatCurrent(rs.getDouble(DeliveryGuyData.LAT_CURRENT));
+				deliveryGuyData.setLonCurrent(rs.getDouble(DeliveryGuyData.LON_CURRENT));
+				deliveryGuyData.setEmployedByShop(rs.getBoolean(DeliveryGuyData.IS_EMPLOYED_BY_SHOP));
+				deliveryGuyData.setShopID(rs.getInt(DeliveryGuyData.SHOP_ID));
+				deliveryGuyData.setCurrentBalance(rs.getDouble(DeliveryGuyData.CURRENT_BALANCE));
 
-				permissions.setPermitAddRemoveItems(rs.getBoolean(ShopStaffPermissions.ADD_REMOVE_ITEMS_FROM_SHOP));
-				permissions.setPermitUpdateItemsInShop(rs.getBoolean(ShopStaffPermissions.UPDATE_STOCK));
-
-				permissions.setPermitCancelOrders(rs.getBoolean(ShopStaffPermissions.CANCEL_ORDERS));
-				permissions.setPermitConfirmOrders(rs.getBoolean(ShopStaffPermissions.CONFIRM_ORDERS));
-				permissions.setPermitSetOrdersPacked(rs.getBoolean(ShopStaffPermissions.SET_ORDERS_PACKED));
-				permissions.setPermitHandoverToDelivery(rs.getBoolean(ShopStaffPermissions.HANDOVER_TO_DELIVERY));
-				permissions.setPermitMarkOrdersDelivered(rs.getBoolean(ShopStaffPermissions.MARK_ORDERS_DELIVERED));
-				permissions.setPermitAcceptPaymentsFromDelivery(rs.getBoolean(ShopStaffPermissions.ACCEPT_PAYMENTS_FROM_DELIVERY));
-				permissions.setPermitAcceptReturns(rs.getBoolean(ShopStaffPermissions.ACCEPT_RETURNS));
+				deliveryGuyData.setStaffUserID(rs.getInt(ShopStaffPermissions.STAFF_ID));
 
 			}
 
@@ -592,17 +530,15 @@ public class DAODeliveryGuy {
 			}
 		}
 
-		return permissions;
+		return deliveryGuyData;
 	}
 
 
 
 
 
-	public UserEndpoint getShopStaffForShopAdmin(
+	public UserEndpoint getDeliveryGuyForShopAdmin(
 			Double latPickUp, Double lonPickUp,
-			Boolean permitCreateUpdateItemCat,
-			Boolean permitCreateUpdateItems,
 			Boolean gender,
 			int shopID,
 			String sortBy,
@@ -621,9 +557,9 @@ public class DAODeliveryGuy {
 
 
 				+ "6371 * acos( cos( radians("
-				+ latPickUp + ")) * cos( radians(" +  StaffPermissions.LAT_CURRENT +  ") ) * cos(radians(" + StaffPermissions.LON_CURRENT +  ") - radians("
+				+ latPickUp + ")) * cos( radians(" +  DeliveryGuyData.LAT_CURRENT +  ") ) * cos(radians(" + DeliveryGuyData.LON_CURRENT +  ") - radians("
 				+ lonPickUp + "))"
-				+ " + sin( radians(" + latPickUp + ")) * sin(radians(" + StaffPermissions.LAT_CURRENT + "))) as distance" + ","
+				+ " + sin( radians(" + latPickUp + ")) * sin(radians(" + DeliveryGuyData.LAT_CURRENT + "))) as distance" + ","
 
 				+ User.TABLE_NAME + "." + User.USER_ID + ","
 				+ User.TABLE_NAME + "." + User.USERNAME + ","
@@ -640,22 +576,16 @@ public class DAODeliveryGuy {
 				+ User.TABLE_NAME + "." + User.TIMESTAMP_CREATED + ","
 				+ User.TABLE_NAME + "." + User.IS_VERIFIED + ","
 
-				+ ShopStaffPermissions.TABLE_NAME + "." + ShopStaffPermissions.DESIGNATION + ","
-				+ ShopStaffPermissions.TABLE_NAME + "." + ShopStaffPermissions.ADD_REMOVE_ITEMS_FROM_SHOP + ","
-				+ ShopStaffPermissions.TABLE_NAME + "." + ShopStaffPermissions.UPDATE_STOCK + ","
-
-				+ ShopStaffPermissions.TABLE_NAME + "." + ShopStaffPermissions.CANCEL_ORDERS + ","
-				+ ShopStaffPermissions.TABLE_NAME + "." + ShopStaffPermissions.CONFIRM_ORDERS + ","
-				+ ShopStaffPermissions.TABLE_NAME + "." + ShopStaffPermissions.SET_ORDERS_PACKED + ","
-				+ ShopStaffPermissions.TABLE_NAME + "." + ShopStaffPermissions.HANDOVER_TO_DELIVERY + ","
-				+ ShopStaffPermissions.TABLE_NAME + "." + ShopStaffPermissions.MARK_ORDERS_DELIVERED + ","
-				+ ShopStaffPermissions.TABLE_NAME + "." + ShopStaffPermissions.ACCEPT_PAYMENTS_FROM_DELIVERY + ","
-				+ ShopStaffPermissions.TABLE_NAME + "." + ShopStaffPermissions.ACCEPT_RETURNS + ""
+				+ DeliveryGuyData.TABLE_NAME + "." + DeliveryGuyData.LAT_CURRENT + ","
+				+ DeliveryGuyData.TABLE_NAME + "." + DeliveryGuyData.LON_CURRENT + ","
+				+ DeliveryGuyData.TABLE_NAME + "." + DeliveryGuyData.IS_EMPLOYED_BY_SHOP + ","
+				+ DeliveryGuyData.TABLE_NAME + "." + DeliveryGuyData.SHOP_ID + ","
+				+ DeliveryGuyData.TABLE_NAME + "." + DeliveryGuyData.CURRENT_BALANCE + ""
 
 				+ " FROM " + User.TABLE_NAME
-				+ " LEFT OUTER JOIN " + ShopStaffPermissions.TABLE_NAME + " ON (" + ShopStaffPermissions.TABLE_NAME + "." + ShopStaffPermissions.STAFF_ID + " = " + User.TABLE_NAME + "." + User.USER_ID + ")"
-				+ " WHERE " + ShopStaffPermissions.TABLE_NAME + "." + ShopStaffPermissions.SHOP_ID + " = ? "
-				+ " AND ( " + User.TABLE_NAME + "." + User.ROLE + " = " + GlobalConstants.ROLE_SHOP_STAFF_CODE
+				+ " LEFT OUTER JOIN " + DeliveryGuyData.TABLE_NAME + " ON (" + DeliveryGuyData.TABLE_NAME + "." + DeliveryGuyData.STAFF_USER_ID + " = " + User.TABLE_NAME + "." + User.USER_ID + ")"
+				+ " WHERE " + DeliveryGuyData.TABLE_NAME + "." + DeliveryGuyData.SHOP_ID + " = ? "
+				+ " AND ( " + User.TABLE_NAME + "." + User.ROLE + " = " + GlobalConstants.ROLE_DELIVERY_GUY_SELF
 				+ " OR " + User.TABLE_NAME + "." + User.ROLE + " = " + GlobalConstants.ROLE_SHOP_ADMIN_CODE + " ) ";
 
 
@@ -801,21 +731,19 @@ public class DAODeliveryGuy {
 					user.setTimestampCreated(rs.getTimestamp(User.TIMESTAMP_CREATED));
 					user.setVerified(rs.getBoolean(User.IS_VERIFIED));
 
-					ShopStaffPermissions permissions = new ShopStaffPermissions();
 
-					permissions.setDesignation(rs.getString(StaffPermissions.DESIGNATION));
-					permissions.setPermitAddRemoveItems(rs.getBoolean(ShopStaffPermissions.ADD_REMOVE_ITEMS_FROM_SHOP));
-					permissions.setPermitUpdateItemsInShop(rs.getBoolean(ShopStaffPermissions.UPDATE_STOCK));
+					DeliveryGuyData deliveryGuyData = new DeliveryGuyData();
 
-					permissions.setPermitCancelOrders(rs.getBoolean(ShopStaffPermissions.CANCEL_ORDERS));
-					permissions.setPermitConfirmOrders(rs.getBoolean(ShopStaffPermissions.CONFIRM_ORDERS));
-					permissions.setPermitSetOrdersPacked(rs.getBoolean(ShopStaffPermissions.SET_ORDERS_PACKED));
-					permissions.setPermitHandoverToDelivery(rs.getBoolean(ShopStaffPermissions.HANDOVER_TO_DELIVERY));
-					permissions.setPermitMarkOrdersDelivered(rs.getBoolean(ShopStaffPermissions.MARK_ORDERS_DELIVERED));
-					permissions.setPermitAcceptPaymentsFromDelivery(rs.getBoolean(ShopStaffPermissions.ACCEPT_PAYMENTS_FROM_DELIVERY));
-					permissions.setPermitAcceptReturns(rs.getBoolean(ShopStaffPermissions.ACCEPT_RETURNS));
+					deliveryGuyData.setLatCurrent(rs.getDouble(DeliveryGuyData.LAT_CURRENT));
+					deliveryGuyData.setLonCurrent(rs.getDouble(DeliveryGuyData.LON_CURRENT));
+					deliveryGuyData.setEmployedByShop(rs.getBoolean(DeliveryGuyData.IS_EMPLOYED_BY_SHOP));
+					deliveryGuyData.setShopID(rs.getInt(DeliveryGuyData.SHOP_ID));
+					deliveryGuyData.setCurrentBalance(rs.getDouble(DeliveryGuyData.CURRENT_BALANCE));
 
-					user.setRt_shop_staff_permissions(permissions);
+					deliveryGuyData.setStaffUserID(rs.getInt(ShopStaffPermissions.STAFF_ID));
+
+
+					user.setRt_delivery_guy_data(deliveryGuyData);
 
 					itemList.add(user);
 				}
@@ -915,327 +843,7 @@ public class DAODeliveryGuy {
 
 
 
-	public UserEndpoint getShopStaffListPublic(
-			Double latPickUp, Double lonPickUp,
-			Boolean permitProfileUpdate,
-			Boolean permitRegistrationAndRenewal,
-			Boolean gender,
-			String sortBy,
-			Integer limit, Integer offset,
-			boolean getRowCount,
-			boolean getOnlyMetadata
-	) {
 
-
-		boolean isfirst = true;
-
-		String queryCount = "";
-
-
-		String queryJoin = "SELECT DISTINCT "
-
-
-				+ "6371 * acos( cos( radians("
-				+ latPickUp + ")) * cos( radians(" +  StaffPermissions.LAT_CURRENT +  ") ) * cos(radians(" + StaffPermissions.LON_CURRENT +  ") - radians("
-				+ lonPickUp + "))"
-				+ " + sin( radians(" + latPickUp + ")) * sin(radians(" + StaffPermissions.LAT_CURRENT + "))) as distance" + ","
-
-
-				+ User.TABLE_NAME + "." + User.USER_ID + ","
-				+ User.TABLE_NAME + "." + User.USERNAME + ","
-				+ User.TABLE_NAME + "." + User.E_MAIL + ","
-				+ User.TABLE_NAME + "." + User.PHONE + ","
-
-				+ User.TABLE_NAME + "." + User.NAME + ","
-				+ User.TABLE_NAME + "." + User.GENDER + ","
-
-				+ User.TABLE_NAME + "." + User.PROFILE_IMAGE_URL + ","
-				+ User.TABLE_NAME + "." + User.IS_ACCOUNT_PRIVATE + ","
-				+ User.TABLE_NAME + "." + User.ABOUT + ","
-
-				+ User.TABLE_NAME + "." + User.TIMESTAMP_CREATED + ","
-				+ User.TABLE_NAME + "." + User.IS_VERIFIED + ","
-
-				+ ShopStaffPermissions.TABLE_NAME + "." + ShopStaffPermissions.DESIGNATION + ","
-				+ ShopStaffPermissions.TABLE_NAME + "." + ShopStaffPermissions.ADD_REMOVE_ITEMS_FROM_SHOP + ","
-				+ ShopStaffPermissions.TABLE_NAME + "." + ShopStaffPermissions.UPDATE_STOCK + ","
-
-				+ ShopStaffPermissions.TABLE_NAME + "." + ShopStaffPermissions.CANCEL_ORDERS + ","
-				+ ShopStaffPermissions.TABLE_NAME + "." + ShopStaffPermissions.CONFIRM_ORDERS + ","
-				+ ShopStaffPermissions.TABLE_NAME + "." + ShopStaffPermissions.SET_ORDERS_PACKED + ","
-				+ ShopStaffPermissions.TABLE_NAME + "." + ShopStaffPermissions.HANDOVER_TO_DELIVERY + ","
-				+ ShopStaffPermissions.TABLE_NAME + "." + ShopStaffPermissions.MARK_ORDERS_DELIVERED + ","
-				+ ShopStaffPermissions.TABLE_NAME + "." + ShopStaffPermissions.ACCEPT_PAYMENTS_FROM_DELIVERY + ","
-				+ ShopStaffPermissions.TABLE_NAME + "." + ShopStaffPermissions.ACCEPT_RETURNS + ""
-
-				+ " FROM " + User.TABLE_NAME
-				+ " LEFT OUTER JOIN " + StaffPermissions.TABLE_NAME + " ON (" + StaffPermissions.TABLE_NAME + "." + StaffPermissions.STAFF_ID + " = " + User.TABLE_NAME + "." + User.USER_ID + ")"
-				+ " WHERE TRUE "
-				+ " AND ( " + User.TABLE_NAME + "." + User.ROLE + " = " + GlobalConstants.ROLE_SHOP_STAFF_CODE
-				+ " OR "
-				+ User.TABLE_NAME + "." + User.ROLE + " = " + GlobalConstants.ROLE_SHOP_ADMIN_CODE + " ) ";
-
-
-//        + " AND " + User.TABLE_NAME + "." + User.ROLE + " = " + GlobalConstantsNBS.ROLE_STAFF_CODE;
-
-
-
-
-		if(gender != null)
-		{
-			queryJoin = queryJoin + " AND " + User.TABLE_NAME + "." + User.GENDER + " = ? ";
-		}
-//
-
-
-//        if(permitProfileUpdate!=null && permitProfileUpdate)
-//        {
-////            queryJoin = queryJoin + " AND " + StaffPermissions.TABLE_NAME + "." + StaffPermissions.PERMIT_TAXI_PROFILE_UPDATE + " = TRUE ";
-//        }
-//
-//
-//        if(permitRegistrationAndRenewal !=null && permitRegistrationAndRenewal)
-//        {
-//            queryJoin = queryJoin + " AND " + StaffPermissions.TABLE_NAME + "." + StaffPermissions.PERMIT_TAXI_REGISTRATION_AND_RENEWAL + " = TRUE ";
-//        }
-
-
-
-
-		// all the non-aggregate columns which are present in select must be present in group by also.
-		queryJoin = queryJoin
-
-				+ " group by "
-				+ ShopStaffPermissions.TABLE_NAME + "." + ShopStaffPermissions.PERMISSION_ID + ","
-				+ User.TABLE_NAME + "." + User.USER_ID;
-
-
-		queryCount = queryJoin;
-
-
-
-		if(sortBy!=null)
-		{
-			if(!sortBy.equals(""))
-			{
-				String queryPartSortBy = " ORDER BY " + sortBy;
-
-//				queryNormal = queryNormal + queryPartSortBy;
-				queryJoin = queryJoin + queryPartSortBy;
-			}
-		}
-
-
-
-		if(limit != null)
-		{
-
-			String queryPartLimitOffset = "";
-
-			if(offset!=null)
-			{
-				queryPartLimitOffset = " LIMIT " + limit + " " + " OFFSET " + offset;
-
-			}else
-			{
-				queryPartLimitOffset = " LIMIT " + limit + " " + " OFFSET " + 0;
-			}
-
-
-//			queryNormal = queryNormal + queryPartLimitOffset;
-			queryJoin = queryJoin + queryPartLimitOffset;
-		}
-
-
-
-
-
-
-		/*
-
-		Applying filters Ends
-
-		 */
-
-		// Applying filters
-
-
-
-
-		queryCount = "SELECT COUNT(*) as item_count FROM (" + queryCount + ") AS temp";
-
-
-		UserEndpoint endPoint = new UserEndpoint();
-
-		ArrayList<User> itemList = new ArrayList<>();
-		Connection connection = null;
-
-		PreparedStatement statement = null;
-		ResultSet rs = null;
-
-		PreparedStatement statementCount = null;
-		ResultSet resultSetCount = null;
-
-		try {
-
-			connection = dataSource.getConnection();
-
-			int i = 0;
-
-
-			if(!getOnlyMetadata)
-			{
-				statement = connection.prepareStatement(queryJoin);
-
-
-				if(gender!=null)
-				{
-					statement.setObject(++i,gender);
-				}
-
-
-				rs = statement.executeQuery();
-
-				while(rs.next())
-				{
-
-					User user = new User();
-
-					user.setUserID(rs.getInt(User.USER_ID));
-					user.setUsername(rs.getString(User.USERNAME));
-					user.setEmail(rs.getString(User.E_MAIL));
-					user.setPhone(rs.getString(User.PHONE));
-
-
-					user.setName(rs.getString(User.NAME));
-					user.setGender(rs.getBoolean(User.GENDER));
-
-
-					user.setProfileImagePath(rs.getString(User.PROFILE_IMAGE_URL));
-					user.setAccountPrivate(rs.getBoolean(User.IS_ACCOUNT_PRIVATE));
-					user.setAbout(rs.getString(User.ABOUT));
-
-					user.setTimestampCreated(rs.getTimestamp(User.TIMESTAMP_CREATED));
-					user.setVerified(rs.getBoolean(User.IS_VERIFIED));
-
-
-
-					ShopStaffPermissions permissions = new ShopStaffPermissions();
-
-					permissions.setDesignation(rs.getString(StaffPermissions.DESIGNATION));
-
-					permissions.setPermitAddRemoveItems(rs.getBoolean(ShopStaffPermissions.ADD_REMOVE_ITEMS_FROM_SHOP));
-					permissions.setPermitUpdateItemsInShop(rs.getBoolean(ShopStaffPermissions.UPDATE_STOCK));
-
-					permissions.setPermitCancelOrders(rs.getBoolean(ShopStaffPermissions.CANCEL_ORDERS));
-					permissions.setPermitConfirmOrders(rs.getBoolean(ShopStaffPermissions.CONFIRM_ORDERS));
-					permissions.setPermitSetOrdersPacked(rs.getBoolean(ShopStaffPermissions.SET_ORDERS_PACKED));
-					permissions.setPermitHandoverToDelivery(rs.getBoolean(ShopStaffPermissions.HANDOVER_TO_DELIVERY));
-					permissions.setPermitMarkOrdersDelivered(rs.getBoolean(ShopStaffPermissions.MARK_ORDERS_DELIVERED));
-					permissions.setPermitAcceptPaymentsFromDelivery(rs.getBoolean(ShopStaffPermissions.ACCEPT_PAYMENTS_FROM_DELIVERY));
-					permissions.setPermitAcceptReturns(rs.getBoolean(ShopStaffPermissions.ACCEPT_RETURNS));
-
-
-
-					permissions.setRt_distance(rs.getFloat("distance"));
-
-					user.setRt_shop_staff_permissions(permissions);
-
-					itemList.add(user);
-				}
-
-				endPoint.setResults(itemList);
-
-			}
-
-
-
-
-
-			if(getRowCount)
-			{
-				statementCount = connection.prepareStatement(queryCount);
-
-				i = 0;
-
-				if(gender!=null)
-				{
-					statementCount.setObject(++i,gender);
-				}
-
-
-				resultSetCount = statementCount.executeQuery();
-
-				while(resultSetCount.next())
-				{
-					endPoint.setItemCount(resultSetCount.getInt("item_count"));
-				}
-			}
-
-
-
-
-
-
-		}
-		catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-
-		finally
-
-		{
-
-			try {
-				if(rs!=null)
-				{rs.close();}
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-			try {
-
-				if(statement!=null)
-				{statement.close();}
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-
-
-			try {
-				if(resultSetCount!=null)
-				{resultSetCount.close();}
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-			try {
-
-				if(statementCount!=null)
-				{statementCount.close();}
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-			try {
-
-				if(connection!=null)
-				{connection.close();}
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
-		return endPoint;
-	}
 
 
 }

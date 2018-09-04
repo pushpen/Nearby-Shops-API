@@ -20,7 +20,7 @@ public class OrderStatusHomeDelivery {
 
     public static final int DELIVERED = 6;// Delivered | Payment Received (Staff)
     public static final int PAYMENT_RECEIVED = 7;// Payment Received-Complete
-    public static final int RETURN_ORDER = 8;// Payment Received-Complete
+    public static final int RETURN_ORDER = 8;// Return-Requested
 
 
     public static final int RETURN_REQUESTED = 8;// Return Requested | Accept Return (Staff)

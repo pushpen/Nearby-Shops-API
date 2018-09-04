@@ -73,6 +73,7 @@ public class Globals {
     public static DAOUserNew daoUserNew = new DAOUserNew();
     public static DAOStaff daoStaff = new DAOStaff();
     public static DAOShopStaff daoShopStaff = new DAOShopStaff();
+    public static DAODeliveryGuy daoDeliveryGuy = new DAODeliveryGuy();
 
     public static DAOResetPassword daoResetPassword= new DAOResetPassword();
     public static DAOUserSignUp daoUserSignUp = new DAOUserSignUp();
