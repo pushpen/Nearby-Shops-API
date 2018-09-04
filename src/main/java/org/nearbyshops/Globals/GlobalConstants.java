@@ -27,7 +27,7 @@ public class GlobalConstants {
 
 
     // credits and offers
-    public static int REFERRAL_CREDIT_FOR_DRIVER_REGISTRATION; // credited in the account of the one who refers
+    public static int REFERRAL_CREDIT_FOR_SHOP_OWNER_REGISTRATION; // credited in the account of the one who refers
     public static int REFERRAL_CREDIT_FOR_END_USER_REGISTRATION; // referral credit - credited into the account of the one who refers
 
     public static int JOINING_CREDIT_FOR_DRIVER; // credit applied when a driver joins the platform

@@ -228,13 +228,12 @@ public class DAODeliveryGuy {
 
 
 
-		String updatePermissions = "UPDATE " + DeliveryGuyData.TABLE_NAME
-				+ " SET "
-				+ DeliveryGuyData.LAT_CURRENT + "=?,"
-				+ DeliveryGuyData.LON_CURRENT + "=?,"
-				+ DeliveryGuyData.CURRENT_BALANCE + "=?"
 
-				+ " WHERE " + DeliveryGuyData.STAFF_USER_ID + " = ?";
+
+//		String updatePermissions = "UPDATE " + DeliveryGuyData.TABLE_NAME
+//				+ " SET " + DeliveryGuyData.CURRENT_BALANCE + "=?"
+//
+//				+ " WHERE " + DeliveryGuyData.STAFF_USER_ID + " = ?";
 
 
 
@@ -268,25 +267,25 @@ public class DAODeliveryGuy {
 
 
 			rowCountUpdated = statement.executeUpdate();
-			System.out.println("Total rows updated: " + rowCountUpdated);
+//			System.out.println("Total rows updated: " + rowCountUpdated);
 
 
-			statementDeliveryGuyData = connection.prepareStatement(updatePermissions,PreparedStatement.RETURN_GENERATED_KEYS);
-			i = 0;
-
-			DeliveryGuyData data = user.getRt_delivery_guy_data();
-
-
-			if(data!=null)
-			{
-				statementDeliveryGuyData.setObject(++i,data.getLatCurrent());
-				statementDeliveryGuyData.setObject(++i,data.getLonCurrent());
-				statementDeliveryGuyData.setObject(++i,data.getCurrentBalance());
-
-				statementDeliveryGuyData.setObject(++i,user.getUserID());
-
-				statementDeliveryGuyData.executeUpdate();
-			}
+//			statementDeliveryGuyData = connection.prepareStatement(updatePermissions,PreparedStatement.RETURN_GENERATED_KEYS);
+//			i = 0;
+//
+//			DeliveryGuyData data = user.getRt_delivery_guy_data();
+//
+//
+//			if(data!=null)
+//			{
+//				statementDeliveryGuyData.setObject(++i,data.getLatCurrent());
+//				statementDeliveryGuyData.setObject(++i,data.getLonCurrent());
+//				statementDeliveryGuyData.setObject(++i,data.getCurrentBalance());
+//
+//				statementDeliveryGuyData.setObject(++i,user.getUserID());
+//
+//				statementDeliveryGuyData.executeUpdate();
+//			}
 
 
 
@@ -585,8 +584,7 @@ public class DAODeliveryGuy {
 				+ " FROM " + User.TABLE_NAME
 				+ " LEFT OUTER JOIN " + DeliveryGuyData.TABLE_NAME + " ON (" + DeliveryGuyData.TABLE_NAME + "." + DeliveryGuyData.STAFF_USER_ID + " = " + User.TABLE_NAME + "." + User.USER_ID + ")"
 				+ " WHERE " + DeliveryGuyData.TABLE_NAME + "." + DeliveryGuyData.SHOP_ID + " = ? "
-				+ " AND ( " + User.TABLE_NAME + "." + User.ROLE + " = " + GlobalConstants.ROLE_DELIVERY_GUY_SELF
-				+ " OR " + User.TABLE_NAME + "." + User.ROLE + " = " + GlobalConstants.ROLE_SHOP_ADMIN_CODE + " ) ";
+				+ " AND ( " + User.TABLE_NAME + "." + User.ROLE + " = " + GlobalConstants.ROLE_DELIVERY_GUY_SELF_CODE + " ) ";
 
 
 
@@ -616,7 +614,7 @@ public class DAODeliveryGuy {
 		queryJoin = queryJoin
 
 				+ " group by "
-				+ ShopStaffPermissions.TABLE_NAME + "." + ShopStaffPermissions.PERMISSION_ID + ","
+				+ DeliveryGuyData.TABLE_NAME + "." + DeliveryGuyData.DATA_ID + ","
 				+ User.TABLE_NAME + "." + User.USER_ID;
 
 
@@ -739,8 +737,12 @@ public class DAODeliveryGuy {
 					deliveryGuyData.setEmployedByShop(rs.getBoolean(DeliveryGuyData.IS_EMPLOYED_BY_SHOP));
 					deliveryGuyData.setShopID(rs.getInt(DeliveryGuyData.SHOP_ID));
 					deliveryGuyData.setCurrentBalance(rs.getDouble(DeliveryGuyData.CURRENT_BALANCE));
+//					deliveryGuyData.setStaffUserID(rs.getInt(DeliveryGuyData.STAFF_USER_ID));
 
-					deliveryGuyData.setStaffUserID(rs.getInt(ShopStaffPermissions.STAFF_ID));
+					deliveryGuyData.setRt_distance(rs.getDouble("distance"));
+
+
+
 
 
 					user.setRt_delivery_guy_data(deliveryGuyData);

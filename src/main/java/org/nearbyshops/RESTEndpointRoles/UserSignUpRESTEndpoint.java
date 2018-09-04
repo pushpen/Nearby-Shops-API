@@ -205,6 +205,8 @@ public class UserSignUpRESTEndpoint {
         }
 
 
+
+
         user.setUserID(idOfInsertedRow);
 
 
@@ -226,11 +228,6 @@ public class UserSignUpRESTEndpoint {
 
         return null;
     }
-
-
-
-
-
 
 
 
@@ -325,9 +322,113 @@ public class UserSignUpRESTEndpoint {
     @Path("/ShopAdminRegistration")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response createShopAdmin(User user)
+    public Response shopAdminRegistration(User user)
     {
-        return userRegistration(user, GlobalConstants.ROLE_SHOP_ADMIN_CODE);
+        if(user==null)
+        {
+            throw new WebApplicationException();
+        }
+
+
+        user.setRole(GlobalConstants.ROLE_SHOP_ADMIN_CODE);
+
+
+        int idOfInsertedRow =-1;
+
+
+
+        if(user.getRt_registration_mode()==User.REGISTRATION_MODE_EMAIL)
+        {
+            idOfInsertedRow = Globals.daoUserSignUp.registerUsingEmail(user,false);
+
+
+            System.out.println("Email : " + user.getEmail()
+                    + "\nPassword : " + user.getPassword()
+                    + "\nRegistration Mode : " + user.getRt_registration_mode()
+                    + "\nName : " + user.getName()
+                    + "\nInsert Count : " + idOfInsertedRow
+                    + "\nVerificationCode : " + user.getRt_email_verification_code()
+            );
+
+
+            if(idOfInsertedRow>=1)
+            {
+                // registration successful therefore send email to notify the user
+                Mail.using(Globals.getMailgunConfiguration())
+                        .body()
+                        .h1("Registration successful for your account")
+                        .p("Your account has been Created.")
+                        .h3("Your E-mail : " + user.getEmail())
+                        .p("You can login with your email and password that you have provided. Thank you for registering with Taxi Referral Service (TRS).")
+                        .mail()
+                        .to(user.getEmail())
+                        .subject("Taxi Referral Service : Account Registered")
+                        .from("Taxi Referral Service","noreply@taxireferral.org")
+                        .build()
+                        .send();
+
+
+
+
+
+            }
+        }
+        else if(user.getRt_registration_mode()==User.REGISTRATION_MODE_PHONE)
+        {
+
+            idOfInsertedRow = daoUser.registerUsingPhone(user,false,100,100,false);
+
+
+            System.out.println("Phone : " + user.getPhone()
+                    + "\nEmail : " + user.getEmail()
+                    + "\nPassword : " + user.getPassword()
+                    + "\nRegistration Mode : " + user.getRt_registration_mode()
+                    + "\nName : " + user.getName()
+                    + "\nInsert Count : " + idOfInsertedRow
+                    + "\nVerificationCode : " + user.getRt_phone_verification_code()
+            );
+
+            // send notification to the mobile number via SMS
+
+            if(idOfInsertedRow>=1)
+            {
+                if(user.getRole()==GlobalConstants.ROLE_SHOP_ADMIN_CODE)
+                {
+
+                    String message = "Thank you for registering with Nearby Shops.";
+                    SendSMS.sendSMS(message, user.getPhone());
+
+
+                }
+                else
+                {
+                    SendSMS.sendSMS("Congratulations your account has been registered with Taxi Referral Service.",
+                            user.getPhone());
+                }
+            }
+
+        }
+
+
+        user.setUserID(idOfInsertedRow);
+
+
+        if(idOfInsertedRow >=1)
+        {
+
+            return Response.status(Response.Status.CREATED)
+                    .entity(user)
+                    .build();
+
+        }else if(idOfInsertedRow <= 0)
+        {
+
+            return Response.status(Response.Status.NOT_MODIFIED)
+                    .build();
+        }
+
+
+        return null;
     }
 
 

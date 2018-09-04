@@ -1154,7 +1154,7 @@ public class DAOUserSignUp {
                         + DeliveryGuyData.STAFF_USER_ID + ","
                         + DeliveryGuyData.IS_EMPLOYED_BY_SHOP + ","
                         + DeliveryGuyData.SHOP_ID + ""
-                        + ") values(?,?)";
+                        + ") values(?,?,?)";
 
 
 

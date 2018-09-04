@@ -7,8 +7,6 @@ import org.apache.commons.configuration2.builder.FileBasedConfigurationBuilder;
 import org.apache.commons.configuration2.builder.fluent.Parameters;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 
-import static org.nearbyshops.Globals.GlobalConstants.MSG91_SMS_SERVICE_API_KEY;
-
 public class GlobalConfig {
 
 
@@ -52,7 +50,8 @@ public class GlobalConfig {
 
 
         GlobalConstants.REFERRAL_CREDIT_FOR_END_USER_REGISTRATION = configuration.getInt("referralcredit.enduser.registration");
-        GlobalConstants.REFERRAL_CREDIT_FOR_DRIVER_REGISTRATION = configuration.getInt("referralcredit.driver.registration");
+        GlobalConstants.REFERRAL_CREDIT_FOR_SHOP_OWNER_REGISTRATION = configuration.getInt("referralcredit.shop-owner.registration");
+
 
 //        GlobalConstants.JOINING_CREDIT_FOR_DRIVER = configuration.getInt(ConfigurationKeys.JOINING_CREDIT_DRIVER);
         GlobalConstants.JOINING_CREDIT_FOR_END_USER = configuration.getInt("joiningcredit.enduser");
@@ -97,7 +96,7 @@ public class GlobalConfig {
         System.out.println("FIREBASE_DRIVER_KEY : " + GlobalConstants.FIREBASE_DRIVER_KEY);
         System.out.println("FIREBASE_END_USER_KEY : " + GlobalConstants.FIREBASE_END_USER_KEY);
 
-        System.out.println("REFERRAL CREDIT FOR DRIVER REGISTRATION : " + GlobalConstants.REFERRAL_CREDIT_FOR_DRIVER_REGISTRATION);
+        System.out.println("REFERRAL CREDIT FOR DRIVER REGISTRATION : " + GlobalConstants.REFERRAL_CREDIT_FOR_SHOP_OWNER_REGISTRATION);
         System.out.println("REFERRAL CREDIT FOR END USER REGISTRATION : " + GlobalConstants.REFERRAL_CREDIT_FOR_END_USER_REGISTRATION);
 
         System.out.println("Joining Credit For Driver : " + GlobalConstants.JOINING_CREDIT_FOR_DRIVER);

@@ -135,7 +135,7 @@ public class DeliveryGuyLoginRESTEndpoint {
 
         User user = (User) Globals.accountApproved;
 
-        int shopID = Globals.daoDeliveryGuy.getShopIDforDeliveryGuy(user.getUserID());
+        int shopID = Globals.shopDAO.getShopIDForShopAdmin(user.getUserID()).getShopID();
 
 //        System.out.println("Get Shop Staff !");
 

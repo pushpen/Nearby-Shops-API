@@ -62,12 +62,22 @@ public class DeliveryGuyData {
     private boolean isEmployedByShop;
     private int shopID;
     private double currentBalance;
+    private double rt_distance;
+
 
 
 
 
     // getter and setters
 
+
+    public double getRt_distance() {
+        return rt_distance;
+    }
+
+    public void setRt_distance(double rt_distance) {
+        this.rt_distance = rt_distance;
+    }
 
     public int getDataID() {
         return dataID;
