@@ -9,10 +9,10 @@ import java.util.List;
  */
 public class OrderEndPoint {
 
-    private Integer itemCount;
-    private Integer offset;
-    private Integer limit;
-    private Integer max_limit;
+    private int itemCount;
+    private int offset;
+    private int limit;
+    private int max_limit;
     private List<Order> results;
 
 

@@ -192,7 +192,8 @@ public class OrderResource {
                               @QueryParam("SearchString") String searchString,
                               @QueryParam("SortBy") String sortBy,
                               @QueryParam("Limit")Integer limit, @QueryParam("Offset")Integer offset,
-                              @QueryParam("metadata_only")Boolean metaonly)
+							  @QueryParam("GetRowCount")boolean getRowCount,
+							  @QueryParam("MetadataOnly")boolean getOnlyMetaData)
 	{
 		//							  @QueryParam("EndUserID")Integer endUserID,
 
@@ -216,57 +217,48 @@ public class OrderResource {
 //		}
 
 
-		final int max_limit = 100;
 
 		if(limit!=null)
 		{
-			if(limit>=max_limit)
+			if(limit >= GlobalConstants.max_limit)
 			{
-				limit = max_limit;
+				limit = GlobalConstants.max_limit;
+			}
+
+			if(offset==null)
+			{
+				offset = 0;
 			}
 		}
-		else
-		{
-			limit = 30;
-		}
 
 
-		if(offset==null)
-		{
-			offset = 0;
-		}
 
 
-		OrderEndPoint endPoint = Globals.orderService.endPointMetaDataOrders(orderID,
+		OrderEndPoint endpoint = Globals.orderService.readOrders(orderID,
 				endUserID,shopID, pickFromShop,
 				homeDeliveryStatus,pickFromShopStatus,
 				deliveryGuyID,
-				paymentsReceived,deliveryReceived,pendingOrders,searchString
-		);
-
-		endPoint.setLimit(limit);
-		endPoint.setMax_limit(max_limit);
-		endPoint.setOffset(offset);
-
-		List<Order> list = null;
+				latCenter,lonCenter,
+				pendingOrders,
+				searchString,
+				sortBy,limit,offset,
+				getRowCount,getOnlyMetaData);
 
 
-		if(metaonly==null || (!metaonly)) {
-
-			list =
-					Globals.orderService.readOrders(orderID,
-							endUserID,shopID, pickFromShop,
-							homeDeliveryStatus,pickFromShopStatus,
-							deliveryGuyID,
-							paymentsReceived,deliveryReceived,
-							latCenter,lonCenter,
-							pendingOrders,
-							searchString,
-							sortBy,limit,offset);
 
 
-			endPoint.setResults(list);
+		if(limit!=null)
+		{
+			endpoint.setLimit(limit);
+			endpoint.setOffset(offset);
+			endpoint.setMax_limit(GlobalConstants.max_limit);
 		}
+
+
+
+
+
+
 
 
 //		try {
@@ -278,9 +270,14 @@ public class OrderResource {
 		//Marker
 
 		return Response.status(Status.OK)
-				.entity(endPoint)
+				.entity(endpoint)
 				.build();
 	}
+
+
+
+
+
 
 
 
