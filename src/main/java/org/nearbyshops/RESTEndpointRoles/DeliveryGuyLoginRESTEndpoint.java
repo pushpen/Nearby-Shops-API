@@ -122,7 +122,7 @@ public class DeliveryGuyLoginRESTEndpoint {
     @GET
     @Path("/GetDeliveryGuyForShopAdmin")
     @Produces(MediaType.APPLICATION_JSON)
-    @RolesAllowed({GlobalConstants.ROLE_SHOP_ADMIN})
+    @RolesAllowed({GlobalConstants.ROLE_SHOP_ADMIN,GlobalConstants.ROLE_SHOP_STAFF})
     public Response getDeliveryGuyForShopAdmin(
             @QueryParam("latCurrent") Double latPickUp, @QueryParam("lonCurrent") Double lonPickUp,
             @QueryParam("Gender") Boolean gender,
@@ -134,8 +134,19 @@ public class DeliveryGuyLoginRESTEndpoint {
 
 
         User user = (User) Globals.accountApproved;
+        int shopID = 0;
 
-        int shopID = Globals.shopDAO.getShopIDForShopAdmin(user.getUserID()).getShopID();
+
+        if(user.getRole()==GlobalConstants.ROLE_SHOP_ADMIN_CODE)
+        {
+            shopID = Globals.shopDAO.getShopIDForShopAdmin(user.getUserID()).getShopID();
+        }
+        else if(user.getRole()==GlobalConstants.ROLE_SHOP_STAFF_CODE)
+        {
+            shopID = Globals.daoShopStaff.getShopIDforShopStaff(user.getUserID());
+        }
+
+
 
 //        System.out.println("Get Shop Staff !");
 

@@ -6,7 +6,6 @@ import org.nearbyshops.Globals.Globals;
 import org.nearbyshops.ModelRoles.DeliveryGuyData;
 import org.nearbyshops.ModelRoles.Endpoints.UserEndpoint;
 import org.nearbyshops.ModelRoles.ShopStaffPermissions;
-import org.nearbyshops.ModelRoles.StaffPermissions;
 import org.nearbyshops.ModelRoles.User;
 
 import java.sql.Connection;
@@ -536,10 +535,13 @@ public class DAODeliveryGuy {
 
 
 
+
+
+
 	public UserEndpoint getDeliveryGuyForShopAdmin(
 			Double latPickUp, Double lonPickUp,
 			Boolean gender,
-			int shopID,
+			Integer shopID,
 			String sortBy,
 			Integer limit, Integer offset,
 			boolean getRowCount,
@@ -582,10 +584,18 @@ public class DAODeliveryGuy {
 				+ DeliveryGuyData.TABLE_NAME + "." + DeliveryGuyData.CURRENT_BALANCE + ""
 
 				+ " FROM " + User.TABLE_NAME
-				+ " LEFT OUTER JOIN " + DeliveryGuyData.TABLE_NAME + " ON (" + DeliveryGuyData.TABLE_NAME + "." + DeliveryGuyData.STAFF_USER_ID + " = " + User.TABLE_NAME + "." + User.USER_ID + ")"
-				+ " WHERE " + DeliveryGuyData.TABLE_NAME + "." + DeliveryGuyData.SHOP_ID + " = ? "
-				+ " AND ( " + User.TABLE_NAME + "." + User.ROLE + " = " + GlobalConstants.ROLE_DELIVERY_GUY_SELF_CODE + " ) ";
+				+ " INNER JOIN " + DeliveryGuyData.TABLE_NAME + " ON (" + DeliveryGuyData.TABLE_NAME + "." + DeliveryGuyData.STAFF_USER_ID + " = " + User.TABLE_NAME + "." + User.USER_ID + ")"
+				+ " WHERE TRUE "
+				+ " AND ( " + User.TABLE_NAME + "." + User.ROLE + " = " + GlobalConstants.ROLE_DELIVERY_GUY_SELF_CODE
+				+ " OR " + User.TABLE_NAME + "." + User.ROLE + " = " + GlobalConstants.ROLE_DELIVERY_GUY_CODE +  " ) ";
 
+
+
+
+		if(shopID!=null)
+		{
+			queryJoin = queryJoin + " AND " + DeliveryGuyData.TABLE_NAME + "." + DeliveryGuyData.SHOP_ID + " = ? ";
+		}
 
 
 		if(gender != null)
@@ -696,7 +706,10 @@ public class DAODeliveryGuy {
 				statement = connection.prepareStatement(queryJoin);
 
 
-				statement.setObject(++i,shopID);
+				if(shopID!=null)
+				{
+					statement.setObject(++i,shopID);
+				}
 
 
 				if(gender!=null)
@@ -761,7 +774,13 @@ public class DAODeliveryGuy {
 
 				i = 0;
 
-				statementCount.setObject(++i,shopID);
+
+				if(shopID!=null)
+				{
+					statementCount.setObject(++i,shopID);
+				}
+
+
 
 
 				if(gender!=null)

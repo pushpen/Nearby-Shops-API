@@ -173,6 +173,10 @@ public class AuthenticationFilter implements ContainerRequestFilter {
                 }
 
             }
+            else if(role.equals(GlobalConstants.ROLE_DELIVERY_GUY_SELF))
+            {
+                roleID=GlobalConstants.ROLE_DELIVERY_GUY_SELF_CODE;
+            }
             else if(role.equals(GlobalConstants.ROLE_SHOP_STAFF))
             {
                 roleID = GlobalConstants.ROLE_SHOP_STAFF_CODE;

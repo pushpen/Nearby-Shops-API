@@ -4,7 +4,6 @@ import org.nearbyshops.DAOPushNotifications.DAOOneSignal;
 import org.nearbyshops.Globals.GlobalConstants;
 import org.nearbyshops.Globals.Globals;
 import org.nearbyshops.Model.Order;
-import org.nearbyshops.Model.Shop;
 import org.nearbyshops.ModelEndpoint.OrderEndPoint;
 import org.nearbyshops.ModelRoles.User;
 
@@ -75,7 +74,7 @@ public class OrderResource {
 
 			if (orderId != -1) {
 
-				Order orderResult = Globals.orderService.readOrder(orderId);
+				Order orderResult = Globals.orderService.readSingleOrder(orderId);
 
 //			Globals.broadcastMessageToShop("Order Number : " + String.valueOf(orderId) + " Has been received !",orderResult.getShopID());
 
@@ -569,7 +568,7 @@ public class OrderResource {
 //	public Response getOrder(@PathParam("OrderID")int orderID)
 //	{
 //
-//		Order order = Globals.orderService.readOrder(orderID);
+//		Order order = Globals.orderService.readSingleOrder(orderID);
 //
 //		if(order != null)
 //		{

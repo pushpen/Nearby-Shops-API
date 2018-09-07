@@ -3,7 +3,6 @@ package org.nearbyshops.RESTEndpointsOrderHD;
 import org.nearbyshops.Globals.GlobalConstants;
 import org.nearbyshops.Globals.Globals;
 import org.nearbyshops.Model.Order;
-import org.nearbyshops.Model.Shop;
 import org.nearbyshops.ModelEndpoint.OrderEndPoint;
 import org.nearbyshops.ModelOrderStatus.OrderStatusHomeDelivery;
 import org.nearbyshops.ModelRoles.User;
@@ -54,7 +53,7 @@ public class OrderEndpointDeliveryGuySelf {
 	@PUT
 	@Path("/AcceptOrder/{OrderID}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	@RolesAllowed({GlobalConstants.ROLE_DELIVERY_GUY})
+	@RolesAllowed({GlobalConstants.ROLE_DELIVERY_GUY_SELF,GlobalConstants.ROLE_DELIVERY_GUY})
 	public Response acceptOrder(@PathParam("OrderID")int orderID)
 	{
 		Order order = Globals.orderService.readStatusHomeDelivery(orderID);
@@ -88,9 +87,9 @@ public class OrderEndpointDeliveryGuySelf {
 //		}
 
 
-		if(order.getStatusHomeDelivery()== OrderStatusHomeDelivery.PENDING_HANDOVER)
+		if(order.getStatusHomeDelivery()== OrderStatusHomeDelivery.HANDOVER_REQUESTED)
 		{
-			order.setStatusHomeDelivery(OrderStatusHomeDelivery.HANDOVER_ACCEPTED);
+			order.setStatusHomeDelivery(OrderStatusHomeDelivery.OUT_FOR_DELIVERY);
 			int rowCount = Globals.orderService.updateStatusHomeDelivery(order);
 
 			if(rowCount >= 1)
@@ -123,7 +122,7 @@ public class OrderEndpointDeliveryGuySelf {
 	@PUT
 	@Path("/ReturnPackage/{OrderID}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	@RolesAllowed({GlobalConstants.ROLE_DELIVERY_GUY})
+	@RolesAllowed({GlobalConstants.ROLE_DELIVERY_GUY_SELF,GlobalConstants.ROLE_DELIVERY_GUY})
 	public Response returnOrderPackage(@PathParam("OrderID")int orderID)
 	{
 		Order order = Globals.orderService.readStatusHomeDelivery(orderID);
@@ -175,7 +174,7 @@ public class OrderEndpointDeliveryGuySelf {
 	@PUT
 	@Path("/HandoverToUser/{OrderID}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	@RolesAllowed({GlobalConstants.ROLE_DELIVERY_GUY})
+	@RolesAllowed({GlobalConstants.ROLE_DELIVERY_GUY_SELF,GlobalConstants.ROLE_DELIVERY_GUY})
 	public Response handoverToUser(@PathParam("OrderID")int orderID)
 	{
 		Order order = Globals.orderService.readStatusHomeDelivery(orderID);
@@ -203,7 +202,7 @@ public class OrderEndpointDeliveryGuySelf {
 //		}
 
 
-		if(order.getStatusHomeDelivery() == OrderStatusHomeDelivery.HANDOVER_ACCEPTED) {
+		if(order.getStatusHomeDelivery() == OrderStatusHomeDelivery.OUT_FOR_DELIVERY) {
 
 			order.setStatusHomeDelivery(OrderStatusHomeDelivery.PENDING_DELIVERY_ACCEPT_PENDING_PAYMENT);
 
@@ -231,9 +230,20 @@ public class OrderEndpointDeliveryGuySelf {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	@RolesAllowed({GlobalConstants.ROLE_SHOP_STAFF, GlobalConstants.ROLE_SHOP_ADMIN, GlobalConstants.ROLE_DELIVERY_GUY})
+	@RolesAllowed({GlobalConstants.ROLE_SHOP_STAFF, GlobalConstants.ROLE_SHOP_ADMIN, GlobalConstants.ROLE_DELIVERY_GUY_SELF,GlobalConstants.ROLE_DELIVERY_GUY})
 	public Response getOrders(@QueryParam("OrderID")Integer orderID,
                               @QueryParam("EndUserID")Integer endUserID,
                               @QueryParam("ShopID")Integer shopID,

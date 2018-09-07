@@ -531,10 +531,10 @@ public class DAOOneSignal {
     public ArrayList<String> getPlayerIDsForShopStaff(int shopID) {
 
 
-        String query = "SELECT " +  OneSignalIDs.PLAYER_ID
-                + " FROM "   +  ShopStaffPermissions.TABLE_NAME
-                + " INNER JOIN " + OneSignalIDs.TABLE_NAME + " ON (" + OneSignalIDs.TABLE_NAME + "." + OneSignalIDs.USER_ID + " = " + ShopStaffPermissions.TABLE_NAME + "." + ShopStaffPermissions.STAFF_ID + ")"
-                + " WHERE "  + ShopStaffPermissions.SHOP_ID + " = ?";
+        String query = "SELECT "    +  OneSignalIDs.PLAYER_ID
+                    + " FROM "      +  ShopStaffPermissions.TABLE_NAME
+                    + " INNER JOIN " + OneSignalIDs.TABLE_NAME + " ON (" + OneSignalIDs.TABLE_NAME + "." + OneSignalIDs.USER_ID + " = " + ShopStaffPermissions.TABLE_NAME + "." + ShopStaffPermissions.STAFF_ID + ")"
+                    + " WHERE "     + ShopStaffPermissions.SHOP_ID + " = ?";
 
 
 

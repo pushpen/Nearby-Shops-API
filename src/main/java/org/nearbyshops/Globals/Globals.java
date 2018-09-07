@@ -8,6 +8,7 @@ import org.nearbyshops.DAOPreparedCartOrder.CartService;
 import org.nearbyshops.DAOPreparedCartOrder.CartStatsDAO;
 import org.nearbyshops.DAOPreparedCartOrder.DeliveryAddressService;
 import org.nearbyshops.DAOPreparedItemSpecification.*;
+import org.nearbyshops.DAOPreparedOrders.DAOOrderStaff;
 import org.nearbyshops.DAOPreparedOrders.OrderItemService;
 import org.nearbyshops.DAOPreparedOrders.OrderService;
 import org.nearbyshops.DAOPreparedOrders.PlaceOrderDAO;
@@ -50,6 +51,7 @@ public class Globals {
     public static CartStatsDAO cartStatsDAO = new CartStatsDAO();
 
     public static OrderService orderService = new OrderService();
+    public static DAOOrderStaff daoOrderStaff = new DAOOrderStaff();
     public static DeliveryAddressService deliveryAddressService = new DeliveryAddressService();
     public static OrderItemService orderItemService = new OrderItemService();
     public static PlaceOrderDAO pladeOrderDAO = new PlaceOrderDAO();

@@ -28,6 +28,25 @@ public class OrderEndpointShopStaff {
 		// TODO Auto-generated constructor stub
 	}
 
+
+
+
+	// :: staff functions
+	// confirmOrder()
+	// setOrderPacked()
+	// handoverToDelivery()
+	// acceptReturn()
+	// unpackOrder()
+	// paymentReceived()
+
+
+	// delivery guy functions
+	// AcceptPackage() | DeclinePackage()
+	// Return() | Deliver()
+
+
+
+
 //
 //	@GET
 //	@Path("/Notifications/{ShopID}")
@@ -62,25 +81,8 @@ public class OrderEndpointShopStaff {
 	{
 		Order order = Globals.orderService.readStatusHomeDelivery(orderID);
 
-//		System.out.println("Set Confirmed : ShopID : Order : " + order.getShopID());
-
 		User user = (User) Globals.accountApproved;
 
-//		if(user.getRole()==GlobalConstants.ROLE_SHOP_ADMIN_CODE)
-//		{
-//
-//			Shop shop = Globals.shopDAO.getShopIDForShopAdmin(user.getUserID());
-//
-////			System.out.println("ShopID : Order : " + order.getShopID() + "ShopID : Shop : " + shop.getShopID());
-//
-//			if(order.getShopID()!=shop.getShopID())
-//			{
-//				// An attempt to update an order for shop you do not own
-//				throw new ForbiddenException("An attempt to update order for shop you do not own !");
-//			}
-//		}
-//		else
-//
 
  		if(user.getRole()==GlobalConstants.ROLE_SHOP_STAFF_CODE)
 		{
@@ -91,43 +93,26 @@ public class OrderEndpointShopStaff {
 				throw new ForbiddenException("Not Permitted !");
 			}
 
-			if(order.getShopID()!=permissions.getShopID())
-			{
-				// An attempt to update an order for shop you do not own
-				throw new ForbiddenException("An attempt to update order for shop you do not own !");
-			}
 		}
 
 
 
+		order.setStatusHomeDelivery(OrderStatusHomeDelivery.ORDER_CONFIRMED);
+		int rowCount = Globals.daoOrderStaff.confirmOrder(order);
 
-		if(order.getStatusHomeDelivery()== OrderStatusHomeDelivery.ORDER_PLACED)
+		if(rowCount >= 1)
 		{
-			order.setStatusHomeDelivery(OrderStatusHomeDelivery.ORDER_CONFIRMED);
-			int rowCount = Globals.orderService.updateStatusHomeDelivery(order);
 
-			if(rowCount >= 1)
-			{
-
-//				Globals.broadcastMessageToEndUser("Order Confirmed (Home Delivery)","Order Number " + String.valueOf(orderID) + " (HD) is Confirmed !",order.getEndUserID());
-				return Response.status(Status.OK)
-						.build();
-			}
-			if(rowCount <= 0)
-			{
-
-				return Response.status(Status.NOT_MODIFIED)
-						.build();
-			}
-
+			return Response.status(Status.OK)
+					.build();
 		}
-		else
+		if(rowCount <= 0)
 		{
-			throw new ForbiddenException("Invalid operation !");
+
+			return Response.status(Status.NOT_MODIFIED)
+					.build();
 		}
 
-//		order.setOrderID(orderID);
-//		int rowCount = Globals.orderService.updateOrder(order);
 
 
 		return null;
@@ -240,6 +225,8 @@ public class OrderEndpointShopStaff {
 	}
 
 
+
+
 	@PUT
 	@Path("/HandoverToDelivery/{DeliveryGuySelfID}")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -247,12 +234,16 @@ public class OrderEndpointShopStaff {
 	public Response handoverToDelivery(@PathParam("DeliveryGuySelfID")int deliveryGuyID, List<Order> ordersList)
 	{
 
+		User user = (User) Globals.accountApproved;
+
 		int rowCount = 0;
-		Shop shop = null;
+		int shopID = 0;
+
+
 
 //		order.setDeliveryGuySelfID(orderReceived.getDeliveryGuySelfID());
 //		DeliveryGuySelf deliveryGuySelf = Globals.deliveryGuySelfDAO.getShopIDForDeliveryGuy(deliveryGuyID);
-//
+
 //		if(Globals.accountApproved instanceof ShopAdmin) {
 //			ShopAdmin shopAdmin = (ShopAdmin) Globals.accountApproved;
 //			shop = Globals.shopDAO.getShopIDForShopAdmin(shopAdmin.getShopAdminID());
@@ -273,7 +264,7 @@ public class OrderEndpointShopStaff {
 //		{
 //			throw new ForbiddenException("Not Permitted !");
 //		}
-
+//
 
 		// verify the account of delivery guy being assigned
 //		if(deliveryGuySelf!=null)
@@ -291,26 +282,32 @@ public class OrderEndpointShopStaff {
 //		}
 
 
+
+
+
+
+
+
 		for(Order orderReceived : ordersList)
 		{
 			Order order = Globals.orderService.readStatusHomeDelivery(orderReceived.getOrderID());
 
-			if(order.getShopID()!=shop.getShopID())
-			{
-				// An attempt to update an order for shop you do not own
-//					ForbiddenOperations activity = new ForbiddenOperations();
-//					activity.setShopAdminID(shopAdmin.getShopAdminID());
-//					activity.setActivityInfo("An attempt to update order for shop you do not own !");
-//					activity.setEndpointInfo("PUT : /OrderPFS/ShopStaff/HandoverToDelivery/{OrderID}");
-//					Globals.forbiddenOperationsDAO.saveForbiddenActivity(activity);
-
-				throw new ForbiddenException("An attempt to update order for shop you do not own !");
-			}
+//			if(order.getShopID()!=shop.getShopID())
+//			{
+//				// An attempt to update an order for shop you do not own
+////					ForbiddenOperations activity = new ForbiddenOperations();
+////					activity.setShopAdminID(shopAdmin.getShopAdminID());
+////					activity.setActivityInfo("An attempt to update order for shop you do not own !");
+////					activity.setEndpointInfo("PUT : /OrderPFS/ShopStaff/HandoverToDelivery/{OrderID}");
+////					Globals.forbiddenOperationsDAO.saveForbiddenActivity(activity);
+//
+//				throw new ForbiddenException("An attempt to update order for shop you do not own !");
+//			}
 
 
 			if(order.getStatusHomeDelivery()== OrderStatusHomeDelivery.ORDER_PACKED) {
 
-				order.setStatusHomeDelivery(OrderStatusHomeDelivery.PENDING_HANDOVER);
+				order.setStatusHomeDelivery(OrderStatusHomeDelivery.HANDOVER_REQUESTED);
 				order.setDeliveryGuySelfID(deliveryGuyID);
 				rowCount = Globals.orderService.updateDeliveryGuySelfID(order) + rowCount;
 			}
@@ -341,7 +338,6 @@ public class OrderEndpointShopStaff {
 					.build();
 		}
 	}
-
 
 
 
@@ -410,7 +406,7 @@ public class OrderEndpointShopStaff {
 
 
 
-		if(order.getStatusHomeDelivery()== OrderStatusHomeDelivery.PENDING_HANDOVER)
+		if(order.getStatusHomeDelivery()== OrderStatusHomeDelivery.HANDOVER_REQUESTED)
 		{
 			order.setStatusHomeDelivery(OrderStatusHomeDelivery.ORDER_PACKED);
 			order.setDeliveryGuySelfID(null);
@@ -446,606 +442,6 @@ public class OrderEndpointShopStaff {
 	}
 
 
-
-
-	@PUT
-	@Path("/MarkDelivered/{OrderID}")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@RolesAllowed({GlobalConstants.ROLE_SHOP_ADMIN, GlobalConstants.ROLE_SHOP_STAFF})
-	public Response markDelivered(@PathParam("OrderID")int orderID)
-	{
-		Order order = Globals.orderService.readStatusHomeDelivery(orderID);
-
-//		if(Globals.accountApproved instanceof ShopAdmin)
-//		{
-//			ShopAdmin shopAdmin = (ShopAdmin) Globals.accountApproved;
-//			Shop shop = Globals.shopDAO.getShopIDForShopAdmin(shopAdmin.getShopAdminID());
-//
-//			if(order.getShopID()!=shop.getShopID())
-//			{
-//				// An attempt to update an order for shop you do not own
-//				throw new ForbiddenException("An attempt to update order for shop you do not own !");
-//			}
-//		}
-//		else if(Globals.accountApproved instanceof ShopStaff)
-//		{
-//			ShopStaff shopStaff = (ShopStaff) Globals.accountApproved;
-//
-//			if(!shopStaff.isMarkOrdersDelivered())
-//			{
-//				throw new ForbiddenException("Not Permitted !");
-//			}
-//
-//			if(order.getShopID()!=shopStaff.getShopID())
-//			{
-//				// An attempt to update an order for shop you do not own
-//				throw new ForbiddenException("An attempt to update order for shop you do not own !");
-//			}
-//
-//		}
-//		else
-//		{
-//			throw new ForbiddenException("Not Permitted !");
-//		}
-
-
-
-		User user = (User) Globals.accountApproved;
-
-		if(user.getRole()==GlobalConstants.ROLE_SHOP_STAFF_CODE)
-		{
-			ShopStaffPermissions permissions = Globals.daoShopStaff.getShopStaffPermissions(user.getUserID());
-
-			if(!permissions.isPermitMarkOrdersDelivered())
-			{
-				throw new ForbiddenException("Not Permitted !");
-			}
-
-			if(order.getShopID()!=permissions.getShopID())
-			{
-				// An attempt to update an order for shop you do not own
-				throw new ForbiddenException("An attempt to update order for shop you do not own !");
-			}
-		}
-
-
-
-
-		if(order.getStatusHomeDelivery()== OrderStatusHomeDelivery.PENDING_DELIVERY_ACCEPT_PENDING_PAYMENT)
-		{
-//			order.setStatusHomeDelivery(OrderStatusHomeDelivery.ORDER_PACKED);
-//			order.setDeliveryGuySelfID(null);
-			order.setDeliveryReceived(true);
-
-			int rowCount = Globals.orderService.updateDeliveryReceived(order);
-
-
-			if(rowCount >= 1)
-			{
-
-
-//				Globals.broadcastMessageToEndUser("Order Delivered (Home Delivery)","Order Number " + String.valueOf(orderID) + " (HD) is Delivered !",order.getEndUserID());
-				return Response.status(Status.OK)
-						.entity(null)
-						.build();
-			}
-			if(rowCount <= 0)
-			{
-
-				return Response.status(Status.NOT_MODIFIED)
-						.build();
-			}
-
-		}
-		else
-		{
-			throw new ForbiddenException("Invalid operation !");
-		}
-
-//		order.setOrderID(orderID);
-//		int rowCount = Globals.orderService.updateOrder(order);
-
-
-		return null;
-	}
-
-
-
-
-	@PUT
-	@Path("/PaymentReceived/{OrderID}")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@RolesAllowed({GlobalConstants.ROLE_SHOP_ADMIN, GlobalConstants.ROLE_SHOP_STAFF})
-	public Response paymentReceived(@PathParam("OrderID")int orderID)
-	{
-		Order order = Globals.orderService.readStatusHomeDelivery(orderID);
-
-//		if(Globals.accountApproved instanceof ShopAdmin)
-//		{
-//			ShopAdmin shopAdmin = (ShopAdmin) Globals.accountApproved;
-//			Shop shop = Globals.shopDAO.getShopIDForShopAdmin(shopAdmin.getShopAdminID());
-//
-//			if(order.getShopID()!=shop.getShopID())
-//			{
-//				// An attempt to update an order for shop you do not own
-//				throw new ForbiddenException("An attempt to update order for shop you do not own !");
-//			}
-//		}
-//		else if(Globals.accountApproved instanceof ShopStaff)
-//		{
-//			ShopStaff shopStaff = (ShopStaff) Globals.accountApproved;
-//
-//			if(!shopStaff.isAcceptPaymentsFromDelivery())
-//			{
-//				throw new ForbiddenException("Not Permitted !");
-//			}
-//
-//			if(order.getShopID()!=shopStaff.getShopID())
-//			{
-//				// An attempt to update an order for shop you do not own
-//				throw new ForbiddenException("An attempt to update order for shop you do not own !");
-//			}
-//		}
-//		else
-//		{
-//			throw new ForbiddenException("Not Permitted !");
-//		}
-
-
-		User user = (User) Globals.accountApproved;
-
-
-		if(user.getRole()==GlobalConstants.ROLE_SHOP_STAFF_CODE)
-		{
-			ShopStaffPermissions permissions = Globals.daoShopStaff.getShopStaffPermissions(user.getUserID());
-
-			if(!permissions.isPermitHandoverToDelivery())
-			{
-				throw new ForbiddenException("Not Permitted !");
-			}
-
-			if(order.getShopID()!=permissions.getShopID())
-			{
-				// An attempt to update an order for shop you do not own
-				throw new ForbiddenException("An attempt to update order for shop you do not own !");
-			}
-		}
-
-
-
-
-		if(order.getStatusHomeDelivery()== OrderStatusHomeDelivery.PENDING_DELIVERY_ACCEPT_PENDING_PAYMENT)
-		{
-//			order.setStatusHomeDelivery(OrderStatusHomeDelivery.ORDER_PACKED);
-//			order.setDeliveryGuySelfID(null);
-//			order.setDeliveryReceived(true);
-			order.setPaymentReceived(true);
-
-			int rowCount = Globals.orderService.updatePaymentReceived(order);
-
-
-			if(rowCount >= 1)
-			{
-
-				return Response.status(Status.OK)
-						.entity(null)
-						.build();
-			}
-			if(rowCount <= 0)
-			{
-
-				return Response.status(Status.NOT_MODIFIED)
-						.build();
-			}
-
-		}
-		else
-		{
-			throw new ForbiddenException("Invalid operation !");
-		}
-
-//		order.setOrderID(orderID);
-//		int rowCount = Globals.orderService.updateOrder(order);
-
-
-		return null;
-	}
-
-
-
-	@PUT
-	@Path("/PaymentReceived")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@RolesAllowed({GlobalConstants.ROLE_SHOP_ADMIN, GlobalConstants.ROLE_SHOP_STAFF})
-	public Response paymentReceivedBulk(List<Order> ordersList)
-	{
-		int rowCount = 0;
-		Shop shop = null;
-
-//		if(Globals.accountApproved instanceof ShopAdmin)
-//		{
-//			ShopAdmin shopAdmin = (ShopAdmin) Globals.accountApproved;
-//			shop = Globals.shopDAO.getShopIDForShopAdmin(shopAdmin.getShopAdminID());
-//
-////			for(OrderPFS orderItem : ordersList)
-////			{
-////				OrderPFS order = Globals.orderService.readStatusHomeDelivery(orderItem.getOrderID());
-////
-////				if(order.getShopID()!=shop.getShopID())
-////				{
-////					// An attempt to update an order for shop you do not own
-////					throw new ForbiddenException("An attempt to update order for shop you do not own !");
-////				}
-////			}
-//		}
-//		else if(Globals.accountApproved instanceof ShopStaff)
-//		{
-//			ShopStaff shopStaff = (ShopStaff) Globals.accountApproved;
-//			shop = new Shop();
-//			shop.setShopID(shopStaff.getShopID());
-//
-//			if(!shopStaff.isAcceptPaymentsFromDelivery())
-//			{
-//				throw new ForbiddenException("Not Permitted !");
-//			}
-//
-//		}
-//		else
-//		{
-//			throw new ForbiddenException("Not Permitted !");
-//		}
-
-
-
-
-		User user = (User) Globals.accountApproved;
-
-		if(user.getRole()==GlobalConstants.ROLE_SHOP_STAFF_CODE)
-		{
-			ShopStaffPermissions permissions = Globals.daoShopStaff.getShopStaffPermissions(user.getUserID());
-
-			if(!permissions.isPermitHandoverToDelivery())
-			{
-				throw new ForbiddenException("Not Permitted !");
-			}
-
-		}
-
-
-
-
-		for(Order order : ordersList)
-		{
-
-			if(order.getShopID()!=shop.getShopID())
-			{
-				throw new ForbiddenException("Not Permitted !");
-			}
-
-			if(order.getStatusHomeDelivery()== OrderStatusHomeDelivery.PENDING_DELIVERY_ACCEPT_PENDING_PAYMENT)
-			{
-//			order.setStatusHomeDelivery(OrderStatusHomeDelivery.ORDER_PACKED);
-//			order.setDeliveryGuySelfID(null);
-//				order.setDeliveryReceived(true);
-				order.setPaymentReceived(true);
-				rowCount = Globals.orderService.updatePaymentReceived(order) + rowCount;
-			}
-
-		}
-
-
-
-		if(rowCount==ordersList.size())
-		{
-
-			return Response.status(Status.OK)
-					.build();
-
-		}
-		else if (rowCount>0 && rowCount<ordersList.size())
-		{
-			return Response.status(Status.PARTIAL_CONTENT)
-					.build();
-
-		}
-		else if(rowCount<=0)
-		{
-			return Response.status(Status.NOT_MODIFIED)
-					.build();
-		}
-
-
-		return null;
-	}
-
-
-
-
-	// requires authentication by the Distributor
-	@PUT
-	@Path("/CancelByShop/{OrderID}")
-	@RolesAllowed({GlobalConstants.ROLE_SHOP_ADMIN, GlobalConstants.ROLE_SHOP_STAFF})
-	public Response cancelledByShop(@PathParam("OrderID")int orderID)
-	{
-		Order order = Globals.orderService.readStatusHomeDelivery(orderID);
-
-//		if(Globals.accountApproved instanceof ShopAdmin)
-//		{
-//			ShopAdmin shopAdmin = (ShopAdmin) Globals.accountApproved;
-//			Shop shop = Globals.shopDAO.getShopIDForShopAdmin(shopAdmin.getShopAdminID());
-//
-//			if(order.getShopID()!=shop.getShopID())
-//			{
-//				// An attempt to update an order for shop you do not own
-//				throw new ForbiddenException("An attempt to update order for shop you do not own !");
-//			}
-//		}
-//		else if(Globals.accountApproved instanceof ShopStaff)
-//		{
-//			ShopStaff shopStaff = (ShopStaff) Globals.accountApproved;
-//
-//			if(!shopStaff.isCancelOrders())
-//			{
-//				throw new ForbiddenException("Not Permitted !");
-//			}
-//
-//			if(order.getShopID()!=shopStaff.getShopID())
-//			{
-//				// An attempt to update an order for shop you do not own
-//				throw new ForbiddenException("An attempt to update order for shop you do not own !");
-//			}
-//		}
-//		else
-//		{
-//			throw new ForbiddenException("Not Permitted !");
-//		}
-
-
-		User user = (User) Globals.accountApproved;
-
-
-		if(user.getRole()==GlobalConstants.ROLE_SHOP_STAFF_CODE)
-		{
-			ShopStaffPermissions permissions = Globals.daoShopStaff.getShopStaffPermissions(user.getUserID());
-
-			if(!permissions.isPermitHandoverToDelivery())
-			{
-				throw new ForbiddenException("Not Permitted !");
-			}
-
-			if(order.getShopID()!=permissions.getShopID())
-			{
-				// An attempt to update an order for shop you do not own
-				throw new ForbiddenException("An attempt to update order for shop you do not own !");
-			}
-		}
-
-
-
-
-
-
-
-		int rowCount = Globals.orderService.orderCancelledByShop(orderID);
-
-		if(rowCount >= 1)
-		{
-
-//			Globals.broadcastMessageToEndUser("Order Cancelled (Home Delivery)","Order Number " + String.valueOf(orderID) + " (HD) is Cancelled By Shop !",order.getEndUserID());
-			return Response.status(Status.OK)
-					.entity(null)
-					.build();
-		}
-		if(rowCount <= 0)
-		{
-
-			return Response.status(Status.NOT_MODIFIED)
-					.entity(null)
-					.build();
-		}
-
-		return null;
-	}
-
-
-
-
-	@PUT
-	@Path("/AcceptReturnCancelledByShop/{OrderID}")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@RolesAllowed({GlobalConstants.ROLE_SHOP_ADMIN, GlobalConstants.ROLE_SHOP_STAFF})
-	public Response acceptReturnCancelledByShop(@PathParam("OrderID")int orderID)
-	{
-		Order order = Globals.orderService.readStatusHomeDelivery(orderID);
-
-//		if(Globals.accountApproved instanceof ShopAdmin)
-//		{
-//			ShopAdmin shopAdmin = (ShopAdmin) Globals.accountApproved;
-//			Shop shop = Globals.shopDAO.getShopIDForShopAdmin(shopAdmin.getShopAdminID());
-//
-//			if(order.getShopID()!=shop.getShopID())
-//			{
-//				// An attempt to update an order for shop you do not own
-//				throw new ForbiddenException("An attempt to update order for shop you do not own !");
-//			}
-//		}
-//		else if(Globals.accountApproved instanceof ShopStaff)
-//		{
-//			ShopStaff shopStaff = (ShopStaff) Globals.accountApproved;
-//
-//			// check permission
-//			if(!shopStaff.isAcceptReturns())
-//			{
-//				throw new ForbiddenException("Not Permitted !");
-//			}
-//
-//			// check shopID
-//			if(order.getShopID()!=shopStaff.getShopID())
-//			{
-//				// An attempt to update an order for shop you do not own
-//				throw new ForbiddenException("An attempt to update order for shop you do not own !");
-//			}
-//		}
-//		else
-//		{
-//			throw new ForbiddenException("Not Permitted !");
-//		}
-
-
-		User user = (User) Globals.accountApproved;
-
-		if(user.getRole()==GlobalConstants.ROLE_SHOP_STAFF_CODE)
-		{
-			ShopStaffPermissions permissions = Globals.daoShopStaff.getShopStaffPermissions(user.getUserID());
-
-			if(!permissions.isPermitAcceptReturns())
-			{
-				throw new ForbiddenException("Not Permitted !");
-			}
-
-			if(order.getShopID()!=permissions.getShopID())
-			{
-				// An attempt to update an order for shop you do not own
-				throw new ForbiddenException("An attempt to update order for shop you do not own !");
-			}
-		}
-
-
-
-		if(order.getStatusHomeDelivery()== OrderStatusHomeDelivery.CANCELLED_BY_SHOP_RETURN_PENDING)
-		{
-			order.setStatusHomeDelivery(OrderStatusHomeDelivery.CANCELLED_BY_SHOP);
-
-			int rowCount = Globals.orderService.updateStatusHomeDelivery(order);
-
-
-			if(rowCount >= 1)
-			{
-
-				return Response.status(Status.OK)
-						.entity(null)
-						.build();
-			}
-			if(rowCount <= 0)
-			{
-
-				return Response.status(Status.NOT_MODIFIED)
-						.build();
-			}
-
-		}
-		else
-		{
-			throw new ForbiddenException("Invalid operation !");
-		}
-
-//		order.setOrderID(orderID);
-//		int rowCount = Globals.orderService.updateOrder(order);
-
-
-		return null;
-	}
-
-
-
-	@PUT
-	@Path("/AcceptReturnCancelledByUser/{OrderID}")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@RolesAllowed({GlobalConstants.ROLE_SHOP_ADMIN, GlobalConstants.ROLE_SHOP_STAFF})
-	public Response acceptReturnCancelledByUser(@PathParam("OrderID")int orderID)
-	{
-		Order order = Globals.orderService.readStatusHomeDelivery(orderID);
-
-//		if(Globals.accountApproved instanceof ShopAdmin)
-//		{
-//			ShopAdmin shopAdmin = (ShopAdmin) Globals.accountApproved;
-//			Shop shop = Globals.shopDAO.getShopIDForShopAdmin(shopAdmin.getShopAdminID());
-//
-//			if(order.getShopID()!=shop.getShopID())
-//			{
-//				// An attempt to update an order for shop you do not own
-//				throw new ForbiddenException("An attempt to update order for shop you do not own !");
-//			}
-//		}
-//		else if(Globals.accountApproved instanceof ShopStaff)
-//		{
-//			ShopStaff shopStaff = (ShopStaff) Globals.accountApproved;
-//
-//			// check permission
-//			if(!shopStaff.isAcceptReturns())
-//			{
-//				throw new ForbiddenException("Not Permitted !");
-//			}
-//
-//			// check shopID
-//			if(order.getShopID()!=shopStaff.getShopID())
-//			{
-//				// An attempt to update an order for shop you do not own
-//				throw new ForbiddenException("An attempt to update order for shop you do not own !");
-//			}
-//		}
-//		else
-//		{
-//			throw new ForbiddenException("Not Permitted !");
-//		}
-
-
-
-
-		User user = (User) Globals.accountApproved;
-
-		if(user.getRole()==GlobalConstants.ROLE_SHOP_STAFF_CODE)
-		{
-			ShopStaffPermissions permissions = Globals.daoShopStaff.getShopStaffPermissions(user.getUserID());
-
-			if(!permissions.isPermitAcceptReturns())
-			{
-				throw new ForbiddenException("Not Permitted !");
-			}
-
-			if(order.getShopID()!=permissions.getShopID())
-			{
-				// An attempt to update an order for shop you do not own
-				throw new ForbiddenException("An attempt to update order for shop you do not own !");
-			}
-		}
-
-
-
-
-		if(order.getStatusHomeDelivery()== OrderStatusHomeDelivery.CANCELLED_BY_USER_RETURN_PENDING)
-		{
-			order.setStatusHomeDelivery(OrderStatusHomeDelivery.CANCELLED_BY_USER);
-
-			int rowCount = Globals.orderService.updateStatusHomeDelivery(order);
-
-
-			if(rowCount >= 1)
-			{
-
-				return Response.status(Status.OK)
-						.entity(null)
-						.build();
-			}
-			if(rowCount <= 0)
-			{
-
-				return Response.status(Status.NOT_MODIFIED)
-						.build();
-			}
-
-		}
-		else
-		{
-			throw new ForbiddenException("Invalid operation !");
-		}
-
-//		order.setOrderID(orderID);
-//		int rowCount = Globals.orderService.updateOrder(order);
-
-
-		return null;
-	}
 
 
 
@@ -1144,6 +540,10 @@ public class OrderEndpointShopStaff {
 
 		return null;
 	}
+
+
+
+
 
 
 
