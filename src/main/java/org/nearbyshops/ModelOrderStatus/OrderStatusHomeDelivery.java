@@ -47,6 +47,4 @@ public class OrderStatusHomeDelivery {
     public static final int CANCELLED_BY_USER = 20;
 
 
-
-
 }
