@@ -115,6 +115,18 @@ public class Order {
     private DeliveryAddress deliveryAddress;
     private OrderStats orderStats;
 
+    private User rt_delivery_guy_profile;
+
+
+
+
+    public User getRt_delivery_guy_profile() {
+        return rt_delivery_guy_profile;
+    }
+
+    public void setRt_delivery_guy_profile(User rt_delivery_guy_profile) {
+        this.rt_delivery_guy_profile = rt_delivery_guy_profile;
+    }
 
     public Shop getShop() {
         return shop;

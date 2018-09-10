@@ -6,6 +6,7 @@ import org.nearbyshops.Model.Order;
 import org.nearbyshops.Model.Shop;
 import org.nearbyshops.ModelEndpoint.OrderEndPoint;
 import org.nearbyshops.ModelOrderStatus.OrderStatusHomeDelivery;
+import org.nearbyshops.ModelRoles.Endpoints.UserEndpoint;
 import org.nearbyshops.ModelRoles.ShopStaffPermissions;
 import org.nearbyshops.ModelRoles.User;
 
@@ -55,6 +56,10 @@ public class OrderEndpointShopStaff {
 //
 //		return eventOutput;
 //	}
+
+
+
+
 
 
 
@@ -132,6 +137,11 @@ public class OrderEndpointShopStaff {
 		}
 
 
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 
 
 //			order.setStatusHomeDelivery(OrderStatusHomeDelivery.ORDER_PACKED);
@@ -304,6 +314,19 @@ public class OrderEndpointShopStaff {
 		int rowCount = Globals.daoOrderStaff.acceptReturn(orderID);
 
 
+
+
+
+
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
+
+
+
 		if(rowCount >= 1)
 		{
 
@@ -350,6 +373,12 @@ public class OrderEndpointShopStaff {
 
 		int rowCount = Globals.daoOrderStaff.unpackOrder_delete(orderID);
 
+
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 
 		if(rowCount >= 1)
 		{
@@ -524,6 +553,97 @@ public class OrderEndpointShopStaff {
 
 
 
+
+
+
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@RolesAllowed({GlobalConstants.ROLE_SHOP_ADMIN, GlobalConstants.ROLE_SHOP_STAFF})
+	public Response fetchDeliveryGuys(
+			@QueryParam("ShopID")Integer shopID,
+			@QueryParam("StatusHomeDelivery")Integer homeDeliveryStatus,
+			@QueryParam("SortBy") String sortBy,
+			@QueryParam("Limit")Integer limit, @QueryParam("Offset")Integer offset,
+			@QueryParam("GetRowCount")boolean getRowCount,
+			@QueryParam("MetadataOnly")boolean getOnlyMetaData
+
+	)
+	{
+
+
+
+		// *********************** second Implementation
+
+		User user = (User) Globals.accountApproved;
+
+		if(user.getRole()==GlobalConstants.ROLE_SHOP_ADMIN_CODE)
+		{
+			Shop shop = Globals.shopDAO.getShopIDForShopAdmin(user.getUserID());
+			shopID = shop.getShopID();
+		}
+		else if(user.getRole()==GlobalConstants.ROLE_SHOP_STAFF_CODE)
+		{
+			shopID = Globals.daoShopStaff.getShopIDforShopStaff(user.getUserID());
+		}
+
+
+
+		if(limit!=null)
+		{
+			if(limit >= GlobalConstants.max_limit)
+			{
+				limit = GlobalConstants.max_limit;
+			}
+
+			if(offset==null)
+			{
+				offset = 0;
+			}
+		}
+
+
+		getRowCount=true;
+
+
+		UserEndpoint endpoint = Globals.daoOrderStaff.fetchDeliveryGuys(
+				shopID,
+				homeDeliveryStatus,
+				sortBy,limit,offset,
+				true,getOnlyMetaData
+		);
+
+
+
+
+
+
+		if(limit!=null)
+		{
+			endpoint.setLimit(limit);
+			endpoint.setOffset(offset);
+			endpoint.setMax_limit(GlobalConstants.max_limit);
+		}
+
+
+
+
+//		try {
+//			Thread.sleep(1000);
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
+
+		//Marker
+
+		return Response.status(Status.OK)
+				.entity(endpoint)
+				.build();
+	}
+
+
+
+
+
 	// Permissions : General
 	// Submit Item Categories
 	// Submit Items
@@ -540,5 +660,7 @@ public class OrderEndpointShopStaff {
 	// 6. Accept Return's | Cancelled By Shop
 
 	// 7. Accept Return | Returned by Delivery Guy | Not required
+
+
 
 }

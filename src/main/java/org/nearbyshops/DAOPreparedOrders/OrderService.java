@@ -9,6 +9,7 @@ import org.nearbyshops.ModelDelivery.DeliveryAddress;
 import org.nearbyshops.ModelEndpoint.OrderEndPoint;
 import org.nearbyshops.ModelOrderStatus.OrderStatusHomeDelivery;
 import org.nearbyshops.ModelRoles.Endpoints.UserEndpoint;
+import org.nearbyshops.ModelRoles.User;
 import org.nearbyshops.ModelStats.OrderStats;
 
 import java.sql.*;
@@ -412,16 +413,22 @@ public class OrderService {
                 + DeliveryAddress.TABLE_NAME + "." + DeliveryAddress.PHONE_NUMBER + ","
                 + DeliveryAddress.TABLE_NAME + "." + DeliveryAddress.PINCODE + ","
 
+                + User.TABLE_NAME + "." + User.USER_ID + ","
+                + User.TABLE_NAME + "." + User.NAME + ","
+                + User.TABLE_NAME + "." + User.PHONE + ","
+                + User.TABLE_NAME + "." + User.PROFILE_IMAGE_URL + ","
+
 //                + DeliveryAddress.TABLE_NAME + "." + DeliveryAddress.LATITUDE + ","
 //                + DeliveryAddress.TABLE_NAME + "." + DeliveryAddress.LONGITUDE + ","
 
                 + " count( " + OrderItem.ITEM_ID + " ) as item_count, "
                 + " sum( " + OrderItem.ITEM_PRICE_AT_ORDER + " * " + OrderItem.ITEM_QUANTITY + ") as item_total "
+
                 + " FROM " + Order.TABLE_NAME
                 + " LEFT OUTER JOIN " + OrderItem.TABLE_NAME + " ON (" + Order.TABLE_NAME + "." + Order.ORDER_ID + " = " + OrderItem.TABLE_NAME + "." + OrderItem.ORDER_ID + " ) "
                 + " LEFT OUTER JOIN " + DeliveryAddress.TABLE_NAME + " ON (" + Order.TABLE_NAME + "." + Order.DELIVERY_ADDRESS_ID + " = " + DeliveryAddress.TABLE_NAME + "." + DeliveryAddress.ID + ")"
+                + " LEFT OUTER JOIN " + User.TABLE_NAME + " ON (" + Order.TABLE_NAME + "." + Order.DELIVERY_GUY_SELF_ID + " = " + User.TABLE_NAME + "." + User.USER_ID + ")"
                 + " WHERE TRUE ";
-
 
 
 
@@ -521,6 +528,7 @@ public class OrderService {
         // all the non-aggregate columns which are present in select must be present in group by also.
         query = query
                 + " group by "
+                + User.TABLE_NAME + "." + User.USER_ID + ","
                 + Order.TABLE_NAME + "." + Order.ORDER_ID + ","
                 + DeliveryAddress.TABLE_NAME + "." + DeliveryAddress.ID ;
 
@@ -641,12 +649,22 @@ public class OrderService {
                     order.setDeliveryAddress(address);
 //                }
 
+                    User deliveryGuy = new User();
+                    deliveryGuy.setUserID(rs.getInt(User.USER_ID));
+                    deliveryGuy.setName(rs.getString(User.NAME));
+                    deliveryGuy.setPhone(rs.getString(User.PHONE));
+                    deliveryGuy.setProfileImagePath(rs.getString(User.PROFILE_IMAGE_URL));
+
+                    order.setRt_delivery_guy_profile(deliveryGuy);
+
 
                     OrderStats orderStats = new OrderStats();
                     orderStats.setOrderID(rs.getInt("order_id"));
                     orderStats.setItemCount(rs.getInt("item_count"));
                     orderStats.setItemTotal(rs.getInt("item_total"));
                     order.setOrderStats(orderStats);
+
+
 
 
                     ordersList.add(order);
