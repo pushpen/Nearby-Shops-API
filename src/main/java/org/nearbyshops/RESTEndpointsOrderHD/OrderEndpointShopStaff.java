@@ -456,7 +456,6 @@ public class OrderEndpointShopStaff {
 
 
 
-
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@RolesAllowed({GlobalConstants.ROLE_SHOP_ADMIN, GlobalConstants.ROLE_SHOP_STAFF})
@@ -556,11 +555,14 @@ public class OrderEndpointShopStaff {
 
 
 
+
+
+
 	@GET
+	@Path("/FetchDeliveryGuys")
 	@Produces(MediaType.APPLICATION_JSON)
 	@RolesAllowed({GlobalConstants.ROLE_SHOP_ADMIN, GlobalConstants.ROLE_SHOP_STAFF})
 	public Response fetchDeliveryGuys(
-			@QueryParam("ShopID")Integer shopID,
 			@QueryParam("StatusHomeDelivery")Integer homeDeliveryStatus,
 			@QueryParam("SortBy") String sortBy,
 			@QueryParam("Limit")Integer limit, @QueryParam("Offset")Integer offset,
@@ -570,7 +572,10 @@ public class OrderEndpointShopStaff {
 	)
 	{
 
+		//		@QueryParam("ShopID")Integer shopID,
 
+
+		int shopID = 0;
 
 		// *********************** second Implementation
 
@@ -588,6 +593,7 @@ public class OrderEndpointShopStaff {
 
 
 
+
 		if(limit!=null)
 		{
 			if(limit >= GlobalConstants.max_limit)
@@ -600,6 +606,8 @@ public class OrderEndpointShopStaff {
 				offset = 0;
 			}
 		}
+
+
 
 
 		getRowCount=true;

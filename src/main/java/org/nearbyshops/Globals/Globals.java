@@ -65,6 +65,7 @@ public class Globals {
 
 
     public static ItemImagesDAO itemImagesDAO = new ItemImagesDAO();
+    public static ShopImageDAO shopImageDAO = new ShopImageDAO();
 
 //    public static DAOUserNotifications userNotifications = new DAOUserNotifications();
     public static DAOOneSignal oneSignalNotifications = new DAOOneSignal();

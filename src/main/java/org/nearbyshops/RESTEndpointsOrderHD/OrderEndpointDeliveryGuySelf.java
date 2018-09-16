@@ -69,6 +69,13 @@ public class OrderEndpointDeliveryGuySelf {
 		int rowCount = Globals.daoOrderDeliveryGuy.acceptOrder(orderID);
 
 
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
+
 		if(rowCount >= 1)
 		{
 
@@ -135,6 +142,13 @@ public class OrderEndpointDeliveryGuySelf {
 
 		int rowCount = Globals.daoOrderDeliveryGuy.returnOrder(orderID);
 
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
+
 		if(rowCount >= 1)
 		{
 
@@ -169,6 +183,13 @@ public class OrderEndpointDeliveryGuySelf {
 //		order.setStatusHomeDelivery(OrderStatusHomeDelivery.HANDOVER_REQUESTED);
 
 		int rowCount = Globals.daoOrderDeliveryGuy.deliverOrder(orderID);
+
+
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 
 		if (rowCount >= 1) {
 			return Response.status(Status.OK)
@@ -228,6 +249,9 @@ public class OrderEndpointDeliveryGuySelf {
 			}
 		}
 
+
+
+		getRowCount=true;
 
 
 		OrderEndPoint endpoint = Globals.orderService.readOrders(orderID,

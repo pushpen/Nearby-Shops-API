@@ -113,6 +113,8 @@ public class Main {
             statement.executeUpdate(Shop.createTableShopPostgres);
             statement.executeUpdate(ShopItem.createTableShopItemPostgres);
 
+            statement.executeUpdate(ShopImage.createTablePostgres);
+
             statement.executeUpdate(ShopStaffPermissions.createTablePostgres);
             statement.executeUpdate(DeliveryGuyData.createTablePostgres);
 

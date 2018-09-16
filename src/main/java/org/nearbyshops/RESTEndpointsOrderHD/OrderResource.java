@@ -232,6 +232,8 @@ public class OrderResource {
 		}
 
 
+		getRowCount=true;
+
 
 
 		OrderEndPoint endpoint = Globals.orderService.readOrders(orderID,

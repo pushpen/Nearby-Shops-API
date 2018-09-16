@@ -7,6 +7,7 @@ import java.sql.Timestamp;
  */
 public class ItemImage {
 
+
     // Table Name
     public static final String TABLE_NAME = "ITEM_IMAGES";
 

@@ -191,8 +191,20 @@ public class AuthenticationFilter implements ContainerRequestFilter {
                 roleID = GlobalConstants.ROLE_END_USER_CODE;
 
                 // any role can login in place of end user
+
+
+                if(user.getRole()==GlobalConstants.ROLE_SHOP_ADMIN_CODE ||
+                        user.getRole()==GlobalConstants.ROLE_SHOP_STAFF_CODE ||
+                        user.getRole()==GlobalConstants.ROLE_DELIVERY_GUY_CODE)
+                {
+                    return user;
+                }
+
+
                 return user;
             }
+
+
 
 
 
