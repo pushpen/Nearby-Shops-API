@@ -346,6 +346,8 @@ public class ShopDAO {
 	}
 
 
+
+
 	public int updateShopBySelf(Shop shop)
 	{
 
@@ -2974,9 +2976,6 @@ public class ShopDAO {
 
 		return endPoint;
 	}
-
-
-
 
 
 

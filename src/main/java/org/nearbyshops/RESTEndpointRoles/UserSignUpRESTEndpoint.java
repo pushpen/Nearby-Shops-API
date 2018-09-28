@@ -402,7 +402,7 @@ public class UserSignUpRESTEndpoint {
                 }
                 else
                 {
-                    SendSMS.sendSMS("Congratulations your account has been registered with Taxi Referral Service.",
+                    SendSMS.sendSMS("Congratulations your account has been registered with Nearby Shops.",
                             user.getPhone());
                 }
             }
@@ -487,11 +487,11 @@ public class UserSignUpRESTEndpoint {
                         .h1("Registration successful for your account")
                         .p("Your account has been Created.")
                         .h3("Your E-mail : " + user.getEmail())
-                        .p("You can login with your email and password that you have provided. Thank you for registering with Taxi Referral Service (TRS).")
+                        .p("You can login with your email and password that you have provided. Thank you for registering with Nearby Shops.")
                         .mail()
                         .to(user.getEmail())
-                        .subject("Taxi Referral Service : Account Registered")
-                        .from("Taxi Referral Service","noreply@taxireferral.org")
+                        .subject("Nearby Shops : Account Registered")
+                        .from("Nearby Shops","noreply@nearbyshops.org")
                         .build()
                         .send();
 
@@ -538,7 +538,7 @@ public class UserSignUpRESTEndpoint {
                 }
                 else
                 {
-                    SendSMS.sendSMS("Congratulations your account has been registered with Taxi Referral Service.",
+                    SendSMS.sendSMS("Congratulations your account has been registered with Nearby Shops.",
                             user.getPhone());
                 }
             }

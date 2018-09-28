@@ -96,7 +96,6 @@ public class OrderResource {
 
 
 
-
 				try
 				{
 
@@ -110,8 +109,6 @@ public class OrderResource {
 					ArrayList<String> playerIDs =  Globals.oneSignalNotifications.getPlayerIDsForShopStaff(orderResult.getShopID());
 
 					playerIDs.add(shopAdminPlayerID);
-
-
 
 
 
@@ -179,21 +176,23 @@ public class OrderResource {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@RolesAllowed({GlobalConstants.ROLE_END_USER})
-	public Response getOrders(@QueryParam("OrderID")Integer orderID,
-                              @QueryParam("ShopID")Integer shopID,
-                              @QueryParam("PickFromShop") Boolean pickFromShop,
-                              @QueryParam("StatusHomeDelivery")Integer homeDeliveryStatus,
-                              @QueryParam("StatusPickFromShopStatus")Integer pickFromShopStatus,
-                              @QueryParam("DeliveryGuyID")Integer deliveryGuyID,
-                              @QueryParam("PaymentsReceived") Boolean paymentsReceived,
-                              @QueryParam("DeliveryReceived") Boolean deliveryReceived,
-                              @QueryParam("latCenter")Double latCenter, @QueryParam("lonCenter")Double lonCenter,
-                              @QueryParam("PendingOrders") Boolean pendingOrders,
-                              @QueryParam("SearchString") String searchString,
-                              @QueryParam("SortBy") String sortBy,
-                              @QueryParam("Limit")Integer limit, @QueryParam("Offset")Integer offset,
-							  @QueryParam("GetRowCount")boolean getRowCount,
-							  @QueryParam("MetadataOnly")boolean getOnlyMetaData)
+	public Response getOrders(
+			@QueryParam("OrderID")Integer orderID,
+			@QueryParam("ShopID")Integer shopID,
+			@QueryParam("PickFromShop") Boolean pickFromShop,
+			@QueryParam("StatusHomeDelivery")Integer homeDeliveryStatus,
+			@QueryParam("StatusPickFromShopStatus")Integer pickFromShopStatus,
+			@QueryParam("DeliveryGuyID")Integer deliveryGuyID,
+			@QueryParam("PaymentsReceived") Boolean paymentsReceived,
+			@QueryParam("DeliveryReceived") Boolean deliveryReceived,
+			@QueryParam("latCenter")Double latCenter, @QueryParam("lonCenter")Double lonCenter,
+			@QueryParam("PendingOrders") Boolean pendingOrders,
+			@QueryParam("SearchString") String searchString,
+			@QueryParam("SortBy") String sortBy,
+			@QueryParam("Limit")Integer limit, @QueryParam("Offset")Integer offset,
+			@QueryParam("GetRowCount")boolean getRowCount,
+			@QueryParam("MetadataOnly")boolean getOnlyMetaData
+	)
 	{
 		//							  @QueryParam("EndUserID")Integer endUserID,
 

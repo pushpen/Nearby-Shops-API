@@ -665,8 +665,6 @@ public class OrderService {
                     order.setOrderStats(orderStats);
 
 
-
-
                     ordersList.add(order);
                 }
 
