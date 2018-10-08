@@ -80,7 +80,7 @@ public class Order {
             + " " + Order.PAYMENT_RECEIVED + " boolean,"
             + " " + Order.DELIVERY_CHARGES + " INT,"
             + " " + Order.DELIVERY_ADDRESS_ID + " INT,"
-            + " " + Order.PICK_FROM_SHOP + " boolean,"
+            + " " + Order.PICK_FROM_SHOP + " boolean NOT NULL default 'f',"
             + " " + Order.DELIVERY_GUY_SELF_ID + " INT,"
             + " " + Order.DATE_TIME_PLACED + " timestamp with time zone NOT NULL DEFAULT now(),"
             + " FOREIGN KEY(" + Order.END_USER_ID +") REFERENCES " + User.TABLE_NAME + "(" + User.USER_ID + "),"
@@ -107,7 +107,7 @@ public class Order {
 
     private Integer deliveryCharges;
     private Integer deliveryAddressID;
-    private Boolean pickFromShop;
+    private boolean pickFromShop;
 
     private Integer deliveryGuySelfID;
     private Timestamp dateTimePlaced;

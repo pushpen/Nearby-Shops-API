@@ -411,8 +411,10 @@ public class UserLoginRESTEndpoint {
 
             if(user.getRole() == GlobalConstants.ROLE_STAFF_CODE)
             {
+
                 StaffPermissions permissions = Globals.daoStaff.getStaffPermissions(user.getUserID());
                 user.setRt_staff_permissions(permissions);
+
             }
             else if (user.getRole() == GlobalConstants.ROLE_SHOP_STAFF_CODE)
             {

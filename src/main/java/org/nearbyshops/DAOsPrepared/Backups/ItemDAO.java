@@ -1,4 +1,4 @@
-package org.nearbyshops.DAOsPrepared;
+package org.nearbyshops.DAOsPrepared.Backups;
 
 import com.zaxxer.hikari.HikariDataSource;
 import org.nearbyshops.Globals.Globals;
@@ -450,12 +450,8 @@ public class ItemDAO {
 
 
 
-
-
-
-
 	
-	public ItemEndPoint getItems(
+	public List<Item> getItems(
 					Integer itemCategoryID, Integer shopID,
 					Double latCenter, Double lonCenter,
 					String itemSpecValues,
@@ -468,11 +464,9 @@ public class ItemDAO {
 					boolean getOnlyMetadata
 	)
 	{
-
-		String queryCount = "";
-
-//		String query = "";
-
+		String query = "";
+		
+//		String queryNormal = "SELECT * FROM " + Item.TABLE_NAME;
 
 		String queryJoin = "SELECT "
 				+ "min(" + ShopItem.ITEM_PRICE + ") as min_price" + ","
@@ -695,7 +689,6 @@ public class ItemDAO {
 
 
 
-		queryCount = queryJoin;
 
 
 
@@ -733,56 +726,68 @@ public class ItemDAO {
 
 
 
-		queryCount = "SELECT COUNT(*) as item_count FROM (" + queryCount + ") AS temp";
+
+
+
+		/*
+
+		Applying filters Ends
+
+		 */
 
 
 
 
-		ItemEndPoint endPoint = new ItemEndPoint();
+
+//		boolean isJoinQuery = false;
+//
+//		if(shopID != null || (latCenter!= null && lonCenter!=null))
+//		{
+//			query = queryJoin;
+//			isJoinQuery = true;
+//
+//		}else
+//		{
+//			query = queryNormal;
+//		}
+
+		query = queryJoin;
+		
+		
 		
 		ArrayList<Item> itemList = new ArrayList<Item>();
 		
 		
 		Connection connection = null;
-		PreparedStatement statement = null;
+		Statement statement = null;
 		ResultSet rs = null;
-
-		PreparedStatement statementCount = null;
-		ResultSet resultSetCount = null;
-
-
+		
 		try {
 			
 			connection = dataSource.getConnection();
+			statement = connection.createStatement();
+			
+			rs = statement.executeQuery(query);
+			
+			while(rs.next())
+			{
+				Item item = new Item();
 
-			int i = 0;
+				item.setItemID(rs.getInt(Item.ITEM_ID));
+				item.setItemName(rs.getString(Item.ITEM_NAME));
+				item.setItemDescription(rs.getString(Item.ITEM_DESC));
 
+				item.setItemImageURL(rs.getString(Item.ITEM_IMAGE_URL));
+				item.setItemCategoryID(rs.getInt(Item.ITEM_CATEGORY_ID));
 
-			if(!getOnlyMetadata) {
-
-
-				statement = connection.prepareStatement(queryJoin);
-
-				rs = statement.executeQuery();
-
-				while (rs.next()) {
-					Item item = new Item();
-
-					item.setItemID(rs.getInt(Item.ITEM_ID));
-					item.setItemName(rs.getString(Item.ITEM_NAME));
-					item.setItemDescription(rs.getString(Item.ITEM_DESC));
-
-					item.setItemImageURL(rs.getString(Item.ITEM_IMAGE_URL));
-					item.setItemCategoryID(rs.getInt(Item.ITEM_CATEGORY_ID));
-
-					item.setItemDescriptionLong(rs.getString(Item.ITEM_DESCRIPTION_LONG));
+				item.setItemDescriptionLong(rs.getString(Item.ITEM_DESCRIPTION_LONG));
 //				item.setDateTimeCreated(rs.getTimestamp(Item.DATE_TIME_CREATED));
-					item.setQuantityUnit(rs.getString(Item.QUANTITY_UNIT));
+				item.setQuantityUnit(rs.getString(Item.QUANTITY_UNIT));
 
-					item.setListPrice(rs.getFloat(Item.LIST_PRICE));
-					item.setBarcode(rs.getString(Item.BARCODE));
-					item.setBarcodeFormat(rs.getString(Item.BARCODE_FORMAT));
-					item.setImageCopyrights(rs.getString(Item.IMAGE_COPYRIGHTS));
+				item.setListPrice(rs.getFloat(Item.LIST_PRICE));
+				item.setBarcode(rs.getString(Item.BARCODE));
+				item.setBarcodeFormat(rs.getString(Item.BARCODE_FORMAT));
+				item.setImageCopyrights(rs.getString(Item.IMAGE_COPYRIGHTS));
 
 
 //				if(isJoinQuery)
@@ -799,34 +804,11 @@ public class ItemDAO {
 
 //				}
 
-					itemList.add(item);
-				}
-
-				endPoint.setResults(itemList);
+				itemList.add(item);
 			}
-
-
-
-			if(getRowCount)
-			{
-				statementCount = connection.prepareStatement(queryCount);
-
-				i = 0;
-
-
-
-				resultSetCount = statementCount.executeQuery();
-
-				while(resultSetCount.next())
-				{
-
-						endPoint.setItemCount(resultSetCount.getInt("item_count"));
-//					System.out.println("Item Count ItemDAO : " + String.valueOf(endPoint.getItemCount()));
-
-					}
-			}
-
-
+			
+			
+			
 //			System.out.println("Item By CategoryID " + itemList.size());
 			
 		} catch (SQLException e) {
@@ -866,7 +848,7 @@ public class ItemDAO {
 			}
 		}
 
-		return endPoint;
+		return itemList;
 	}
 
 

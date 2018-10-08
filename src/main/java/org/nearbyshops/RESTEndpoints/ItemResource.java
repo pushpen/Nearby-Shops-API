@@ -371,52 +371,52 @@ public class ItemResource {
 
 //	@Path("/Deprecated")
 //	@Produces(MediaType.APPLICATION_JSON)
-	public Response getItems(
-            @QueryParam("ItemCategoryID")Integer itemCategoryID,
-            @QueryParam("ShopID")Integer shopID,
-            @QueryParam("latCenter") Double latCenter, @QueryParam("lonCenter") Double lonCenter,
-            @QueryParam("deliveryRangeMax")Double deliveryRangeMax,
-            @QueryParam("deliveryRangeMin")Double deliveryRangeMin,
-            @QueryParam("proximity")Double proximity,
-            @QueryParam("SortBy") String sortBy,
-            @QueryParam("Limit")Integer limit, @QueryParam("Offset")Integer offset)
-	
-	{
-				
-		//Marker
-		
-		List<Item> list =
-				itemDAO.getItems(
-						itemCategoryID,
-						shopID,
-						latCenter, lonCenter,
-						deliveryRangeMin,
-						deliveryRangeMax,
-						proximity,null,
-						sortBy,limit,offset
-				);
-		
-		
-		GenericEntity<List<Item>> listEntity = new GenericEntity<List<Item>>(list){
-			
-			};
-		
-			
-			if(list.size()<=0)
-			{
-
-				return Response.status(Status.NO_CONTENT)
-						.entity(listEntity)
-						.build();
-				
-			}else
-			{
-
-				return Response.status(Status.OK)
-						.entity(listEntity)
-						.build();
-			}	
-	}
+//	public Response getItems(
+//            @QueryParam("ItemCategoryID")Integer itemCategoryID,
+//            @QueryParam("ShopID")Integer shopID,
+//            @QueryParam("latCenter") Double latCenter, @QueryParam("lonCenter") Double lonCenter,
+//            @QueryParam("deliveryRangeMax")Double deliveryRangeMax,
+//            @QueryParam("deliveryRangeMin")Double deliveryRangeMin,
+//            @QueryParam("proximity")Double proximity,
+//            @QueryParam("SortBy") String sortBy,
+//            @QueryParam("Limit")Integer limit, @QueryParam("Offset")Integer offset)
+//
+//	{
+//
+//		//Marker
+//
+//		List<Item> list =
+//				itemDAO.getItems(
+//						itemCategoryID,
+//						shopID,
+//						latCenter, lonCenter,
+//						deliveryRangeMin,
+//						deliveryRangeMax,
+//						proximity,null,
+//						sortBy,limit,offset
+//				);
+//
+//
+//		GenericEntity<List<Item>> listEntity = new GenericEntity<List<Item>>(list){
+//
+//			};
+//
+//
+//			if(list.size()<=0)
+//			{
+//
+//				return Response.status(Status.NO_CONTENT)
+//						.entity(listEntity)
+//						.build();
+//
+//			}else
+//			{
+//
+//				return Response.status(Status.OK)
+//						.entity(listEntity)
+//						.build();
+//			}
+//	}
 
 
 
@@ -427,66 +427,68 @@ public class ItemResource {
             @QueryParam("ItemCategoryID")Integer itemCategoryID,
             @QueryParam("ShopID")Integer shopID,
             @QueryParam("latCenter") Double latCenter, @QueryParam("lonCenter") Double lonCenter,
+            @QueryParam("ItemSpecValues") String itemSpecValues,
             @QueryParam("deliveryRangeMax")Double deliveryRangeMax,
             @QueryParam("deliveryRangeMin")Double deliveryRangeMin,
             @QueryParam("proximity")Double proximity,
             @QueryParam("SearchString")String searchString,
             @QueryParam("SortBy") String sortBy,
             @QueryParam("Limit")Integer limit, @QueryParam("Offset")Integer offset,
-            @QueryParam("metadata_only")Boolean metaonly)
+			@QueryParam("GetRowCount")boolean getRowCount,
+			@QueryParam("MetadataOnly")boolean getOnlyMetaData)
 	{
 
 
 
 
-		int set_limit = 30;
-		int set_offset = 0;
-		final int max_limit = 100;
+//		int set_limit = 30;
+//		int set_offset = 0;
+//		final int max_limit = 100;
 
-		if(limit!= null)
+
+		if(limit!=null)
 		{
-
-			if (limit >= max_limit) {
-
-				set_limit = max_limit;
-			}
-			else
+			if(limit >= GlobalConstants.max_limit)
 			{
-
-				set_limit = limit;
+				limit = GlobalConstants.max_limit;
 			}
 
+			if(offset==null)
+			{
+				offset = 0;
+			}
 		}
 
-		if(offset!=null)
+
+
+
+//		ItemEndPoint endPoint = itemDAO.getEndPointMetadata(itemCategoryID,
+//				shopID,latCenter,lonCenter,deliveryRangeMin,deliveryRangeMax,proximity,searchString);
+
+//		endPoint.setLimit(set_limit);
+//		endPoint.setMax_limit(max_limit);
+//		endPoint.setOffset(set_offset);
+
+		ItemEndPoint endPoint  = itemDAO.getItems(
+											itemCategoryID,
+											shopID,
+											latCenter, lonCenter,
+											itemSpecValues,
+											deliveryRangeMin,
+											deliveryRangeMax,
+											proximity,searchString,
+											sortBy,limit,offset,
+											getRowCount,getOnlyMetaData
+									);
+
+
+
+
+		if(limit!=null)
 		{
-			set_offset = offset;
-		}
-
-		ItemEndPoint endPoint = itemDAO.getEndPointMetadata(itemCategoryID,
-				shopID,latCenter,lonCenter,deliveryRangeMin,deliveryRangeMax,proximity,searchString);
-
-		endPoint.setLimit(set_limit);
-		endPoint.setMax_limit(max_limit);
-		endPoint.setOffset(set_offset);
-
-		List<Item> list = null;
-
-
-		if(metaonly==null || (!metaonly)) {
-
-			list =
-					itemDAO.getItems(
-							itemCategoryID,
-							shopID,
-							latCenter, lonCenter,
-							deliveryRangeMin,
-							deliveryRangeMax,
-							proximity,searchString,
-							sortBy,set_limit,set_offset
-					);
-
-			endPoint.setResults(list);
+			endPoint.setLimit(limit);
+			endPoint.setOffset(offset);
+			endPoint.setMax_limit(GlobalConstants.max_limit);
 		}
 
 
@@ -503,6 +505,9 @@ public class ItemResource {
                 .build();
 
 	}
+
+
+
 
 
 

@@ -652,6 +652,162 @@ public class OrderEndpointShopStaff {
 
 
 
+
+
+
+
+
+	@PUT
+	@Path("/SetConfirmedPFS/{OrderID}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@RolesAllowed({GlobalConstants.ROLE_SHOP_ADMIN, GlobalConstants.ROLE_SHOP_STAFF})
+	public Response confirmOrderPFS(@PathParam("OrderID")int orderID)
+	{
+
+//		Order order = Globals.orderService.readStatusHomeDelivery(orderID);
+
+		User user = (User) Globals.accountApproved;
+
+
+		if(user.getRole()==GlobalConstants.ROLE_SHOP_STAFF_CODE)
+		{
+			ShopStaffPermissions permissions = Globals.daoShopStaff.getShopStaffPermissions(user.getUserID());
+
+			if(!permissions.isPermitConfirmOrders())
+			{
+				throw new ForbiddenException("Not Permitted !");
+			}
+
+		}
+
+
+
+		int rowCount = Globals.daoOrderStaff.confirmOrderPFS(orderID);
+
+		if(rowCount >= 1)
+		{
+
+			return Response.status(Status.OK)
+					.build();
+		}
+		if(rowCount <= 0)
+		{
+
+			return Response.status(Status.NOT_MODIFIED)
+					.build();
+		}
+
+
+
+		return null;
+	}
+
+
+
+
+	@PUT
+	@Path("/SetOrderPackedPFS/{OrderID}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@RolesAllowed({GlobalConstants.ROLE_SHOP_ADMIN, GlobalConstants.ROLE_SHOP_STAFF})
+	public Response setOrderPackedPFS(@PathParam("OrderID")int orderID)
+	{
+//		Order order = Globals.orderService.readStatusHomeDelivery(orderID);
+		User user = (User) Globals.accountApproved;
+
+
+
+		if(user.getRole()==GlobalConstants.ROLE_SHOP_STAFF_CODE)
+		{
+			ShopStaffPermissions permissions = Globals.daoShopStaff.getShopStaffPermissions(user.getUserID());
+
+
+			if(!permissions.isPermitSetOrdersPacked())
+			{
+				throw new ForbiddenException("Not Permitted !");
+			}
+		}
+
+
+
+//		try {
+//			Thread.sleep(1000);
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
+
+
+//			order.setStatusHomeDelivery(OrderStatusHomeDelivery.ORDER_PACKED);
+
+		int rowCount = Globals.daoOrderStaff.setOrderPackedPFS(orderID);
+
+
+		if(rowCount >= 1)
+		{
+
+			return Response.status(Status.OK)
+					.entity(null)
+					.build();
+		}
+		if(rowCount <= 0)
+		{
+
+			return Response.status(Status.NOT_MODIFIED)
+					.build();
+		}
+
+
+		return null;
+	}
+
+
+
+	@PUT
+	@Path("/PaymentReceivedPFS/{OrderID}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@RolesAllowed({GlobalConstants.ROLE_SHOP_ADMIN, GlobalConstants.ROLE_SHOP_STAFF})
+	public Response paymentReceivedPFS(@PathParam("OrderID")int orderID)
+	{
+//		Order order = Globals.orderService.readStatusHomeDelivery(orderID);
+
+		User user = (User) Globals.accountApproved;
+
+		if(user.getRole()==GlobalConstants.ROLE_SHOP_STAFF_CODE)
+		{
+			ShopStaffPermissions permissions = Globals.daoShopStaff.getShopStaffPermissions(user.getUserID());
+
+			if(!permissions.isPermitAcceptPaymentsFromDelivery())
+			{
+				throw new ForbiddenException("Not Permitted !");
+			}
+
+		}
+
+
+		int rowCount = Globals.daoOrderStaff.paymentReceivedPFS(orderID);
+
+
+		if(rowCount >= 1)
+		{
+
+			return Response.status(Status.OK)
+					.build();
+		}
+		if(rowCount <= 0)
+		{
+
+			return Response.status(Status.NOT_MODIFIED)
+					.build();
+		}
+
+//		order.setOrderID(orderID);
+//		int rowCount = Globals.orderService.updateOrder(order);
+
+		return null;
+	}
+
+
+
+
 	// Permissions : General
 	// Submit Item Categories
 	// Submit Items

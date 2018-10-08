@@ -71,7 +71,7 @@ public class PlaceOrderDAO {
                 + " ? " + ","
                 + " ? " + ","
 
-                + " false " + ""
+                + " ? " + ""
                 + " from " + Cart.TABLE_NAME
                 + " where " + Cart.CART_ID + " = ?";
 
@@ -198,10 +198,15 @@ public class PlaceOrderDAO {
 
 
 
+
+
             statementCopyCartToOrder = connection.prepareStatement(copyCartToOrder,PreparedStatement.RETURN_GENERATED_KEYS);
             statementCopyCartToOrder.setInt(1,deliveryCharges);
             statementCopyCartToOrder.setInt(2,order.getDeliveryAddressID());
-            statementCopyCartToOrder.setInt(3,cartID);
+            statementCopyCartToOrder.setBoolean(3,order.getPickFromShop());
+            statementCopyCartToOrder.setInt(4,cartID);
+
+
             statementCopyCartToOrder.executeUpdate();
 
             ResultSet rsCopyCartToOrder = statementCopyCartToOrder.getGeneratedKeys();

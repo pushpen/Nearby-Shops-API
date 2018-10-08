@@ -139,6 +139,8 @@ public class ShopReviewRESTEndpoint {
         }
 
 
+
+
         @DELETE
         @Path("/{ShopReviewID}")
         @Produces(MediaType.APPLICATION_JSON)
@@ -147,19 +149,18 @@ public class ShopReviewRESTEndpoint {
 
             int rowCount = shopReviewDAOPrepared.deleteShopReview(shopReviewID);
 
+
+
             if(rowCount>=1)
             {
                 Response response = Response.status(Response.Status.OK)
-                        .entity(null)
                         .build();
 
                 return response;
             }
-
-            if(rowCount == 0)
+            else if(rowCount == 0)
             {
                 Response response = Response.status(Response.Status.NOT_MODIFIED)
-                        .entity(null)
                         .build();
 
                 return response;

@@ -61,17 +61,17 @@ public class ItemSpecValueDAOInnerJoin {
                 + " AND " + ShopItem.TABLE_NAME + "." + ShopItem.ITEM_PRICE + " > 0 ";
 
 
-        isfirst = false;
+//        isfirst = false;
 
 
         if(itemCatID != null)
         {
-            queryJoin = queryJoin + " WHERE "
+            queryJoin = queryJoin + " AND "
                     + ItemCategory.TABLE_NAME
                     + "."
                     + ItemCategory.ITEM_CATEGORY_ID + " = ? ";
 
-            isfirst = false;
+//            isfirst = false;
         }
 
 
@@ -79,16 +79,19 @@ public class ItemSpecValueDAOInnerJoin {
         {
             String queryPart = ItemSpecificationValue.TABLE_NAME + "." + ItemSpecificationValue.ITEM_SPECIFICATION_NAME_ID + " = ? ";
 
-            if(isfirst)
-            {
-                queryJoin = queryJoin + " WHERE " + queryPart;
-            }
-            else
-            {
-                queryJoin = queryJoin + " AND " + queryPart;
-            }
+            queryJoin = queryJoin + " AND " + queryPart;
 
-            isfirst = false;
+
+//            if(isfirst)
+//            {
+//                queryJoin = queryJoin + " WHERE " + queryPart;
+//            }
+//            else
+//            {
+//                queryJoin = queryJoin + " AND " + queryPart;
+//            }
+//
+//            isfirst = false;
         }
 
 
@@ -118,16 +121,18 @@ public class ItemSpecValueDAOInnerJoin {
 //                    + " + sin( radians(" + latCenter + ")) * sin(radians(lat_center))) <= delivery_range ";
 
 
-            if(isfirst)
-            {
-                queryJoin = queryJoin + " WHERE " + queryPartlatLonCenter;
-                isfirst = false;
-            }
-            else
-            {
-                queryJoin = queryJoin + " AND " + queryPartlatLonCenter;
-            }
+//            if(isfirst)
+//            {
+//                queryJoin = queryJoin + " WHERE " + queryPartlatLonCenter;
+//                isfirst = false;
+//            }
+//            else
+//            {
+//                queryJoin = queryJoin + " AND " + queryPartlatLonCenter;
+//            }
 
+
+            queryJoin = queryJoin + " AND " + queryPartlatLonCenter;
 
         }
 
@@ -137,15 +142,18 @@ public class ItemSpecValueDAOInnerJoin {
         {
             String queryPartSearch = Item.TABLE_NAME + "." + Item.ITEM_NAME +" ilike ? ";
 
-            if(isfirst)
-            {
-                queryJoin = queryJoin + " WHERE " + queryPartSearch;
-                isfirst = false;
-            }
-            else
-            {
-                queryJoin = queryJoin + " AND " + queryPartSearch;
-            }
+            queryJoin = queryJoin + " AND " + queryPartSearch;
+
+
+//            if(isfirst)
+//            {
+//                queryJoin = queryJoin + " WHERE " + queryPartSearch;
+//                isfirst = false;
+//            }
+//            else
+//            {
+//                queryJoin = queryJoin + " AND " + queryPartSearch;
+//            }
 
         }
 
@@ -154,23 +162,31 @@ public class ItemSpecValueDAOInnerJoin {
 
         if(shopID != null)
         {
-            if(isfirst)
-            {
 
-                queryJoin = queryJoin + " WHERE "
-                        + Shop.TABLE_NAME
-                        + "."
-                        + Shop.SHOP_ID + " = ? ";
+//            if(isfirst)
+//            {
+//
+//                queryJoin = queryJoin + " WHERE "
+//                        + Shop.TABLE_NAME
+//                        + "."
+//                        + Shop.SHOP_ID + " = ? ";
+//
+//                isfirst = false;
+//            }
+//            else
+//            {
+//                queryJoin = queryJoin + " AND "
+//                        + Shop.TABLE_NAME
+//                        + "."
+//                        + Shop.SHOP_ID + " = ? ";
+//            }
 
-                isfirst = false;
-            }
-            else
-            {
-                queryJoin = queryJoin + " AND "
-                        + Shop.TABLE_NAME
-                        + "."
-                        + Shop.SHOP_ID + " = ? ";
-            }
+
+
+            queryJoin = queryJoin + " AND "
+                    + Shop.TABLE_NAME
+                    + "."
+                    + Shop.SHOP_ID + " = ? ";
 
         }
 

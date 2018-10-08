@@ -64,17 +64,15 @@ public class ItemSpecNameDAOInnerJoin {
                 + " AND " + ShopItem.TABLE_NAME + "." + ShopItem.ITEM_PRICE + " > 0 ";
 
 
-        isfirst = false;
+//        isfirst = false;
 
 
         if(itemCatID != null)
         {
-            queryJoin = queryJoin + " WHERE "
+            queryJoin = queryJoin + " AND "
                     + ItemCategory.TABLE_NAME
                     + "."
                     + ItemCategory.ITEM_CATEGORY_ID + " = ? ";
-
-            isfirst = false;
         }
 
 
@@ -102,16 +100,17 @@ public class ItemSpecNameDAOInnerJoin {
 //                    + " + sin( radians(" + latCenter + ")) * sin(radians(lat_center))) <= delivery_range ";
 
 
-            if(isfirst)
-            {
-                queryJoin = queryJoin + " WHERE " + queryPartlatLonCenter;
-                isfirst = false;
-            }
-            else
-            {
-                queryJoin = queryJoin + " AND " + queryPartlatLonCenter;
-            }
+//            if(isfirst)
+//            {
+//                queryJoin = queryJoin + " WHERE " + queryPartlatLonCenter;
+//                isfirst = false;
+//            }
+//            else
+//            {
+//                queryJoin = queryJoin + " AND " + queryPartlatLonCenter;
+//            }
 
+            queryJoin = queryJoin + " AND " + queryPartlatLonCenter;
 
         }
 
@@ -121,15 +120,17 @@ public class ItemSpecNameDAOInnerJoin {
         {
             String queryPartSearch = Item.TABLE_NAME + "." + Item.ITEM_NAME +" ilike ? ";
 
-            if(isfirst)
-            {
-                queryJoin = queryJoin + " WHERE " + queryPartSearch;
-                isfirst = false;
-            }
-            else
-            {
-                queryJoin = queryJoin + " AND " + queryPartSearch;
-            }
+//            if(isfirst)
+//            {
+//                queryJoin = queryJoin + " WHERE " + queryPartSearch;
+//                isfirst = false;
+//            }
+//            else
+//            {
+//                queryJoin = queryJoin + " AND " + queryPartSearch;
+//            }
+
+            queryJoin = queryJoin + " AND " + queryPartSearch;
 
         }
 
@@ -138,23 +139,29 @@ public class ItemSpecNameDAOInnerJoin {
 
         if(shopID != null)
         {
-            if(isfirst)
-            {
+//            if(isfirst)
+//            {
+//
+//                queryJoin = queryJoin + " WHERE "
+//                        + Shop.TABLE_NAME
+//                        + "."
+//                        + Shop.SHOP_ID + " = ? ";
+//
+//                isfirst = false;
+//            }
+//            else
+//            {
+//                queryJoin = queryJoin + " AND "
+//                        + Shop.TABLE_NAME
+//                        + "."
+//                        + Shop.SHOP_ID + " = ? ";
+//            }
 
-                queryJoin = queryJoin + " WHERE "
-                        + Shop.TABLE_NAME
-                        + "."
-                        + Shop.SHOP_ID + " = ? ";
 
-                isfirst = false;
-            }
-            else
-            {
-                queryJoin = queryJoin + " AND "
-                        + Shop.TABLE_NAME
-                        + "."
-                        + Shop.SHOP_ID + " = ? ";
-            }
+            queryJoin = queryJoin + " AND "
+                    + Shop.TABLE_NAME
+                    + "."
+                    + Shop.SHOP_ID + " = ? ";
 
         }
 

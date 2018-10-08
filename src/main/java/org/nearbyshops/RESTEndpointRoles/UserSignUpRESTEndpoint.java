@@ -573,7 +573,6 @@ public class UserSignUpRESTEndpoint {
 
 
 
-
     @GET
     @Path("/CheckUsernameExists/{username}")
     @Produces(MediaType.APPLICATION_JSON)

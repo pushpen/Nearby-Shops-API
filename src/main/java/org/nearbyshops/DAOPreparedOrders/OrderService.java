@@ -577,9 +577,9 @@ public class OrderService {
         OrderEndPoint endPoint = new OrderEndPoint();
 
         ArrayList<Order> ordersList = new ArrayList<Order>();
+
+
         Connection connection = null;
-
-
         PreparedStatement statement = null;
         ResultSet rs = null;
 

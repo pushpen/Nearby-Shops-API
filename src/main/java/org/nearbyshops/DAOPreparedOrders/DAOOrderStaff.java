@@ -5,6 +5,7 @@ import org.nearbyshops.Globals.Globals;
 import org.nearbyshops.Model.Order;
 import org.nearbyshops.Model.OrderItem;
 import org.nearbyshops.ModelOrderStatus.OrderStatusHomeDelivery;
+import org.nearbyshops.ModelOrderStatus.OrderStatusPickFromShop;
 import org.nearbyshops.ModelReviewItem.ItemReview;
 import org.nearbyshops.ModelRoles.Endpoints.UserEndpoint;
 import org.nearbyshops.ModelRoles.User;
@@ -88,23 +89,9 @@ public class DAOOrderStaff {
     {
         String updateStatement = "UPDATE " + Order.TABLE_NAME
 
-                + " SET "
-//                + OrderPFS.END_USER_ID + " = ?,"
-//                + " " + OrderPFS.SHOP_ID + " = ?,"
-                + " " + Order.STATUS_HOME_DELIVERY + " = ?"
-//                + " " + OrderPFS.STATUS_PICK_FROM_SHOP + " = ?"
-//                + " " + OrderPFS.PAYMENT_RECEIVED + " = ?,"
-//                + " " + OrderPFS.DELIVERY_RECEIVED + " = ?"
-//                + " " + OrderPFS.DELIVERY_CHARGES + " = ?,"
-//                + " " + OrderPFS.DELIVERY_ADDRESS_ID + " = ?,"
-//                + OrderPFS.DELIVERY_GUY_SELF_ID + " = ?"
-//                + OrderPFS.PICK_FROM_SHOP + " = ?"
+                + " SET " + " " + Order.STATUS_HOME_DELIVERY + " = ?"
                 + " WHERE " + Order.ORDER_ID + " = ?"
                 + " AND "  + Order.STATUS_HOME_DELIVERY + " = ? ";
-
-
-//        + " AND "  + Order.SHOP_ID + " = ? "
-
 
 
         Connection connection = null;
@@ -118,16 +105,7 @@ public class DAOOrderStaff {
 
             int i = 0;
 
-//            statement.setObject(1,order.getEndUserID());
-//            statement.setObject(1,order.getShopID());
             statement.setObject(++i, OrderStatusHomeDelivery.ORDER_PACKED);
-//            statement.setObject(4,order.getStatusPickFromShop());
-//            statement.setObject(2,order.getPaymentReceived());
-//            statement.setObject(3,order.getDeliveryReceived());
-//            statement.setObject(7,order.getDeliveryCharges());
-//            statement.setObject(8,order.getDeliveryAddressID());
-//            statement.setObject(2,order.getDeliveryGuySelfID());
-//            statement.setObject(10,order.getPickFromShop());
             statement.setObject(++i,orderID);
             statement.setObject(++i, OrderStatusHomeDelivery.ORDER_CONFIRMED);
 
@@ -168,7 +146,6 @@ public class DAOOrderStaff {
 
         return updatedRows;
     }
-
 
 
 
@@ -725,6 +702,202 @@ public class DAOOrderStaff {
 
         return endPoint;
     }
+
+
+
+
+
+
+
+
+    public int confirmOrderPFS(int orderID)
+    {
+        String updateStatement = "UPDATE " + Order.TABLE_NAME
+
+                + " SET " + " " + Order.STATUS_PICK_FROM_SHOP + " = ?"
+                + " WHERE " + Order.ORDER_ID + " = ?"
+                + " AND "  + Order.STATUS_PICK_FROM_SHOP + " = ? ";
+
+
+        Connection connection = null;
+        PreparedStatement statement = null;
+        int updatedRows = -1;
+
+        try {
+
+            connection = dataSource.getConnection();
+            statement = connection.prepareStatement(updateStatement);
+
+            int i = 0;
+
+            statement.setObject(++i, OrderStatusPickFromShop.ORDER_CONFIRMED);
+            statement.setObject(++i,orderID);
+            statement.setObject(++i, OrderStatusPickFromShop.ORDER_PLACED);
+
+            updatedRows = statement.executeUpdate();
+            System.out.println("Total rows updated: " + updatedRows);
+
+            //conn.close();
+
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        finally
+
+        {
+
+            try {
+
+                if(statement!=null)
+                {statement.close();}
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+            try {
+
+                if(connection!=null)
+                {connection.close();}
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+
+        return updatedRows;
+    }
+
+
+
+    public int setOrderPackedPFS(int orderID)
+    {
+        String updateStatement = "UPDATE " + Order.TABLE_NAME
+                + " SET " + Order.STATUS_PICK_FROM_SHOP + " = ?"
+                + " WHERE " + Order.ORDER_ID + " = ?"
+                + " AND "  + Order.STATUS_PICK_FROM_SHOP + " = ? ";
+
+
+//        + " AND "  + Order.SHOP_ID + " = ? "
+
+
+
+        Connection connection = null;
+        PreparedStatement statement = null;
+        int updatedRows = -1;
+
+        try {
+
+            connection = dataSource.getConnection();
+            statement = connection.prepareStatement(updateStatement);
+
+            int i = 0;
+
+            statement.setObject(++i, OrderStatusPickFromShop.ORDER_PACKED);
+            statement.setObject(++i,orderID);
+            statement.setObject(++i, OrderStatusPickFromShop.ORDER_CONFIRMED);
+
+
+
+
+            updatedRows = statement.executeUpdate();
+            System.out.println("Total rows updated: " + updatedRows);
+
+            //conn.close();
+
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        finally
+
+        {
+
+            try {
+
+                if(statement!=null)
+                {statement.close();}
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+            try {
+
+                if(connection!=null)
+                {connection.close();}
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+
+        return updatedRows;
+    }
+
+
+
+    public int paymentReceivedPFS(int orderID)
+    {
+        String updateStatement = "UPDATE " + Order.TABLE_NAME
+
+                + " SET " + " " + Order.STATUS_PICK_FROM_SHOP + " = ?"
+                + " WHERE " + Order.ORDER_ID + " = ?"
+                + " AND "  + Order.STATUS_PICK_FROM_SHOP + " = ? ";
+
+
+        Connection connection = null;
+        PreparedStatement statement = null;
+        int updatedRows = -1;
+
+        try {
+
+            connection = dataSource.getConnection();
+            statement = connection.prepareStatement(updateStatement);
+
+            int i = 0;
+
+            statement.setObject(++i, OrderStatusPickFromShop.DELIVERED);
+            statement.setObject(++i,orderID);
+            statement.setObject(++i, OrderStatusPickFromShop.ORDER_PACKED);
+
+            updatedRows = statement.executeUpdate();
+            System.out.println("Total rows updated: " + updatedRows);
+
+            //conn.close();
+
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        finally
+
+        {
+
+            try {
+
+                if(statement!=null)
+                {statement.close();}
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+            try {
+
+                if(connection!=null)
+                {connection.close();}
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+
+        return updatedRows;
+    }
+
+
 
 
 
