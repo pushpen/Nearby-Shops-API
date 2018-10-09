@@ -39,8 +39,10 @@ public class DAOOneSignal {
     public static final int ORDER_CONFIRMED = 22;
     public static final int ORDER_PACKED = 23;
     public static final int ORDER_OUT_FOR_DELIVERY = 24;
+    public static final int ORDER_DELIVERED = 25;
+    public static final int ORDER_RETURNED = 26;
 
-    public static final int ORDER_CANCELLED_BY_SHOP = 25;
+    public static final int ORDER_CANCELLED_BY_SHOP = 30;
 
 
 
@@ -528,13 +530,51 @@ public class DAOOneSignal {
 
 
 
-    public ArrayList<String> getPlayerIDsForShopStaff(int shopID) {
+    public ArrayList<String> getPlayerIDsForShopStaff(int shopID,
+                                                      Boolean permitConfirmOrder,
+                                                      Boolean permitPackOrders,
+                                                      Boolean permitHandoverToDelivery,
+                                                      Boolean permitAcceptPayments,
+                                                      Boolean permitAcceptReturns
+    ) {
 
 
         String query = "SELECT "    +  OneSignalIDs.PLAYER_ID
                     + " FROM "      +  ShopStaffPermissions.TABLE_NAME
                     + " INNER JOIN " + OneSignalIDs.TABLE_NAME + " ON (" + OneSignalIDs.TABLE_NAME + "." + OneSignalIDs.USER_ID + " = " + ShopStaffPermissions.TABLE_NAME + "." + ShopStaffPermissions.STAFF_ID + ")"
                     + " WHERE "     + ShopStaffPermissions.SHOP_ID + " = ?";
+
+
+
+
+        if(permitConfirmOrder!=null && permitConfirmOrder)
+        {
+            query  = query + " AND " + ShopStaffPermissions.CONFIRM_ORDERS + " = TRUE ";
+        }
+
+
+        if(permitPackOrders!=null && permitPackOrders)
+        {
+            query = query + " AND " + ShopStaffPermissions.SET_ORDERS_PACKED + " = TRUE ";
+        }
+
+        if(permitHandoverToDelivery!=null && permitHandoverToDelivery)
+        {
+            query = query + " AND " + ShopStaffPermissions.HANDOVER_TO_DELIVERY + " = TRUE ";
+        }
+
+
+        if(permitAcceptPayments!=null && permitAcceptPayments)
+        {
+            query = query + " AND " + ShopStaffPermissions.ACCEPT_PAYMENTS_FROM_DELIVERY + " = TRUE";
+
+        }
+
+        if(permitAcceptReturns!=null && permitAcceptReturns)
+        {
+            query = query + " AND " + ShopStaffPermissions.ACCEPT_PAYMENTS_FROM_DELIVERY + " = TRUE ";
+        }
+
 
 
 

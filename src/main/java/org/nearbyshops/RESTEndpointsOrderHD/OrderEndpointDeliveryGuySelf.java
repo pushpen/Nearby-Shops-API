@@ -1,5 +1,6 @@
 package org.nearbyshops.RESTEndpointsOrderHD;
 
+import org.nearbyshops.DAOPushNotifications.DAOOneSignal;
 import org.nearbyshops.Globals.GlobalConstants;
 import org.nearbyshops.Globals.Globals;
 import org.nearbyshops.Model.Order;
@@ -13,7 +14,10 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
+import java.util.ArrayList;
 import java.util.List;
+
+import static org.nearbyshops.Globals.Globals.oneSignalNotifications;
 
 
 @Singleton
@@ -151,6 +155,32 @@ public class OrderEndpointDeliveryGuySelf {
 
 		if(rowCount >= 1)
 		{
+			Order orderResult = Globals.orderService.readSingleOrder(orderID);
+
+//			String shopAdminPlayerID = oneSignalNotifications.getPlayerIDforShopAdmin(orderResult.getShopID());
+			ArrayList<String> playerIDs =  Globals.oneSignalNotifications.getPlayerIDsForShopStaff(orderResult.getShopID(),
+					null,null,null,null,true);
+
+
+//			playerIDs.add(shopAdminPlayerID);
+
+
+
+			Globals.oneSignalNotifications.sendNotificationToUser(
+					playerIDs,
+					GlobalConstants.ONE_SIGNAL_APP_ID_SHOP_OWNER_APP,
+					GlobalConstants.ONE_SIGNAL_API_KEY_SHOP_OWNER_APP,
+					"https://i1.wp.com/nearbyshops.org/wp-content/uploads/2017/02/cropped-backdrop_play_store-1.png?w=250&ssl=1",
+					null,
+					null,
+					10,
+					"Order Return Requested",
+					"Return is requested for order number " + String.valueOf(orderID) + " !",
+					1,
+					DAOOneSignal.ORDER_RETURNED,
+					null
+			);
+
 
 			return Response.status(Status.OK)
 					.build();
@@ -165,6 +195,9 @@ public class OrderEndpointDeliveryGuySelf {
 
 		return null;
 	}
+
+
+
 
 
 
@@ -192,6 +225,36 @@ public class OrderEndpointDeliveryGuySelf {
 //		}
 
 		if (rowCount >= 1) {
+
+
+			Order orderResult = Globals.orderService.readSingleOrder(orderID);
+
+//			String shopAdminPlayerID = oneSignalNotifications.getPlayerIDforShopAdmin(orderResult.getShopID());
+			ArrayList<String> playerIDs =  Globals.oneSignalNotifications.getPlayerIDsForShopStaff(orderResult.getShopID(),
+					null,null,null,true,null);
+
+
+//			playerIDs.add(shopAdminPlayerID);
+
+
+
+			Globals.oneSignalNotifications.sendNotificationToUser(
+					playerIDs,
+					GlobalConstants.ONE_SIGNAL_APP_ID_SHOP_OWNER_APP,
+					GlobalConstants.ONE_SIGNAL_API_KEY_SHOP_OWNER_APP,
+					"https://i1.wp.com/nearbyshops.org/wp-content/uploads/2017/02/cropped-backdrop_play_store-1.png?w=250&ssl=1",
+					null,
+					null,
+					10,
+					"Order Delivered",
+					"Order number " + String.valueOf(orderID) + " is Delivered !",
+					1,
+					DAOOneSignal.ORDER_RETURNED,
+					null
+			);
+
+
+
 			return Response.status(Status.OK)
 					.build();
 		}

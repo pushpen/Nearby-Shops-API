@@ -86,7 +86,7 @@ public class OrderResource {
 						null,
 						10,
 						"Order Placed",
-						"Your order has been sent successfully !",
+						"Your order has been placed successfully !",
 						1,
 						DAOOneSignal.ORDER_PLACED,
 						null
@@ -99,14 +99,16 @@ public class OrderResource {
 				try
 				{
 
-					System.out.println("Shop ID : " + orderResult.getShopID());
+//					System.out.println("Shop ID : " + orderResult.getShopID());
 
 //					int shopAdminID = Globals.daoShopStaff.getAdminIDforShop(orderResult.getShopID());
 //					String shopAdminPlayerID = oneSignalNotifications.getPlayerID(shopAdminID).getRt_oneSignalPlayerID();
 
 
 					String shopAdminPlayerID = oneSignalNotifications.getPlayerIDforShopAdmin(orderResult.getShopID());
-					ArrayList<String> playerIDs =  Globals.oneSignalNotifications.getPlayerIDsForShopStaff(orderResult.getShopID());
+					ArrayList<String> playerIDs =  Globals.oneSignalNotifications.getPlayerIDsForShopStaff(orderResult.getShopID(),
+							true,null,null,null,null);
+
 
 					playerIDs.add(shopAdminPlayerID);
 

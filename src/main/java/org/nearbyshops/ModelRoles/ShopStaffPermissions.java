@@ -60,7 +60,6 @@ public class ShopStaffPermissions {
                     + " " + ShopStaffPermissions.CONFIRM_ORDERS + " boolean NOT NULL default 'f',"
                     + " " + ShopStaffPermissions.SET_ORDERS_PACKED + " boolean NOT NULL default 'f',"
                     + " " + ShopStaffPermissions.HANDOVER_TO_DELIVERY + " boolean NOT NULL default 'f',"
-                    + " " + ShopStaffPermissions.MARK_ORDERS_DELIVERED + " boolean NOT NULL default 'f',"
                     + " " + ShopStaffPermissions.ACCEPT_PAYMENTS_FROM_DELIVERY + " boolean NOT NULL default 'f',"
                     + " " + ShopStaffPermissions.ACCEPT_RETURNS + " boolean NOT NULL default 'f',"
 
@@ -72,6 +71,10 @@ public class ShopStaffPermissions {
                     + " FOREIGN KEY(" + ShopStaffPermissions.SHOP_ID +") REFERENCES " + Shop.TABLE_NAME + "(" + Shop.SHOP_ID + ") ON DELETE CASCADE,"
                     + " FOREIGN KEY(" + ShopStaffPermissions.STAFF_ID +") REFERENCES " + User.TABLE_NAME + "(" + User.USER_ID + ") ON DELETE CASCADE "
                     + ")";
+
+
+//    + " " + ShopStaffPermissions.MARK_ORDERS_DELIVERED + " boolean NOT NULL default 'f',"
+
 
 
 

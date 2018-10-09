@@ -1,5 +1,6 @@
 package org.nearbyshops.RESTEndpointsOrderHD;
 
+import org.nearbyshops.DAOPushNotifications.DAOOneSignal;
 import org.nearbyshops.Globals.GlobalConstants;
 import org.nearbyshops.Globals.Globals;
 import org.nearbyshops.Model.Order;
@@ -16,7 +17,10 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
+import java.util.ArrayList;
 import java.util.List;
+
+import static org.nearbyshops.Globals.Globals.oneSignalNotifications;
 
 
 @Singleton
@@ -89,10 +93,57 @@ public class OrderEndpointShopStaff {
 
 
 
+
+
+
 		int rowCount = Globals.daoOrderStaff.confirmOrder(orderID);
 
 		if(rowCount >= 1)
 		{
+
+			Order orderResult = Globals.orderService.readSingleOrder(orderID);
+
+			oneSignalNotifications.sendNotificationToEndUser(
+					orderResult.getEndUserID(),
+					"https://i1.wp.com/nearbyshops.org/wp-content/uploads/2017/02/cropped-backdrop_play_store-1.png?w=250&ssl=1",
+					null,
+					null,
+					10,
+					"Order Confirmed",
+					"Order number " + String.valueOf(orderID) + " has been confirmed !",
+					1,
+					DAOOneSignal.ORDER_CONFIRMED,
+					null
+			);
+
+
+
+
+//			String shopAdminPlayerID = oneSignalNotifications.getPlayerIDforShopAdmin(orderResult.getShopID());
+			ArrayList<String> playerIDs =  Globals.oneSignalNotifications.getPlayerIDsForShopStaff(orderResult.getShopID(),
+					null,true,null,null,null);
+
+
+//			playerIDs.add(shopAdminPlayerID);
+
+
+
+			Globals.oneSignalNotifications.sendNotificationToUser(
+					playerIDs,
+					GlobalConstants.ONE_SIGNAL_APP_ID_SHOP_OWNER_APP,
+					GlobalConstants.ONE_SIGNAL_API_KEY_SHOP_OWNER_APP,
+					"https://i1.wp.com/nearbyshops.org/wp-content/uploads/2017/02/cropped-backdrop_play_store-1.png?w=250&ssl=1",
+					null,
+					null,
+					10,
+					"Order Confirmed",
+					"Order number " + String.valueOf(orderID) + " has been confirmed !",
+					1,
+					DAOOneSignal.ORDER_PLACED,
+					null
+			);
+
+
 
 			return Response.status(Status.OK)
 					.build();
@@ -137,11 +188,12 @@ public class OrderEndpointShopStaff {
 		}
 
 
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+
+//		try {
+//			Thread.sleep(1000);
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
 
 
 //			order.setStatusHomeDelivery(OrderStatusHomeDelivery.ORDER_PACKED);
@@ -151,6 +203,49 @@ public class OrderEndpointShopStaff {
 
 			if(rowCount >= 1)
 			{
+
+				Order orderResult = Globals.orderService.readSingleOrder(orderID);
+
+				oneSignalNotifications.sendNotificationToEndUser(
+						orderResult.getEndUserID(),
+						"https://i1.wp.com/nearbyshops.org/wp-content/uploads/2017/02/cropped-backdrop_play_store-1.png?w=250&ssl=1",
+						null,
+						null,
+						10,
+						"Order Packed",
+						"Order number " + String.valueOf(orderID) + " has been Packed !",
+						1,
+						DAOOneSignal.ORDER_PACKED,
+						null
+				);
+
+
+
+//			String shopAdminPlayerID = oneSignalNotifications.getPlayerIDforShopAdmin(orderResult.getShopID());
+				ArrayList<String> playerIDs =  Globals.oneSignalNotifications.getPlayerIDsForShopStaff(orderResult.getShopID(),
+						null,null,true,null,null);
+
+
+//			playerIDs.add(shopAdminPlayerID);
+
+
+
+				Globals.oneSignalNotifications.sendNotificationToUser(
+						playerIDs,
+						GlobalConstants.ONE_SIGNAL_APP_ID_SHOP_OWNER_APP,
+						GlobalConstants.ONE_SIGNAL_API_KEY_SHOP_OWNER_APP,
+						"https://i1.wp.com/nearbyshops.org/wp-content/uploads/2017/02/cropped-backdrop_play_store-1.png?w=250&ssl=1",
+						null,
+						null,
+						10,
+						"Order Packed",
+						"Order number " + String.valueOf(orderID) + " has been packed !",
+						1,
+						DAOOneSignal.ORDER_PACKED,
+						null
+				);
+
+
 
 				return Response.status(Status.OK)
 						.entity(null)
@@ -288,7 +383,6 @@ public class OrderEndpointShopStaff {
 
 
 
-
 	@PUT
 	@Path("/AcceptReturn/{OrderID}")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -316,23 +410,39 @@ public class OrderEndpointShopStaff {
 
 
 
-
-
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+//
+//
+//		try {
+//			Thread.sleep(3000);
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
 
 
 
 
 		if(rowCount >= 1)
 		{
+			Order orderResult = Globals.orderService.readSingleOrder(orderID);
+
+			oneSignalNotifications.sendNotificationToEndUser(
+					orderResult.getEndUserID(),
+					"https://i1.wp.com/nearbyshops.org/wp-content/uploads/2017/02/cropped-backdrop_play_store-1.png?w=250&ssl=1",
+					null,
+					null,
+					10,
+					"Order Returned",
+					"Order number " + String.valueOf(orderID) + " has been returned because order failed to be delivered !",
+					1,
+					DAOOneSignal.ORDER_RETURNED,
+					null
+			);
+
 
 			return Response.status(Status.OK)
-					.entity(null)
 					.build();
+
+
 		}
 		if(rowCount <= 0)
 		{
@@ -346,6 +456,7 @@ public class OrderEndpointShopStaff {
 
 		return null;
 	}
+
 
 
 
@@ -431,6 +542,23 @@ public class OrderEndpointShopStaff {
 
 		if(rowCount >= 1)
 		{
+
+			Order orderResult = Globals.orderService.readSingleOrder(orderID);
+
+			oneSignalNotifications.sendNotificationToEndUser(
+					orderResult.getEndUserID(),
+					"https://i1.wp.com/nearbyshops.org/wp-content/uploads/2017/02/cropped-backdrop_play_store-1.png?w=250&ssl=1",
+					null,
+					null,
+					10,
+					"Order Delivered",
+					"Order number " + String.valueOf(orderID) + " has been delivered to you !",
+					1,
+					DAOOneSignal.ORDER_DELIVERED,
+					null
+			);
+
+
 
 			return Response.status(Status.OK)
 					.entity(null)
@@ -554,10 +682,6 @@ public class OrderEndpointShopStaff {
 
 
 
-
-
-
-
 	@GET
 	@Path("/FetchDeliveryGuys")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -653,10 +777,6 @@ public class OrderEndpointShopStaff {
 
 
 
-
-
-
-
 	@PUT
 	@Path("/SetConfirmedPFS/{OrderID}")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -686,6 +806,21 @@ public class OrderEndpointShopStaff {
 
 		if(rowCount >= 1)
 		{
+			Order orderResult = Globals.orderService.readSingleOrder(orderID);
+
+			oneSignalNotifications.sendNotificationToEndUser(
+					orderResult.getEndUserID(),
+					"https://i1.wp.com/nearbyshops.org/wp-content/uploads/2017/02/cropped-backdrop_play_store-1.png?w=250&ssl=1",
+					null,
+					null,
+					10,
+					"Order Confirmed",
+					"Order number " + String.valueOf(orderID) + " has been confirmed !",
+					1,
+					DAOOneSignal.ORDER_CONFIRMED,
+					null
+			);
+
 
 			return Response.status(Status.OK)
 					.build();
@@ -743,6 +878,21 @@ public class OrderEndpointShopStaff {
 
 		if(rowCount >= 1)
 		{
+			Order orderResult = Globals.orderService.readSingleOrder(orderID);
+
+			oneSignalNotifications.sendNotificationToEndUser(
+					orderResult.getEndUserID(),
+					"https://i1.wp.com/nearbyshops.org/wp-content/uploads/2017/02/cropped-backdrop_play_store-1.png?w=250&ssl=1",
+					null,
+					null,
+					10,
+					"Order Packed",
+					"Order number " + String.valueOf(orderID) + " has been packed !",
+					1,
+					DAOOneSignal.ORDER_PACKED,
+					null
+			);
+
 
 			return Response.status(Status.OK)
 					.entity(null)
@@ -788,6 +938,21 @@ public class OrderEndpointShopStaff {
 
 		if(rowCount >= 1)
 		{
+			Order orderResult = Globals.orderService.readSingleOrder(orderID);
+
+			oneSignalNotifications.sendNotificationToEndUser(
+					orderResult.getEndUserID(),
+					"https://i1.wp.com/nearbyshops.org/wp-content/uploads/2017/02/cropped-backdrop_play_store-1.png?w=250&ssl=1",
+					null,
+					null,
+					10,
+					"Order Delivered",
+					"Order number " + String.valueOf(orderID) + " has been delivered to you and order amount has been paid !",
+					1,
+					DAOOneSignal.ORDER_DELIVERED,
+					null
+			);
+
 
 			return Response.status(Status.OK)
 					.build();
@@ -824,7 +989,5 @@ public class OrderEndpointShopStaff {
 	// 6. Accept Return's | Cancelled By Shop
 
 	// 7. Accept Return | Returned by Delivery Guy | Not required
-
-
 
 }
