@@ -313,6 +313,32 @@ public class OrderEndpointShopStaff {
 		if(rowCount==ordersList.size())
 		{
 
+
+//			String shopAdminPlayerID = oneSignalNotifications.getPlayerIDforShopAdmin(orderResult.getShopID());
+//			ArrayList<String> playerIDs =  Globals.oneSignalNotifications.getPlayerIDsForShopStaff(orderResult.getShopID(),
+//					null,null,true,null,null);
+
+
+//			playerIDs.add(shopAdminPlayerID);
+
+
+
+			Globals.oneSignalNotifications.sendNotificationToUser(
+					deliveryGuyID,
+					GlobalConstants.ONE_SIGNAL_APP_ID_SHOP_OWNER_APP,
+					GlobalConstants.ONE_SIGNAL_API_KEY_SHOP_OWNER_APP,
+					"https://i1.wp.com/nearbyshops.org/wp-content/uploads/2017/02/cropped-backdrop_play_store-1.png?w=250&ssl=1",
+					null,
+					null,
+					10,
+					"Handover Requested",
+					"Handover requested for some orders !",
+					1,
+					DAOOneSignal.ORDER_PACKED,
+					null
+			);
+
+
 			return Response.status(Status.OK)
 					.build();
 
