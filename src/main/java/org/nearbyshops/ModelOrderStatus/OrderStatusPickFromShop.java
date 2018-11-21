@@ -23,6 +23,9 @@ package org.nearbyshops.ModelOrderStatus;
 
 
 
+
+
+
 public class OrderStatusPickFromShop {
 
     public static final int ORDER_PLACED = 1; // Confirm (Staff)

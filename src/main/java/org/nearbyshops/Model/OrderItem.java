@@ -23,8 +23,8 @@ public class OrderItem {
     public static final String createtableOrderItemPostgres = "CREATE TABLE IF NOT EXISTS " + OrderItem.TABLE_NAME + "("
             + " " + OrderItem.ITEM_ID + " INT,"
             + " " + OrderItem.ORDER_ID + " INT,"
-            + " " + OrderItem.ITEM_PRICE_AT_ORDER + " FLOAT,"
-            + " " + OrderItem.ITEM_QUANTITY + " INT,"
+            + " " + OrderItem.ITEM_PRICE_AT_ORDER + " FLOAT NOT NULL DEFAULT 0,"
+            + " " + OrderItem.ITEM_QUANTITY + " FLOAT NOT NULL DEFAULT 0,"
             + " FOREIGN KEY(" + OrderItem.ITEM_ID +") REFERENCES " + Item.TABLE_NAME + "(" + Item.ITEM_ID + "),"
             + " FOREIGN KEY(" + OrderItem.ORDER_ID +") REFERENCES " + Order.TABLE_NAME + "(" + Order.ORDER_ID + "),"
             + " PRIMARY KEY (" + OrderItem.ITEM_ID + ", " + OrderItem.ORDER_ID + "),"
@@ -35,14 +35,11 @@ public class OrderItem {
 
 
 
-
-
-
     // instance variables
     private Integer itemID;
     private Integer orderID;
-    private Integer itemQuantity;
-    private Integer itemPriceAtOrder;
+    private double itemQuantity;
+    private double itemPriceAtOrder;
 
 
     private Item item;
@@ -79,16 +76,26 @@ public class OrderItem {
         this.orderID = orderID;
     }
 
-    public Integer getItemQuantity() {
-        return itemQuantity;
-    }
+
 
     public void setItemQuantity(Integer itemQuantity) {
         this.itemQuantity = itemQuantity;
     }
 
-    public Integer getItemPriceAtOrder() {
+    public double getItemQuantity() {
+        return itemQuantity;
+    }
+
+    public void setItemQuantity(double itemQuantity) {
+        this.itemQuantity = itemQuantity;
+    }
+
+    public double getItemPriceAtOrder() {
         return itemPriceAtOrder;
+    }
+
+    public void setItemPriceAtOrder(double itemPriceAtOrder) {
+        this.itemPriceAtOrder = itemPriceAtOrder;
     }
 
     public void setItemPriceAtOrder(Integer itemPriceAtOrder) {

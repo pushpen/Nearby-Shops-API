@@ -23,6 +23,7 @@ package org.nearbyshops.ModelOrderStatus;
 
 
 
+
 public class OrderStatusHomeDelivery {
 
     public static final int ORDER_PLACED = 1; // Confirm (Staff)
@@ -41,11 +42,15 @@ public class OrderStatusHomeDelivery {
 
     public static final int DELIVERED = 8;// Delivered | Payment Received (Staff)
     public static final int PAYMENT_RECEIVED = 9;// Payment Received-Complete
-//    public static final int RETURN_REQUESTED_BY_USER = 10;// Return-Requested
 
+
+    public static final int RETURN_REQUESTED_BY_USER = 10;// Return-Requested     | Received | Decline
+    public static final int RETURN_RECEIVED = 11;     //
+    public static final int RETURN_AMOUNT_RECEIVED = 12;
     
 
     public static final int CANCELLED_BY_SHOP = 19;
     public static final int CANCELLED_BY_USER = 20;
+
 
 }

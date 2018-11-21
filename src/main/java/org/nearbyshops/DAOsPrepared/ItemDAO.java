@@ -450,10 +450,6 @@ public class ItemDAO {
 
 
 
-
-
-
-
 	
 	public ItemEndPoint getItems(
 					Integer itemCategoryID, Integer shopID,

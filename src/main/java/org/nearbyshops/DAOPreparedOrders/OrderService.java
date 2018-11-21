@@ -1015,11 +1015,9 @@ public class OrderService {
 
             int status = order.getStatusHomeDelivery();
 
-            if (status == 1 || status == 2 || status == 3 || status == 4)
-            {
-                order.setStatusHomeDelivery(OrderStatusHomeDelivery.CANCELLED_BY_USER);
-            }
-            else if(status == 5)
+            if (status == OrderStatusHomeDelivery.ORDER_PLACED ||
+                    status == OrderStatusHomeDelivery.ORDER_CONFIRMED ||
+                    status == OrderStatusHomeDelivery.ORDER_PACKED)
             {
                 order.setStatusHomeDelivery(OrderStatusHomeDelivery.CANCELLED_BY_USER);
             }
@@ -1027,6 +1025,7 @@ public class OrderService {
             {
                 return 0;
             }
+
 
             return updateStatusHomeDelivery(order);
         }

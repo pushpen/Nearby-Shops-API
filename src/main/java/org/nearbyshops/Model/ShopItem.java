@@ -44,10 +44,10 @@ public class ShopItem{
 	public static final String createTableShopItemPostgres = "CREATE TABLE IF NOT EXISTS " + ShopItem.TABLE_NAME + "("
 			+ " " + ShopItem.ITEM_ID + " INT,"
 			+ " " + ShopItem.SHOP_ID + " INT,"
-			+ " " + ShopItem.AVAILABLE_ITEM_QUANTITY + " INT,"
-			+ " " + ShopItem.ITEM_PRICE + " FLOAT,"
+			+ " " + ShopItem.AVAILABLE_ITEM_QUANTITY + " FLOAT NOT NULL default 0,"
+			+ " " + ShopItem.ITEM_PRICE + " FLOAT NOT NULL default 0,"
 			+ " " + ShopItem.LAST_UPDATE_DATE_TIME + " timestamp with time zone,"
-			+ " " + ShopItem.EXTRA_DELIVERY_CHARGE + " FLOAT,"
+			+ " " + ShopItem.EXTRA_DELIVERY_CHARGE + " FLOAT NOT NULL default 0,"
 			+ " " + ShopItem.DATE_TIME_ADDED + " timestamp with time zone NOT NULL DEFAULT now(),"
 			+ " FOREIGN KEY(" + ShopItem.SHOP_ID +") REFERENCES " + Shop.TABLE_NAME + "(" + Shop.SHOP_ID + "),"
 			+ " FOREIGN KEY(" + ShopItem.ITEM_ID +") REFERENCES " + Item.TABLE_NAME + "(" + Item.ITEM_ID + "),"
@@ -61,14 +61,13 @@ public class ShopItem{
 
 	private Shop shop;
 	private Item item;
-	
 
 
 	// variables
 
 	private int shopID;
 	private int itemID;
-	private int availableItemQuantity;
+	private double availableItemQuantity;
 	private double itemPrice;
 	
 		
@@ -146,10 +145,11 @@ public class ShopItem{
 	}
 
 
-	public int getAvailableItemQuantity() {
+	public double getAvailableItemQuantity() {
 		return availableItemQuantity;
 	}
-	public void setAvailableItemQuantity(int availableItemQuantity) {
+
+	public void setAvailableItemQuantity(double availableItemQuantity) {
 		this.availableItemQuantity = availableItemQuantity;
 	}
 

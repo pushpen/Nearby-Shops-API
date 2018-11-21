@@ -57,8 +57,8 @@ public class ItemSpecNameDAOInnerJoin {
                 + " INNER JOIN " + ItemSpecificationItem.TABLE_NAME + " ON ( " + ItemSpecificationItem.TABLE_NAME + "." + ItemSpecificationItem.ITEM_SPECIFICATION_VALUE_ID + " = " + ItemSpecificationValue.TABLE_NAME + "." + ItemSpecificationValue.ID + " ) "
                 + " INNER JOIN " + Item.TABLE_NAME + " ON ( " + Item.TABLE_NAME + "." + Item.ITEM_ID + " = "  + ItemSpecificationItem.TABLE_NAME + "." + ItemSpecificationItem.ITEM_ID + " ) "
                 + " INNER JOIN " + ItemCategory.TABLE_NAME + " ON ( " + ItemCategory.TABLE_NAME + "." + ItemCategory.ITEM_CATEGORY_ID + " = " + Item.TABLE_NAME + "." + Item.ITEM_CATEGORY_ID + " ) "
-                + " INNER JOIN " + ShopItem.TABLE_NAME + " ON ( " + ShopItem.TABLE_NAME + "." + ShopItem.ITEM_ID + "=" + Item.TABLE_NAME + "." + Item.ITEM_ID + " ) "
-                + " INNER JOIN " + Shop.TABLE_NAME + " ON ( " + Shop.TABLE_NAME + "." + Shop.SHOP_ID + "=" + ShopItem.TABLE_NAME + "." + ShopItem.SHOP_ID + " ) "
+                + " INNER JOIN " + ShopItem.TABLE_NAME + " ON ( " + ShopItem.TABLE_NAME + "." + ShopItem.ITEM_ID + " = " + Item.TABLE_NAME + "." + Item.ITEM_ID + " ) "
+                + " INNER JOIN " + Shop.TABLE_NAME + " ON ( " + Shop.TABLE_NAME + "." + Shop.SHOP_ID + " = " + ShopItem.TABLE_NAME + "." + ShopItem.SHOP_ID + " ) "
                 + " WHERE " + Shop.TABLE_NAME + "." + Shop.IS_OPEN + " = TRUE "
                 + " AND " + Shop.TABLE_NAME + "." + Shop.SHOP_ENABLED + " = TRUE "
                 + " AND " + ShopItem.TABLE_NAME + "." + ShopItem.ITEM_PRICE + " > 0 ";
@@ -311,12 +311,17 @@ public class ItemSpecNameDAOInnerJoin {
 
 
 
+
+
+
+
+
     public int getRowCount(
             Integer itemCatID)
     {
 
         boolean isfirst = true;
-        String query = "";
+        String queryCount = "";
 
         String queryJoin = "SELECT DISTINCT "
 
@@ -344,10 +349,10 @@ public class ItemSpecNameDAOInnerJoin {
 
         // Applying filters
 
-        query = queryJoin;
+        queryCount = queryJoin;
 
 
-        query = "SELECT COUNT(*) as item_count FROM (" + query + ") AS temp";
+        queryCount = "SELECT COUNT(*) as item_count FROM (" + queryCount + ") AS temp";
 
 
 
@@ -359,7 +364,7 @@ public class ItemSpecNameDAOInnerJoin {
         try {
 
             connection = dataSource.getConnection();
-            statement = connection.prepareStatement(query);
+            statement = connection.prepareStatement(queryCount);
 
             int i = 0;
             if(itemCatID!=null)

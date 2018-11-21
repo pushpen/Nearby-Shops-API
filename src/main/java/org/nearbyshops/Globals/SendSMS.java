@@ -31,9 +31,9 @@ public class SendSMS {
                 GlobalConstants.MSG91_SMS_SERVICE_API_KEY +
                 "&mobile=91" +
                 phone +
-                "&message=Your%20one time password (OTP) for Taxi Referral Service is " +
+                "&message=Your%20one time password (OTP) for Nearby Shops is " +
                 otp +
-                "&sender=TRSAPP&otp=" +
+                "&sender=NBSAPP&otp=" +
                 otp;
 
 
@@ -101,7 +101,7 @@ public class SendSMS {
                 phone +
                 "&message=" +
                 message +
-                "&sender=TRSAPP&route=4&country=91";
+                "&sender=NBSAPP&route=4&country=91";
 
 
         final Request request = new Request.Builder()

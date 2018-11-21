@@ -175,6 +175,8 @@ public class Shop {
 	private float rt_rating_avg;
 	private float rt_rating_count;
 
+	private User shopAdminProfile;
+
 
 
 
@@ -186,6 +188,17 @@ public class Shop {
 //	private double latMin;
 //	private double lonMin;
 
+
+	// getter and setters
+
+
+	public User getShopAdminProfile() {
+		return shopAdminProfile;
+	}
+
+	public void setShopAdminProfile(User shopAdminProfile) {
+		this.shopAdminProfile = shopAdminProfile;
+	}
 
 	public int getShopAdminID() {
 		return shopAdminID;

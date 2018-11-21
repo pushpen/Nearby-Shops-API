@@ -21,7 +21,7 @@ public class CartItem {
     public static final String createtableCartItemPostgres = "CREATE TABLE IF NOT EXISTS " + CartItem.TABLE_NAME + "("
             + " " + CartItem.ITEM_ID + " INT,"
             + " " + CartItem.CART_ID + " INT,"
-            + " " + CartItem.ITEM_QUANTITY + " INT,"
+            + " " + CartItem.ITEM_QUANTITY + " FLOAT NOT NULL Default 0,"
             + " FOREIGN KEY(" + CartItem.ITEM_ID +") REFERENCES " + Item.TABLE_NAME + "(" + Item.ITEM_ID + "),"
             + " FOREIGN KEY(" + CartItem.CART_ID +") REFERENCES " + Cart.TABLE_NAME + "(" + Cart.CART_ID + "),"
             + " PRIMARY KEY (" + CartItem.ITEM_ID + ", " + CartItem.CART_ID + ")"
@@ -37,7 +37,7 @@ public class CartItem {
     private Cart cart;
     private Item item;
 
-    private int itemQuantity;
+    private double itemQuantity;
 
 
     // rt stands for real time.
@@ -92,8 +92,12 @@ public class CartItem {
     }
 
 
-    public int getItemQuantity() {
+    public double getItemQuantity() {
         return itemQuantity;
+    }
+
+    public void setItemQuantity(double itemQuantity) {
+        this.itemQuantity = itemQuantity;
     }
 
     public void setItemQuantity(int itemQuantity) {

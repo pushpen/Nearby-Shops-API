@@ -8,6 +8,7 @@ import org.nearbyshops.Model.Shop;
 import org.nearbyshops.Model.ShopItem;
 import org.nearbyshops.ModelEndpoint.ShopEndPoint;
 import org.nearbyshops.ModelReviewShop.ShopReview;
+import org.nearbyshops.ModelRoles.User;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -746,6 +747,8 @@ public class ShopDAO {
 	}
 
 
+
+
 	public ShopEndPoint getShopsListQuerySimple(
 			Boolean enabled, Boolean waitlisted,
 			Boolean filterByVisibility,
@@ -772,16 +775,17 @@ public class ShopDAO {
 				+ lonCenter + "))"
 				+ " + sin( radians(" + latCenter + ")) * sin(radians(lat_center))) as distance" + ","
 
-				+  "avg(" + ShopReview.TABLE_NAME + "." + ShopReview.RATING + ") as avg_rating" + ","
-				+  "count( DISTINCT " + ShopReview.TABLE_NAME + "." + ShopReview.END_USER_ID + ") as rating_count" + ","
-
-				+ "count(*) over() AS full_count " + ","
 				+ Shop.TABLE_NAME + "." + Shop.SHOP_ID + ","
 				+ Shop.SHOP_NAME + ","
+
+				+  "avg(" + ShopReview.TABLE_NAME + "." + ShopReview.RATING + ") as avg_rating" + ","
+				+  "count( DISTINCT " + ShopReview.TABLE_NAME + "." + ShopReview.END_USER_ID + ") as rating_count" + ","
 
 				+ Shop.DELIVERY_RANGE + ","
 				+ Shop.TABLE_NAME + "." + Shop.LAT_CENTER + ","
 				+ Shop.TABLE_NAME + "." + Shop.LON_CENTER + ","
+
+				+ "count(*) over() AS full_count " + ","
 
 				+ Shop.DELIVERY_CHARGES + ","
 				+ Shop.BILL_AMOUNT_FOR_FREE_DELIVERY + ","
@@ -804,15 +808,33 @@ public class ShopDAO {
 				+ Shop.SHORT_DESCRIPTION + ","
 				+ Shop.LONG_DESCRIPTION + ","
 
-				+ Shop.TIMESTAMP_CREATED + ","
-				+ Shop.IS_OPEN + ""
+//				+ Shop.TIMESTAMP_CREATED + " as shop_create_time ,"
+//				+ Shop.TABLE_NAME + "." + Shop.TIMESTAMP_CREATED + " as shop_create_time ,"
+				+ Shop.IS_OPEN + ","
+
+
+//				+ User.TABLE_NAME + "." + User.USER_ID + ","
+//				+ User.TABLE_NAME + "." + User.USERNAME + ","
+//				+ User.TABLE_NAME + "." + User.E_MAIL + ","
+				+ User.TABLE_NAME + "." + User.PHONE + ","
+
+				+ User.TABLE_NAME + "." + User.NAME + ""
+//				+ User.TABLE_NAME + "." + User.GENDER + ","
+
+//				+ User.TABLE_NAME + "." + User.PROFILE_IMAGE_URL + ","
+//				+ User.TABLE_NAME + "." + User.IS_ACCOUNT_PRIVATE + ","
+//				+ User.TABLE_NAME + "." + User.ABOUT + ","
+
+//				+ User.TABLE_NAME + "." + User.TIMESTAMP_CREATED + " as profile_create_time "
+
+
 
 //				+  "avg(" + ShopReview.TABLE_NAME + "." + ShopReview.RATING + ") as avg_rating" + ","
 //				+  "count( DISTINCT " + ShopReview.TABLE_NAME + "." + ShopReview.END_USER_ID + ") as rating_count" + ""
 
 				+ " FROM " + Shop.TABLE_NAME
-				+ " LEFT OUTER JOIN " + ShopReview.TABLE_NAME
-				+ " ON (" + ShopReview.TABLE_NAME + "." + ShopReview.SHOP_ID + " = " + Shop.TABLE_NAME + "." + Shop.SHOP_ID + ")";
+				+ " INNER JOIN " + User.TABLE_NAME + " ON ( " + Shop.TABLE_NAME + "." + Shop.SHOP_ADMIN_ID + " = " + User.TABLE_NAME + "." + User.USER_ID + ")"
+				+ " LEFT OUTER JOIN " + ShopReview.TABLE_NAME  + " ON (" + ShopReview.TABLE_NAME + "." + ShopReview.SHOP_ID + " = " + Shop.TABLE_NAME + "." + Shop.SHOP_ID + ")";
 
 
 
@@ -962,7 +984,8 @@ public class ShopDAO {
 		String queryGroupBy = "";
 
 		queryGroupBy = queryGroupBy + " group by "
-				+ Shop.TABLE_NAME + "." + Shop.SHOP_ID ;
+				+ Shop.TABLE_NAME + "." + Shop.SHOP_ID + ","
+				+ User.TABLE_NAME + "." + User.USER_ID ;
 
 
 		queryNormal = queryNormal + queryGroupBy;
@@ -1032,6 +1055,24 @@ public class ShopDAO {
 			while(rs.next())
 			{
 
+				User shopAdmin = new User();
+
+//				shopAdmin.setUserID(rs.getInt(User.USER_ID));
+//				shopAdmin.setUsername(rs.getString(User.USERNAME));
+//				shopAdmin.setEmail(rs.getString(User.E_MAIL));
+				shopAdmin.setPhone(rs.getString(User.PHONE));
+				shopAdmin.setName(rs.getString(User.NAME));
+//				shopAdmin.setGender(rs.getBoolean(User.GENDER));
+
+
+//				shopAdmin.setProfileImagePath(rs.getString(User.PROFILE_IMAGE_URL));
+//				shopAdmin.setAccountPrivate(rs.getBoolean(User.IS_ACCOUNT_PRIVATE));
+//				shopAdmin.setAbout(rs.getString(User.ABOUT));
+
+//				shopAdmin.setTimestampCreated(rs.getTimestamp("profile_create_time"));
+
+
+
 				Shop shop = new Shop();
 
 				shop.setRt_distance(rs.getDouble("distance"));
@@ -1066,11 +1107,17 @@ public class ShopDAO {
 				shop.setShortDescription(rs.getString(Shop.SHORT_DESCRIPTION));
 				shop.setLongDescription(rs.getString(Shop.LONG_DESCRIPTION));
 
-				shop.setTimestampCreated(rs.getTimestamp(Shop.TIMESTAMP_CREATED));
+//				shop.setTimestampCreated(rs.getTimestamp(Shop.TIMESTAMP_CREATED));
+//				shop.setTimestampCreated(rs.getTimestamp("shop_create_time"));
+
 				shop.setOpen(rs.getBoolean(Shop.IS_OPEN));
 
 
 				endPoint.setItemCount(rs.getInt("full_count"));
+
+				shop.setShopAdminProfile(shopAdmin);
+
+
 
 
 
