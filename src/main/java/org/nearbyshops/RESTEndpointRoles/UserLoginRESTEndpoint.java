@@ -17,14 +17,16 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigInteger;
+//import java.net.URI;
 import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.sql.Timestamp;
+//import java.util.Base64;
 import java.util.Base64;
 import java.util.StringTokenizer;
-
+//import org.apache.commons.codec.binary.Base64;
 /**
  * Created by sumeet on 21/4/17.
  */
