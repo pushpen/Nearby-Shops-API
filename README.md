@@ -59,7 +59,9 @@ Client Side Repositories
 --------------------------
 
 End-User android app : https://github.com/SumeetMoray/Nearby-Shops-End-User-Android-app
+
 Shop-Owner android app : https://github.com/SumeetMoray/Nearby-Shops-Shop-Owner-app
+
 Admin android app : https://github.com/SumeetMoray/Nearby-Shops-Admin-App
 
 
