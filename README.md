@@ -10,9 +10,9 @@ This is the server side component of the Nearby Shops e-commerce software. For m
 Screenshots
 -----------
 
-<img src="https://github.com/SumeetMoray/Nearby-Shops-End-User-Android-app/blob/master/screenshots/Screenshot_20180814-041722.png" width="208"> <img src="https://github.com/SumeetMoray/Nearby-Shops-End-User-Android-app/blob/master/screenshots/Screenshot_20180814-041731.png" width="208"> <img src="https://github.com/SumeetMoray/Nearby-Shops-End-User-Android-app/blob/master/screenshots/Screenshot_20180814-041758.png" width="208"> 
+<img src="https://nearbyshops.org/wp-content/uploads/2018/12/Screenshot_20181222-181246-512x1024.png" width="208"> <img src="https://nearbyshops.org/wp-content/uploads/2018/12/Screenshot_20181222-181259-512x1024.png" width="208"> <img src="https://nearbyshops.org/wp-content/uploads/2018/12/Screenshot_20181222-181405-512x1024.png" width="208"> 
 
-<img src="https://github.com/SumeetMoray/Nearby-Shops-End-User-Android-app/blob/master/screenshots/Screenshot_20180814-041819.png" width="208"> <img src="https://github.com/SumeetMoray/Nearby-Shops-End-User-Android-app/blob/master/screenshots/Screenshot_20180814-041824.png" width="208"> <img src="https://github.com/SumeetMoray/Nearby-Shops-End-User-Android-app/blob/master/screenshots/Screenshot_20180814-041829.png" width="208">
+<img src="https://nearbyshops.org/wp-content/uploads/2018/12/Screenshot_20181222-181453-512x1024.png" width="208"> <img src="https://nearbyshops.org/wp-content/uploads/2018/12/Screenshot_20181222-181504-512x1024.png" width="208"> <img src="https://nearbyshops.org/wp-content/uploads/2018/12/Screenshot_20181222-181513-512x1024.png" width="208">
 
 
 Installation Guide
@@ -53,6 +53,14 @@ Download the nearby shops android app from the above link and then set a fake lo
 The nearby shops currently have shops available in only few cities. If you are living in a city where shops are not available. You need to fake your location and set it to some location where the shops are available. 
 
 Use any location faker app which you can download from playstore and set your location to "Hyderabad, India". You will see some shops and items visible in the nearby shops app. 
+
+
+Client Side Repositories
+--------------------------
+
+End-User android app : https://github.com/SumeetMoray/Nearby-Shops-End-User-Android-app
+Shop-Owner android app : https://github.com/SumeetMoray/Nearby-Shops-Shop-Owner-app
+Admin android app : https://github.com/SumeetMoray/Nearby-Shops-Admin-App
 
 
 
