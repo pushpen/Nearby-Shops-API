@@ -51,10 +51,16 @@ public class PlaceOrderDAO {
                 + " " + Order.STATUS_HOME_DELIVERY + ","
                 + " " + Order.STATUS_PICK_FROM_SHOP + ","
 
-                + " " + Order.PAYMENT_RECEIVED + ","
-                + " " + Order.DELIVERY_RECEIVED + ","
+//                + " " + Order.PAYMENT_RECEIVED + ","
+//                + " " + Order.DELIVERY_RECEIVED + ","
 
+                + " " + Order.ITEM_COUNT + ","
+                + " " + Order.ITEM_TOTAL + ","
+                + " " + Order.APP_SERVICE_CHARGE + ","
                 + " " + Order.DELIVERY_CHARGES + ","
+                + " " + Order.NET_PAYABLE + ","
+
+
                 + " " + Order.DELIVERY_ADDRESS_ID + ","
 //                + OrderPFS.DELIVERY_GUY_SELF_ID + ","
                 + Order.PICK_FROM_SHOP + ""
@@ -65,12 +71,16 @@ public class PlaceOrderDAO {
                 + " 1 " + ","
                 + " 1 " + ","
 
-                + " false " + ","
-                + " false " + ","
+//                + " false " + ","
+//                + " false " + ","
 
                 + " ? " + ","
                 + " ? " + ","
+                + " ? " + ","
+                + " ? " + ","
+                + " ? " + ","
 
+                + " ? " + ","
                 + " ? " + ""
                 + " from " + Cart.TABLE_NAME
                 + " where " + Cart.CART_ID + " = ?";
@@ -171,8 +181,8 @@ public class PlaceOrderDAO {
                 + " " + Order.SHOP_ID + " = ?,"
                 + " " + Order.STATUS_HOME_DELIVERY + " = ?,"
                 + " " + Order.STATUS_PICK_FROM_SHOP + " = ?,"
-                + " " + Order.PAYMENT_RECEIVED + " = ?,"
-                + " " + Order.DELIVERY_RECEIVED + " = ?,"
+//                + " " + Order.PAYMENT_RECEIVED + " = ?,"
+//                + " " + Order.DELIVERY_RECEIVED + " = ?,"
                 + " " + Order.DELIVERY_CHARGES + " = ?,"
                 + " " + Order.DELIVERY_ADDRESS_ID + " = ?,"
                 + Order.DELIVERY_GUY_SELF_ID + " = ?,"
@@ -186,30 +196,55 @@ public class PlaceOrderDAO {
             connection = dataSource.getConnection();
             connection.setAutoCommit(false);
 
-            int deliveryCharges = 0;
+            int itemCount = 0;
+            double itemTotal = 0;
+            double appServiceCharge = 0;
+            double deliveryCharges = 0;
+            double netPayable = 0;
+
 
             if(cartStats.size()==1)
             {
                 if(cartStats.get(0).getCart_Total() < shop.getBillAmountForFreeDelivery())
                 {
-                    deliveryCharges = (int) shop.getDeliveryCharges();
+                    itemCount = cartStats.get(0).getItemsInCart();
+                    itemTotal = cartStats.get(0).getCart_Total();
+                    appServiceCharge = 10;
+
+                    if(order.isPickFromShop())
+                    {
+
+                        deliveryCharges = 0;
+                    }
+                    else
+                    {
+                        deliveryCharges = shop.getDeliveryCharges();
+                    }
+
+                    netPayable = itemTotal + appServiceCharge + deliveryCharges;
+
                 }
             }
 
 
 
-
-
             statementCopyCartToOrder = connection.prepareStatement(copyCartToOrder,PreparedStatement.RETURN_GENERATED_KEYS);
-            statementCopyCartToOrder.setInt(1,deliveryCharges);
-            statementCopyCartToOrder.setInt(2,order.getDeliveryAddressID());
-            statementCopyCartToOrder.setBoolean(3,order.getPickFromShop());
-            statementCopyCartToOrder.setInt(4,cartID);
+
+            statementCopyCartToOrder.setInt(1,itemCount); // item count
+            statementCopyCartToOrder.setDouble(2,itemTotal); // item total
+            statementCopyCartToOrder.setDouble(3,appServiceCharge); // app service charge
+            statementCopyCartToOrder.setDouble(4,deliveryCharges); // delivery charge
+            statementCopyCartToOrder.setDouble(5,netPayable); // net payable
+
+            statementCopyCartToOrder.setInt(6,order.getDeliveryAddressID());
+            statementCopyCartToOrder.setBoolean(7,order.isPickFromShop());
+            statementCopyCartToOrder.setInt(8,cartID);
 
 
             statementCopyCartToOrder.executeUpdate();
 
             ResultSet rsCopyCartToOrder = statementCopyCartToOrder.getGeneratedKeys();
+
             if(rsCopyCartToOrder.next())
             {
                 orderID = rsCopyCartToOrder.getInt(1);

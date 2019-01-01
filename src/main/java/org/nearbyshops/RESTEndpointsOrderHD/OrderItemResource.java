@@ -126,9 +126,8 @@ public class OrderItemResource {
                                  @QueryParam("metadata_only")Boolean metaonly)
 	{
 
-		Order order = Globals.orderService.readStatusHomeDelivery(orderID);
-
-		User user = (User) Globals.accountApproved;
+//		Order order = Globals.orderService.readStatusHomeDelivery(orderID);
+//		User user = (User) Globals.accountApproved;
 
 
 //		if(user.getRole()==GlobalConstants.ROLE_SHOP_ADMIN_CODE)
@@ -191,36 +190,52 @@ public class OrderItemResource {
 
 		////////////////////////////
 
-		int set_limit = 30;
-		int set_offset = 0;
-		final int max_limit = 100;
+//		int set_limit = 30;
+//		int set_offset = 0;
+//		final int max_limit = 100;
+//
+//		if(limit!= null)
+//		{
+//
+//			if (limit >= max_limit) {
+//
+//				set_limit = max_limit;
+//			}
+//			else
+//			{
+//
+//				set_limit = limit;
+//			}
+//
+//		}
+//
+//		if(offset!=null)
+//		{
+//			set_offset = offset;
+//		}
 
-		if(limit!= null)
+
+
+
+		if(limit!=null)
 		{
-
-			if (limit >= max_limit) {
-
-				set_limit = max_limit;
-			}
-			else
+			if(limit >= GlobalConstants.max_limit)
 			{
-
-				set_limit = limit;
+				limit = GlobalConstants.max_limit;
 			}
 
+			if(offset==null)
+			{
+				offset = 0;
+			}
 		}
 
-		if(offset!=null)
-		{
-			set_offset = offset;
-		}
+
+
 
 
 		OrderItemEndPoint endPoint = Globals.orderItemService.getEndPointMetadata(orderID,itemID);
 
-		endPoint.setLimit(set_limit);
-		endPoint.setMax_limit(max_limit);
-		endPoint.setOffset(set_offset);
 
 		List<OrderItem> list = null;
 
@@ -237,6 +252,23 @@ public class OrderItemResource {
 		}
 
 
+
+
+		if(limit!=null)
+		{
+			endPoint.setLimit(limit);
+			endPoint.setOffset(offset);
+			endPoint.setMax_limit(GlobalConstants.max_limit);
+
+//			endPoint.setLimit(set_limit);
+//			endPoint.setMax_limit(max_limit);
+//			endPoint.setOffset(set_offset);
+
+		}
+
+
+
+
 		/*try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
@@ -249,8 +281,6 @@ public class OrderItemResource {
 				.entity(endPoint)
 				.build();
 	}
-
-
 
 
 }

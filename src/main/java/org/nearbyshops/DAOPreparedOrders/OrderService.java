@@ -1,5 +1,6 @@
 package org.nearbyshops.DAOPreparedOrders;
 
+import com.sun.org.apache.xpath.internal.operations.Or;
 import com.zaxxer.hikari.HikariDataSource;
 import org.nearbyshops.Globals.Globals;
 import org.nearbyshops.Model.Order;
@@ -266,8 +267,8 @@ public class OrderService {
                  + Order.DATE_TIME_PLACED + ","
 
                  + Order.DELIVERY_CHARGES + ","
-                 + Order.DELIVERY_RECEIVED + ","
-                 + Order.PAYMENT_RECEIVED + ","
+//                 + Order.DELIVERY_RECEIVED + ","
+//                 + Order.PAYMENT_RECEIVED + ","
 
                  + Order.DELIVERY_GUY_SELF_ID + ","
                  + Order.END_USER_ID + ","
@@ -306,9 +307,10 @@ public class OrderService {
 
                 order.setStatusHomeDelivery(rs.getInt(Order.STATUS_HOME_DELIVERY));
                 order.setStatusPickFromShop(rs.getInt(Order.STATUS_PICK_FROM_SHOP));
-                order.setDeliveryReceived(rs.getBoolean(Order.DELIVERY_RECEIVED));
 
-                order.setPaymentReceived(rs.getBoolean(Order.PAYMENT_RECEIVED));
+//                order.setDeliveryReceived(rs.getBoolean(Order.DELIVERY_RECEIVED));
+//                order.setPaymentReceived(rs.getBoolean(Order.PAYMENT_RECEIVED));
+
                 order.setDeliveryAddressID((Integer) rs.getObject(Order.DELIVERY_ADDRESS_ID));
                 order.setDeliveryGuySelfID((Integer) rs.getObject(Order.DELIVERY_GUY_SELF_ID));
             }
@@ -357,6 +359,9 @@ public class OrderService {
 
 
 
+
+
+
     //    Boolean getDeliveryAddress,
 //    Boolean getStats
     public OrderEndPoint readOrders(
@@ -384,20 +389,34 @@ public class OrderService {
                 + " + sin( radians(" + latCenter + ")) * sin(radians( " + DeliveryAddress.LATITUDE + " ))) as distance" + ","
 
                 + Order.TABLE_NAME + "." + Order.ORDER_ID + ","
+
+                + Order.TABLE_NAME + "." + Order.END_USER_ID + ","
+                + Order.TABLE_NAME + "." + Order.SHOP_ID + ","
                 + Order.TABLE_NAME + "." + Order.DELIVERY_ADDRESS_ID + ","
+                + Order.TABLE_NAME + "." + Order.DELIVERY_GUY_SELF_ID + ","
+
+                + Order.TABLE_NAME + "." + Order.DELIVERY_OTP + ","
+
+                + Order.TABLE_NAME + "." + Order.ITEM_COUNT + ","
+
+                + Order.TABLE_NAME + "." + Order.ITEM_TOTAL + ","
+                + Order.TABLE_NAME + "." + Order.APP_SERVICE_CHARGE + ","
+                + Order.TABLE_NAME + "." + Order.DELIVERY_CHARGES + ","
+                + Order.TABLE_NAME + "." + Order.NET_PAYABLE + ","
+
+                + Order.TABLE_NAME + "." + Order.IS_CANCELLED_BY_END_USER + ","
+                + Order.TABLE_NAME + "." + Order.REASON_FOR_CANCELLED_BY_SHOP + ","
+                + Order.TABLE_NAME + "." + Order.REASON_FOR_CANCELLED_BY_USER + ","
+                + Order.TABLE_NAME + "." + Order.REASON_FOR_ORDER_RETURNED + ","
+
                 + Order.TABLE_NAME + "." + Order.DATE_TIME_PLACED + ","
 
-                + Order.TABLE_NAME + "." + Order.DELIVERY_CHARGES + ","
-                + Order.TABLE_NAME + "." + Order.DELIVERY_RECEIVED + ","
-                + Order.TABLE_NAME + "." + Order.PAYMENT_RECEIVED + ","
-
-                + Order.TABLE_NAME + "." + Order.DELIVERY_GUY_SELF_ID + ","
-                + Order.TABLE_NAME + "." + Order.END_USER_ID + ","
                 + Order.TABLE_NAME + "." + Order.PICK_FROM_SHOP + ","
-
-                + Order.TABLE_NAME + "." + Order.SHOP_ID + ","
                 + Order.TABLE_NAME + "." + Order.STATUS_HOME_DELIVERY + ","
                 + Order.TABLE_NAME + "." + Order.STATUS_PICK_FROM_SHOP + ","
+
+//                + Order.TABLE_NAME + "." + Order.DELIVERY_RECEIVED + ","
+//                + Order.TABLE_NAME + "." + Order.PAYMENT_RECEIVED + ","
 
                 + DeliveryAddress.TABLE_NAME + "." + DeliveryAddress.END_USER_ID + ","
                 + DeliveryAddress.TABLE_NAME + "." + DeliveryAddress.CITY + ","
@@ -416,20 +435,21 @@ public class OrderService {
                 + User.TABLE_NAME + "." + User.USER_ID + ","
                 + User.TABLE_NAME + "." + User.NAME + ","
                 + User.TABLE_NAME + "." + User.PHONE + ","
-                + User.TABLE_NAME + "." + User.PROFILE_IMAGE_URL + ","
+                + User.TABLE_NAME + "." + User.PROFILE_IMAGE_URL + ""
 
 //                + DeliveryAddress.TABLE_NAME + "." + DeliveryAddress.LATITUDE + ","
 //                + DeliveryAddress.TABLE_NAME + "." + DeliveryAddress.LONGITUDE + ","
 
-                + " count( " + OrderItem.ITEM_ID + " ) as item_count, "
-                + " sum( " + OrderItem.ITEM_PRICE_AT_ORDER + " * " + OrderItem.ITEM_QUANTITY + ") as item_total "
+//                + " count( " + OrderItem.ITEM_ID + " ) as item_count, "
+//                + " sum( " + OrderItem.ITEM_PRICE_AT_ORDER + " * " + OrderItem.ITEM_QUANTITY + ") as item_total "
 
                 + " FROM " + Order.TABLE_NAME
-                + " LEFT OUTER JOIN " + OrderItem.TABLE_NAME + " ON (" + Order.TABLE_NAME + "." + Order.ORDER_ID + " = " + OrderItem.TABLE_NAME + "." + OrderItem.ORDER_ID + " ) "
                 + " LEFT OUTER JOIN " + DeliveryAddress.TABLE_NAME + " ON (" + Order.TABLE_NAME + "." + Order.DELIVERY_ADDRESS_ID + " = " + DeliveryAddress.TABLE_NAME + "." + DeliveryAddress.ID + ")"
                 + " LEFT OUTER JOIN " + User.TABLE_NAME + " ON (" + Order.TABLE_NAME + "." + Order.DELIVERY_GUY_SELF_ID + " = " + User.TABLE_NAME + "." + User.USER_ID + ")"
                 + " WHERE TRUE ";
 
+
+//        + " LEFT OUTER JOIN " + OrderItem.TABLE_NAME + " ON (" + Order.TABLE_NAME + "." + Order.ORDER_ID + " = " + OrderItem.TABLE_NAME + "." + OrderItem.ORDER_ID + " ) "
 
 
 //        boolean isFirst = true;
@@ -606,23 +626,41 @@ public class OrderService {
                 rs = statement.executeQuery();
 
                 while (rs.next()) {
+
                     Order order = new Order();
 
-                    order.setShopID((Integer) rs.getObject(Order.SHOP_ID));
-                    order.setDeliveryCharges(rs.getInt(Order.DELIVERY_CHARGES));
-                    order.setEndUserID(rs.getInt(Order.END_USER_ID));
-
                     order.setOrderID(rs.getInt(Order.ORDER_ID));
-                    order.setPickFromShop(rs.getBoolean(Order.PICK_FROM_SHOP));
+
+                    order.setEndUserID(rs.getInt(Order.END_USER_ID));
+                    order.setShopID(rs.getInt(Order.SHOP_ID));
+                    order.setDeliveryAddressID(rs.getInt(Order.DELIVERY_ADDRESS_ID));
+                    order.setDeliveryGuySelfID(rs.getInt(Order.DELIVERY_GUY_SELF_ID));
+
+
+                    order.setDeliveryOTP((Integer) rs.getObject(Order.DELIVERY_OTP));
+
+                    order.setItemCount((Integer) rs.getObject(Order.ITEM_COUNT));
+
+                    order.setItemTotal((Double) rs.getObject(Order.ITEM_TOTAL));
+                    order.setAppServiceCharge(rs.getDouble(Order.APP_SERVICE_CHARGE));
+                    order.setDeliveryCharges(rs.getDouble(Order.DELIVERY_CHARGES));
+                    order.setNetPayable(rs.getDouble(Order.NET_PAYABLE));
+
+                    order.setCancelledByEndUser(rs.getBoolean(Order.IS_CANCELLED_BY_END_USER));
+                    order.setReasonCancelledByShop(rs.getString(Order.REASON_FOR_CANCELLED_BY_SHOP));
+                    order.setReasonCancelledByUser(rs.getString(Order.REASON_FOR_CANCELLED_BY_USER));
+                    order.setReasonForOrderReturned(rs.getString(Order.REASON_FOR_ORDER_RETURNED));
+
                     order.setDateTimePlaced(rs.getTimestamp(Order.DATE_TIME_PLACED));
 
+                    order.setPickFromShop(rs.getBoolean(Order.PICK_FROM_SHOP));
                     order.setStatusHomeDelivery(rs.getInt(Order.STATUS_HOME_DELIVERY));
                     order.setStatusPickFromShop(rs.getInt(Order.STATUS_PICK_FROM_SHOP));
-                    order.setDeliveryReceived(rs.getBoolean(Order.DELIVERY_RECEIVED));
 
-                    order.setPaymentReceived(rs.getBoolean(Order.PAYMENT_RECEIVED));
-                    order.setDeliveryAddressID((Integer) rs.getObject(Order.DELIVERY_ADDRESS_ID));
-                    order.setDeliveryGuySelfID((Integer) rs.getObject(Order.DELIVERY_GUY_SELF_ID));
+
+//                    order.setDeliveryReceived(rs.getBoolean(Order.DELIVERY_RECEIVED));
+//                    order.setPaymentReceived(rs.getBoolean(Order.PAYMENT_RECEIVED));
+
 
 
                 /*if(getDeliveryAddress!=null && getDeliveryAddress)
@@ -649,6 +687,8 @@ public class OrderService {
                     order.setDeliveryAddress(address);
 //                }
 
+
+
                     User deliveryGuy = new User();
                     deliveryGuy.setUserID(rs.getInt(User.USER_ID));
                     deliveryGuy.setName(rs.getString(User.NAME));
@@ -658,11 +698,12 @@ public class OrderService {
                     order.setRt_delivery_guy_profile(deliveryGuy);
 
 
-                    OrderStats orderStats = new OrderStats();
-                    orderStats.setOrderID(rs.getInt("order_id"));
-                    orderStats.setItemCount(rs.getInt("item_count"));
-                    orderStats.setItemTotal(rs.getInt("item_total"));
-                    order.setOrderStats(orderStats);
+
+//                    OrderStats orderStats = new OrderStats();
+//                    orderStats.setOrderID(rs.getInt("order_id"));
+//                    orderStats.setItemCount(rs.getInt("item_count"));
+//                    orderStats.setItemTotal(rs.getInt("item_total"));
+//                    order.setOrderStats(orderStats);
 
 
                     ordersList.add(order);
@@ -751,8 +792,10 @@ public class OrderService {
                 + " " + Order.SHOP_ID + " = ?,"
                 + " " + Order.STATUS_HOME_DELIVERY + " = ?,"
                 + " " + Order.STATUS_PICK_FROM_SHOP + " = ?,"
-                + " " + Order.PAYMENT_RECEIVED + " = ?,"
-                + " " + Order.DELIVERY_RECEIVED + " = ?,"
+
+//                + " " + Order.PAYMENT_RECEIVED + " = ?,"
+//                + " " + Order.DELIVERY_RECEIVED + " = ?,"
+
                 + " " + Order.DELIVERY_CHARGES + " = ?,"
                 + " " + Order.DELIVERY_ADDRESS_ID + " = ?,"
                       + Order.DELIVERY_GUY_SELF_ID + " = ?,"
@@ -765,22 +808,27 @@ public class OrderService {
         PreparedStatement statement = null;
         int updatedRows = -1;
 
+        int i = 0;
+
         try {
 
             connection = dataSource.getConnection();
             statement = connection.prepareStatement(updateStatement);
 
-            statement.setObject(1,order.getEndUserID());
-            statement.setObject(2,order.getShopID());
-            statement.setObject(3,order.getStatusHomeDelivery());
-            statement.setObject(4,order.getStatusPickFromShop());
-            statement.setObject(5,order.getPaymentReceived());
-            statement.setObject(6,order.getDeliveryReceived());
-            statement.setObject(7,order.getDeliveryCharges());
-            statement.setObject(8,order.getDeliveryAddressID());
-            statement.setObject(9,order.getDeliveryGuySelfID());
-            statement.setObject(10,order.getPickFromShop());
-            statement.setObject(11,order.getOrderID());
+
+            statement.setObject(++i,order.getEndUserID());
+            statement.setObject(++i,order.getShopID());
+            statement.setObject(++i,order.getStatusHomeDelivery());
+            statement.setObject(++i,order.getStatusPickFromShop());
+
+//            statement.setObject(5,order.getPaymentReceived());
+//            statement.setObject(6,order.getDeliveryReceived());
+
+            statement.setObject(++i,order.getDeliveryCharges());
+            statement.setObject(++i,order.getDeliveryAddressID());
+            statement.setObject(++i,order.getDeliveryGuySelfID());
+            statement.setObject(++i,order.isPickFromShop());
+            statement.setObject(++i,order.getOrderID());
 
 
             updatedRows = statement.executeUpdate();
@@ -830,7 +878,8 @@ public class OrderService {
 //                + OrderPFS.DATE_TIME_PLACED + ","
 
 //                + OrderPFS.DELIVERY_CHARGES + ","
-                + Order.DELIVERY_RECEIVED + ","
+
+//                + Order.DELIVERY_RECEIVED + ","
 //                + OrderPFS.PAYMENT_RECEIVED + ","
 
                 + Order.DELIVERY_GUY_SELF_ID + ","
@@ -866,10 +915,16 @@ public class OrderService {
 //                order.setEndUserID(rs.getInt(OrderPFS.END_USER_ID));
 
                 order.setOrderID(orderID);
-                order.setDeliveryReceived(rs.getBoolean(Order.DELIVERY_RECEIVED));
+
+//                order.setDeliveryReceived(rs.getBoolean(Order.DELIVERY_RECEIVED));
+
                 order.setShopID(rs.getInt(Order.SHOP_ID));
                 order.setStatusHomeDelivery(rs.getInt(Order.STATUS_HOME_DELIVERY));
                 order.setEndUserID(rs.getInt(Order.END_USER_ID));
+                order.setDeliveryGuySelfID(rs.getInt(Order.DELIVERY_GUY_SELF_ID));
+
+
+
 //                order.setPickFromShop(rs.getBoolean(OrderPFS.PICK_FROM_SHOP));
 //                order.setDateTimePlaced(rs.getTimestamp(OrderPFS.DATE_TIME_PLACED));
 
@@ -880,7 +935,7 @@ public class OrderService {
 //                order.setPaymentReceived(rs.getBoolean(OrderPFS.PAYMENT_RECEIVED));
 //
 //               order.setDeliveryAddressID((Integer) rs.getObject(OrderPFS.DELIVERY_ADDRESS_ID));
-                order.setDeliveryGuySelfID((Integer) rs.getObject(Order.DELIVERY_GUY_SELF_ID));
+
             }
 
 
