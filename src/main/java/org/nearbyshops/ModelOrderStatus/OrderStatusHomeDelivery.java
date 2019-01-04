@@ -31,7 +31,7 @@ public class OrderStatusHomeDelivery {
     public static final int ORDER_PACKED = 3; // handover to delivery (Staff)
 
 
-    public static final int HANDOVER_REQUESTED = 4; // handover requested | Accept Package : Decline (Delivery Guy)
+    public static final int HANDOVER_REQUESTED = 4; // handover requested | Accept Package (Delivery Guy) : Decline (Delivery Guy)
     public static final int OUT_FOR_DELIVERY = 5;// out for delivery | Return : Delivered (Delivery Guy)
 //    public static final int PENDING_DELIVERY = 6;
 
@@ -62,6 +62,58 @@ public class OrderStatusHomeDelivery {
 
 
 
+
+
+
+
+    public static String getStatusString(int orderStatus)
+    {
+        String statusString = "";
+
+        if(orderStatus == ORDER_PLACED)
+        {
+            statusString = "Order Placed";
+        }
+        else if(orderStatus == ORDER_CONFIRMED)
+        {
+            statusString = "Order Confirmed";
+        }
+        else if(orderStatus == ORDER_PACKED)
+        {
+            statusString = "Order Packed";
+        }
+        else if(orderStatus == HANDOVER_REQUESTED)
+        {
+            statusString = "Handover Requested";
+        }
+        else if(orderStatus == OUT_FOR_DELIVERY)
+        {
+            statusString = "Out for Delivery";
+        }
+        else if(orderStatus == RETURN_REQUESTED)
+        {
+            statusString = "Return Requested";
+        }
+        else if(orderStatus == RETURNED_ORDERS)
+        {
+            statusString = "Order Returned";
+        }
+        else if(orderStatus == DELIVERED)
+        {
+            statusString = "Order Delivered";
+        }
+        else if(orderStatus == PAYMENT_RECEIVED)
+        {
+            statusString = "Order Delivered Complete";
+        }
+        else if(orderStatus == CANCELLED)
+        {
+            statusString = "Order Cancelled";
+        }
+
+
+        return statusString;
+    }
 
 
 }

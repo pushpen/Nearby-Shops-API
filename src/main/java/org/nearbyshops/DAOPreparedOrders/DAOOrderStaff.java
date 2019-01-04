@@ -838,6 +838,73 @@ public class DAOOrderStaff {
 
 
 
+    public int setOrderReadyForPickupPFS(int orderID)
+    {
+        String updateStatement = "UPDATE " + Order.TABLE_NAME
+                + " SET " + Order.STATUS_PICK_FROM_SHOP + " = ?"
+                + " WHERE " + Order.ORDER_ID + " = ?"
+                + " AND "  + Order.STATUS_PICK_FROM_SHOP + " = ? ";
+
+
+//        + " AND "  + Order.SHOP_ID + " = ? "
+
+
+
+        Connection connection = null;
+        PreparedStatement statement = null;
+        int updatedRows = -1;
+
+        try {
+
+            connection = dataSource.getConnection();
+            statement = connection.prepareStatement(updateStatement);
+
+            int i = 0;
+
+            statement.setObject(++i, OrderStatusPickFromShop.ORDER_READY_FOR_PICKUP);
+            statement.setObject(++i,orderID);
+            statement.setObject(++i, OrderStatusPickFromShop.ORDER_PACKED);
+
+
+
+
+            updatedRows = statement.executeUpdate();
+            System.out.println("Total rows updated: " + updatedRows);
+
+            //conn.close();
+
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        finally
+
+        {
+
+            try {
+
+                if(statement!=null)
+                {statement.close();}
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+            try {
+
+                if(connection!=null)
+                {connection.close();}
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+
+        return updatedRows;
+    }
+
+
+
     public int paymentReceivedPFS(int orderID)
     {
         String updateStatement = "UPDATE " + Order.TABLE_NAME
@@ -860,7 +927,7 @@ public class DAOOrderStaff {
 
             statement.setObject(++i, OrderStatusPickFromShop.DELIVERED);
             statement.setObject(++i,orderID);
-            statement.setObject(++i, OrderStatusPickFromShop.ORDER_PACKED);
+            statement.setObject(++i, OrderStatusPickFromShop.ORDER_READY_FOR_PICKUP);
 
             updatedRows = statement.executeUpdate();
             System.out.println("Total rows updated: " + updatedRows);

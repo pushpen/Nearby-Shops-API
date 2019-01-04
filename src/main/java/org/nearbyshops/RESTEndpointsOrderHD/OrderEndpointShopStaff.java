@@ -937,6 +937,79 @@ public class OrderEndpointShopStaff {
 
 
 
+
+	@PUT
+	@Path("/SetOrderReadyForPickupPFS/{OrderID}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@RolesAllowed({GlobalConstants.ROLE_SHOP_ADMIN, GlobalConstants.ROLE_SHOP_STAFF})
+	public Response setOrderReadyForPickupPFS(@PathParam("OrderID")int orderID)
+	{
+//		Order order = Globals.orderService.readStatusHomeDelivery(orderID);
+		User user = (User) Globals.accountApproved;
+
+
+
+		if(user.getRole()==GlobalConstants.ROLE_SHOP_STAFF_CODE)
+		{
+			ShopStaffPermissions permissions = Globals.daoShopStaff.getShopStaffPermissions(user.getUserID());
+
+
+			if(!permissions.isPermitSetOrdersPacked())
+			{
+				throw new ForbiddenException("Not Permitted !");
+			}
+		}
+
+
+
+//		try {
+//			Thread.sleep(1000);
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
+
+
+//			order.setStatusHomeDelivery(OrderStatusHomeDelivery.ORDER_PACKED);
+
+		int rowCount = Globals.daoOrderStaff.setOrderReadyForPickupPFS(orderID);
+
+
+		if(rowCount >= 1)
+		{
+			Order orderResult = Globals.orderService.readSingleOrder(orderID);
+
+			oneSignalNotifications.sendNotificationToEndUser(
+					orderResult.getEndUserID(),
+					"https://i1.wp.com/nearbyshops.org/wp-content/uploads/2017/02/cropped-backdrop_play_store-1.png?w=250&ssl=1",
+					null,
+					null,
+					10,
+					"Order Ready for Pickup",
+					"Order number " + String.valueOf(orderID) + " is ready for pickup !",
+					1,
+					DAOOneSignal.ORDER_PACKED,
+					null
+			);
+
+
+			return Response.status(Status.OK)
+					.entity(null)
+					.build();
+		}
+		if(rowCount <= 0)
+		{
+
+			return Response.status(Status.NOT_MODIFIED)
+					.build();
+		}
+
+
+		return null;
+	}
+
+
+
+
 	@PUT
 	@Path("/PaymentReceivedPFS/{OrderID}")
 	@Consumes(MediaType.APPLICATION_JSON)

@@ -311,8 +311,8 @@ public class OrderService {
 //                order.setDeliveryReceived(rs.getBoolean(Order.DELIVERY_RECEIVED));
 //                order.setPaymentReceived(rs.getBoolean(Order.PAYMENT_RECEIVED));
 
-                order.setDeliveryAddressID((Integer) rs.getObject(Order.DELIVERY_ADDRESS_ID));
-                order.setDeliveryGuySelfID((Integer) rs.getObject(Order.DELIVERY_GUY_SELF_ID));
+                order.setDeliveryAddressID(rs.getInt(Order.DELIVERY_ADDRESS_ID));
+                order.setDeliveryGuySelfID(rs.getInt(Order.DELIVERY_GUY_SELF_ID));
             }
 
 
