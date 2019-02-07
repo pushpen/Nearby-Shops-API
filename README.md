@@ -1,11 +1,19 @@
-<img src="https://i1.wp.com/nearbyshops.org/wp-content/uploads/2018/12/Untitled-design-e1545575054544.png" width="170"> 
-
-
 Nearby Shops API (JSON based REST API)
 ====================================
 
+
+<img src="https://i1.wp.com/nearbyshops.org/wp-content/uploads/2018/12/Untitled-design-e1545575054544.png" width="170"> 
+
 This is the server side component of the Nearby Shops e-commerce software. For more information about this project please visit https://nearbyshops.org
 
+Get paid to Contribute
+-------------------------
+
+Developer time is valuable and its not fair to expect developers to contribute their time without being reasonably compensated. Therefore we have made a policy to compensate the developers, designers or any other contributor who help us with the project. We will make best efforts to Compensate the contibutors.
+
+All the pull requests that gets accepted will be compensated. The compensation will be similar to how freelance developers, desginers get paid.
+
+To know how to contribute please visit https://nearbyshops.org/contribute/
 
 Screenshots
 -----------
