@@ -2,7 +2,8 @@ Nearby Shops API (JSON based REST API)
 ====================================
 
 
-<img src="https://i1.wp.com/nearbyshops.org/wp-content/uploads/2018/12/Untitled-design-e1545575054544.png" width="170"> 
+<img src="https://nearbyshops.org/wp-content/uploads/2019/02/nearby-shops-logo-e1549185087374-300x237.png" width="170"> 
+
 
 This is the server side component of the Nearby Shops e-commerce software. For more information about this project please visit https://nearbyshops.org
 
