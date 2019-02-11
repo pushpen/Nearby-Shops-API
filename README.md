@@ -63,6 +63,18 @@ The nearby shops currently have shops available in only few cities. If you are l
 Use any location faker app which you can download from playstore and set your location to "Hyderabad, India". You will see some shops and items visible in the nearby shops app. 
 
 
+
+Community 
+-----------
+
+Do you have questions ? Need help ? you can speak with original developers of this project. We welcome you to join our forum for discussion on anything related to this project !
+
+Please visit : https://nearbyshops.org/community/
+
+
+
+
+
 Client Side Repositories
 --------------------------
 
@@ -71,6 +83,9 @@ End-User android app : https://github.com/SumeetMoray/Nearby-Shops-End-User-Andr
 Shop-Owner android app : https://github.com/SumeetMoray/Nearby-Shops-Shop-Owner-app
 
 Admin android app : https://github.com/SumeetMoray/Nearby-Shops-Admin-App
+
+
+
 
 
 
