@@ -49,6 +49,10 @@ public class GlobalConfig {
 
 
 
+        GlobalConstants.app_service_charge_pick_for_shop = configuration.getInt("app_service_charge.pick-from-shop");
+        GlobalConstants.app_service_charge_home_delivery = configuration.getInt("app_service_charge.home-delivery");
+
+
         GlobalConstants.REFERRAL_CREDIT_FOR_END_USER_REGISTRATION = configuration.getInt("referralcredit.enduser.registration");
         GlobalConstants.REFERRAL_CREDIT_FOR_SHOP_OWNER_REGISTRATION = configuration.getInt("referralcredit.shop-owner.registration");
 

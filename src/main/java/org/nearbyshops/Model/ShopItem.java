@@ -49,8 +49,8 @@ public class ShopItem{
 			+ " " + ShopItem.LAST_UPDATE_DATE_TIME + " timestamp with time zone,"
 			+ " " + ShopItem.EXTRA_DELIVERY_CHARGE + " FLOAT NOT NULL default 0,"
 			+ " " + ShopItem.DATE_TIME_ADDED + " timestamp with time zone NOT NULL DEFAULT now(),"
-			+ " FOREIGN KEY(" + ShopItem.SHOP_ID +") REFERENCES " + Shop.TABLE_NAME + "(" + Shop.SHOP_ID + "),"
-			+ " FOREIGN KEY(" + ShopItem.ITEM_ID +") REFERENCES " + Item.TABLE_NAME + "(" + Item.ITEM_ID + "),"
+			+ " FOREIGN KEY(" + ShopItem.SHOP_ID +") REFERENCES " + Shop.TABLE_NAME + "(" + Shop.SHOP_ID + ") ON DELETE CASCADE,"
+			+ " FOREIGN KEY(" + ShopItem.ITEM_ID +") REFERENCES " + Item.TABLE_NAME + "(" + Item.ITEM_ID + ") ON DELETE CASCADE,"
 			+ " PRIMARY KEY (" + ShopItem.SHOP_ID + ", " + ShopItem.ITEM_ID + ")"
 			+ ")";
 

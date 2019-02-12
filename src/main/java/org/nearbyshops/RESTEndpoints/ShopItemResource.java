@@ -446,14 +446,12 @@ public class ShopItemResource {
 		{
 
 			return Response.status(Status.OK)
-								.entity(null)
 								.build();
 			
 		}else if(rowCount <= 0)
 		{
 
 			return Response.status(Status.NOT_MODIFIED)
-					.entity(null)
 					.build();
 		}
 	
@@ -521,13 +519,11 @@ public class ShopItemResource {
 		{
 
 			return Response.status(Status.PARTIAL_CONTENT)
-					.entity(null)
 					.build();
 		}
 		else if(rowCountSum == 0 ) {
 
 			return Response.status(Status.NOT_MODIFIED)
-					.entity(null)
 					.build();
 		}
 

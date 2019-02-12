@@ -19,8 +19,10 @@ import javax.ws.rs.container.ResourceInfo;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.ext.Provider;
 import java.lang.reflect.Method;
+import java.security.Principal;
 import java.util.*;
 
 /**
@@ -93,6 +95,34 @@ public class AuthenticationFilter implements ContainerRequestFilter {
             //Verifying Username and password
 //            System.out.println(username);
 //            System.out.println(password);
+
+
+
+
+            requestContext.setSecurityContext(new SecurityContext() {
+                @Override
+                public Principal getUserPrincipal() {
+                    return null;
+                }
+
+                @Override
+                public boolean isUserInRole(String s) {
+                    return false;
+                }
+
+                @Override
+                public boolean isSecure() {
+                    return false;
+                }
+
+                @Override
+                public String getAuthenticationScheme() {
+                    return null;
+                }
+            });
+
+//            requestContext.setProperty("sample",);
+
 
             Globals.accountApproved = isUserAllowed(username, password, rolesSet);
 

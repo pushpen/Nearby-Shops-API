@@ -57,7 +57,7 @@ public class ItemDAOJoinOuter {
 				+ "min(" + ShopItem.ITEM_PRICE + ") as min_price" + ","
 				+ "max(" + ShopItem.ITEM_PRICE + ") as max_price" + ","
 				+ "avg(" + ShopItem.ITEM_PRICE + ") as avg_price" + ","
-				+ "count(" + ShopItem.TABLE_NAME + "." + ShopItem.ITEM_ID + ") as shop_count" + ","
+				+ "count( DISTINCT " + ShopItem.TABLE_NAME + "." + ShopItem.ITEM_ID + ") as shop_count" + ","
 
 //				+ Item.TABLE_NAME + "." + Item.ITEM_CATEGORY_ID + ","
 //				+ Item.TABLE_NAME + "." + Item.ITEM_ID + ","

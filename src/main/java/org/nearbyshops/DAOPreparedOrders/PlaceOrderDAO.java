@@ -1,6 +1,8 @@
 package org.nearbyshops.DAOPreparedOrders;
 
 import com.zaxxer.hikari.HikariDataSource;
+import jdk.nashorn.internal.objects.Global;
+import org.nearbyshops.Globals.GlobalConstants;
 import org.nearbyshops.Globals.Globals;
 import org.nearbyshops.Model.*;
 import org.nearbyshops.ModelStats.CartStats;
@@ -209,16 +211,18 @@ public class PlaceOrderDAO {
                 {
                     itemCount = cartStats.get(0).getItemsInCart();
                     itemTotal = cartStats.get(0).getCart_Total();
-                    appServiceCharge = 10;
+//                    appServiceCharge = 10;
 
                     if(order.isPickFromShop())
                     {
 
                         deliveryCharges = 0;
+                        appServiceCharge = GlobalConstants.app_service_charge_pick_for_shop;
                     }
                     else
                     {
                         deliveryCharges = shop.getDeliveryCharges();
+                        appServiceCharge = GlobalConstants.app_service_charge_home_delivery;
                     }
 
                     netPayable = itemTotal + appServiceCharge + deliveryCharges;

@@ -138,6 +138,7 @@ public class ItemDAO {
 
 
 
+
 	public int changeParent(Item item)
 	{
 
@@ -829,10 +830,7 @@ public class ItemDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-
 		finally
-		
 		{
 			
 			try {

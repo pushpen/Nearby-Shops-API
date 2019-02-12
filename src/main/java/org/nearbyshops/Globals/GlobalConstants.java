@@ -44,6 +44,10 @@ public class GlobalConstants {
     public static String ONE_SIGNAL_APP_ID_END_USER_APP;
 
 
+    public static int app_service_charge_pick_for_shop;
+    public static int app_service_charge_home_delivery;
+
+
 
     // constants
     public static int TOKEN_DURATION_MINUTES; // 24 hours for expiry of a token
