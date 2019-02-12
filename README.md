@@ -1,11 +1,20 @@
-<img src="https://i1.wp.com/nearbyshops.org/wp-content/uploads/2018/12/Untitled-design-e1545575054544.png" width="170"> 
-
-
 Nearby Shops API (JSON based REST API)
 ====================================
 
+
+<img src="https://nearbyshops.org/wp-content/uploads/2019/02/nearby-shops-logo-e1549185087374-300x237.png" width="170"> 
+
+
 This is the server side component of the Nearby Shops e-commerce software. For more information about this project please visit https://nearbyshops.org
 
+Get paid to Contribute
+-------------------------
+
+Developer time is valuable and its not fair to expect developers to contribute their time without being reasonably compensated. Therefore we have made a policy to compensate the developers, designers or any other contributor who help us with the project. We will make best efforts to Compensate the contibutors.
+
+All the pull requests that gets accepted will be compensated. The compensation will be similar to how freelance developers, desginers get paid.
+
+To know how to contribute please visit https://nearbyshops.org/contribute/
 
 Screenshots
 -----------
@@ -55,6 +64,18 @@ The nearby shops currently have shops available in only few cities. If you are l
 Use any location faker app which you can download from playstore and set your location to "Hyderabad, India". You will see some shops and items visible in the nearby shops app. 
 
 
+
+Community 
+-----------
+
+Do you have questions ? Need help ? you can speak with original developers of this project. We welcome you to join our forum for discussion on anything related to this project !
+
+Please visit : https://nearbyshops.org/community/
+
+
+
+
+
 Client Side Repositories
 --------------------------
 
@@ -63,6 +84,9 @@ End-User android app : https://github.com/SumeetMoray/Nearby-Shops-End-User-Andr
 Shop-Owner android app : https://github.com/SumeetMoray/Nearby-Shops-Shop-Owner-app
 
 Admin android app : https://github.com/SumeetMoray/Nearby-Shops-Admin-App
+
+
+
 
 
 
