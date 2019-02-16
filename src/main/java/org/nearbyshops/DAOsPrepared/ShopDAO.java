@@ -1112,6 +1112,7 @@ public class ShopDAO {
 				shop.setOpen(rs.getBoolean(Shop.IS_OPEN));
 
 
+
 				endPoint.setItemCount(rs.getInt("full_count"));
 
 				shop.setShopAdminProfile(shopAdmin);
@@ -2485,6 +2486,7 @@ public class ShopDAO {
 					+ Shop.TABLE_NAME + "." + Shop.PINCODE + ","
 					+ Shop.TABLE_NAME + "." + Shop.LANDMARK + ","
 					+ Shop.TABLE_NAME + "." + Shop.BILL_AMOUNT_FOR_FREE_DELIVERY + ","
+
 					+ Shop.TABLE_NAME + "." + Shop.CUSTOMER_HELPLINE_NUMBER + ","
 					+ Shop.TABLE_NAME + "." + Shop.DELIVERY_HELPLINE_NUMBER + ","
 					+ Shop.TABLE_NAME + "." + Shop.SHORT_DESCRIPTION + ","

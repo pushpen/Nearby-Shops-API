@@ -75,6 +75,10 @@ public class ShopItemByItemDAO {
 					+ Shop.TABLE_NAME + "." + Shop.PINCODE + ","
 					+ Shop.TABLE_NAME + "." + Shop.LANDMARK + ","
 					+ Shop.TABLE_NAME + "." + Shop.BILL_AMOUNT_FOR_FREE_DELIVERY + ","
+
+					+ Shop.TABLE_NAME + "." + Shop.PICK_FROM_SHOP_AVAILABLE + ","
+					+ Shop.TABLE_NAME + "." + Shop.HOME_DELIVERY_AVAILABLE + ","
+
 					+ Shop.TABLE_NAME + "." + Shop.CUSTOMER_HELPLINE_NUMBER + ","
 					+ Shop.TABLE_NAME + "." + Shop.DELIVERY_HELPLINE_NUMBER + ","
 					+ Shop.TABLE_NAME + "." + Shop.SHORT_DESCRIPTION + ","
@@ -559,6 +563,10 @@ public class ShopItemByItemDAO {
 					shop.setPincode(rs.getLong(Shop.PINCODE));
 					shop.setLandmark(rs.getString(Shop.LANDMARK));
 					shop.setBillAmountForFreeDelivery(rs.getInt(Shop.BILL_AMOUNT_FOR_FREE_DELIVERY));
+
+					shop.setHomeDeliveryAvailable(rs.getBoolean(Shop.HOME_DELIVERY_AVAILABLE));
+					shop.setPickFromShopAvailable(rs.getBoolean(Shop.PICK_FROM_SHOP_AVAILABLE));
+
 					shop.setCustomerHelplineNumber(rs.getString(Shop.CUSTOMER_HELPLINE_NUMBER));
 					shop.setDeliveryHelplineNumber(rs.getString(Shop.DELIVERY_HELPLINE_NUMBER));
 					shop.setShortDescription(rs.getString(Shop.SHORT_DESCRIPTION));

@@ -464,6 +464,8 @@ public class ShopResource {
 
 
 
+
+
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getShops(
