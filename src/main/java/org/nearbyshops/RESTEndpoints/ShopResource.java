@@ -1,12 +1,14 @@
 package org.nearbyshops.RESTEndpoints;
 
 import net.coobird.thumbnailator.Thumbnails;
+import org.nearbyshops.DAOBilling.DAOAddBalance;
 import org.nearbyshops.DAOsPrepared.ShopDAO;
 import org.nearbyshops.Globals.GlobalConstants;
 import org.nearbyshops.Globals.Globals;
 import org.nearbyshops.Model.Image;
 import org.nearbyshops.Model.Shop;
 import org.nearbyshops.ModelEndpoint.ShopEndPoint;
+import org.nearbyshops.ModelRoles.StaffPermissions;
 import org.nearbyshops.ModelRoles.User;
 
 import javax.annotation.security.RolesAllowed;
@@ -36,8 +38,11 @@ public class ShopResource {
 
 	private ShopDAO shopDAO = Globals.shopDAO;
 
+	private DAOAddBalance addBalanceDAO = Globals.daoAddBalance;
 
-	
+
+
+
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -686,6 +691,55 @@ public class ShopResource {
 
 	}
 
+
+
+
+
+
+
+	@PUT
+	@Path("/AddBalance/{ShopAdminID}/{AmountToAdd}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@RolesAllowed({GlobalConstants.ROLE_ADMIN,GlobalConstants.ROLE_STAFF})
+	public Response addBalance(@PathParam("ShopAdminID") int shopAdminID, @PathParam("AmountToAdd") double amountToAdd)
+	{
+
+		User user = ((User)Globals.accountApproved);
+		StaffPermissions permissions = Globals.daoStaff.getStaffPermissions(user.getUserID());
+
+		// check staff permissions
+
+		if(user.getRole()!=GlobalConstants.ROLE_ADMIN_CODE)
+		{
+			if(permissions==null || !permissions.isPermitApproveShops())
+			{
+				return Response.status(Response.Status.EXPECTATION_FAILED)
+						.build();
+			}
+		}
+
+
+
+
+		int rowCount = addBalanceDAO.add_balance_to_shop(shopAdminID,amountToAdd);
+
+
+		if(rowCount >= 1)
+		{
+
+			return Response.status(Response.Status.OK)
+					.build();
+		}
+		else if(rowCount <= 0)
+		{
+
+			return Response.status(Response.Status.NOT_MODIFIED)
+					.build();
+		}
+
+
+		return null;
+	}
 
 
 

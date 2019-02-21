@@ -311,7 +311,7 @@ public class DAOUserSignUp {
                             + Transaction.IS_CREDIT + ","
 
 //                            + Transaction.CURRENT_DUES_BEFORE_TRANSACTION + ","
-                            + Transaction.SERVICE_BALANCE_AFTER_TRANSACTION + ""
+                            + Transaction.BALANCE_AFTER_TRANSACTION + ""
 
                             + ") "
                             + " SELECT "
@@ -371,7 +371,7 @@ public class DAOUserSignUp {
                 + Transaction.IS_CREDIT + ","
 
 //                + Transaction.CURRENT_DUES_BEFORE_TRANSACTION + ","
-                + Transaction.SERVICE_BALANCE_AFTER_TRANSACTION + ""
+                + Transaction.BALANCE_AFTER_TRANSACTION + ""
 
                 + ") "
                 + " SELECT "
@@ -786,7 +786,7 @@ public class DAOUserSignUp {
                 + Transaction.IS_CREDIT + ","
 
 //                + Transaction.CURRENT_DUES_BEFORE_TRANSACTION + ","
-                + Transaction.SERVICE_BALANCE_AFTER_TRANSACTION + ""
+                + Transaction.BALANCE_AFTER_TRANSACTION + ""
 
                 + ") "
                 + " SELECT "
@@ -846,7 +846,7 @@ public class DAOUserSignUp {
                 + Transaction.IS_CREDIT + ","
 
 //                + Transaction.CURRENT_DUES_BEFORE_TRANSACTION + ","
-                + Transaction.SERVICE_BALANCE_AFTER_TRANSACTION + ""
+                + Transaction.BALANCE_AFTER_TRANSACTION + ""
 
                 + ") "
                 + " SELECT "

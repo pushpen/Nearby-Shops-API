@@ -47,6 +47,9 @@ public class Shop {
 	public static final String GOVERNMENT_ID_NUMBER = "GOVERNMENT_ID_NUMBER";
 	public static final String GOVERNMENT_ID_NAME = "GOVERNMENT_ID_NAME";
 
+	public static final String ACCOUNT_BALANCE = "ACCOUNT_BALANCE";
+	public static final String EXTENDED_CREDIT_LIMIT = "EXTENDED_CREDIT_LIMIT";
+
 
 
 	// deprecated columns
@@ -119,9 +122,20 @@ public class Shop {
 			+ " " + Shop.TIMESTAMP_CREATED + " timestamp with time zone NOT NULL DEFAULT now(),"
 			+ " " + Shop.IS_OPEN + " boolean ,"
 			+ " " + Shop.SHOP_ADMIN_ID + " INT UNIQUE NOT NULL ,"
+
+			+ " " + Shop.ACCOUNT_BALANCE + " float NOT NULL default 0 ,"
+			+ " " + Shop.EXTENDED_CREDIT_LIMIT + " float NOT NULL default 0 ,"
+
+
 			+ " FOREIGN KEY(" + Shop.SHOP_ADMIN_ID +") REFERENCES " + User.TABLE_NAME + "(" + User.USER_ID + ")"
 			+ ")" ;
 
+
+
+	public static final String addColumns =
+					" ALTER TABLE IF EXISTS " + Shop.TABLE_NAME
+					+ "  ADD COLUMN IF NOT EXISTS  " + Shop.ACCOUNT_BALANCE + "  float NOT NULL default 0 ,"
+					+ "  ADD COLUMN IF NOT EXISTS  " + Shop.EXTENDED_CREDIT_LIMIT + "  float NOT NULL default 0 ";
 
 
 
@@ -174,6 +188,10 @@ public class Shop {
 	private double rt_distance;
 	private float rt_rating_avg;
 	private float rt_rating_count;
+	private double rt_min_balance;
+
+	private double accountBalance;
+	private double extendedCreditLimit;
 
 	private User shopAdminProfile;
 
@@ -191,6 +209,30 @@ public class Shop {
 
 	// getter and setters
 
+
+	public double getExtendedCreditLimit() {
+		return extendedCreditLimit;
+	}
+
+	public void setExtendedCreditLimit(double extendedCreditLimit) {
+		this.extendedCreditLimit = extendedCreditLimit;
+	}
+
+	public double getRt_min_balance() {
+		return rt_min_balance;
+	}
+
+	public void setRt_min_balance(double rt_min_balance) {
+		this.rt_min_balance = rt_min_balance;
+	}
+
+	public double getAccountBalance() {
+		return accountBalance;
+	}
+
+	public void setAccountBalance(double accountBalance) {
+		this.accountBalance = accountBalance;
+	}
 
 	public User getShopAdminProfile() {
 		return shopAdminProfile;

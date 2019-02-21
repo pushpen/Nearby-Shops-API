@@ -1,6 +1,7 @@
 package org.nearbyshops.DAOsPrepared;
 
 import com.zaxxer.hikari.HikariDataSource;
+import org.nearbyshops.Globals.GlobalConstants;
 import org.nearbyshops.Globals.Globals;
 import org.nearbyshops.Model.Item;
 import org.nearbyshops.Model.ItemCategory;
@@ -287,7 +288,8 @@ public class ShopDAO {
 				+ " SET "
 				+ Shop.SHOP_ENABLED + " = ?,"
 				+ Shop.SHOP_WAITLISTED + " = ?,"
-				+ Shop.IS_OPEN + " = ?"
+				+ Shop.IS_OPEN + " = ?,"
+				+ Shop.EXTENDED_CREDIT_LIMIT + " = ?"
 				+ " WHERE " + Shop.SHOP_ID + " = ?";
 
 
@@ -305,7 +307,9 @@ public class ShopDAO {
 			statement.setObject(1,shop.getShopEnabled());
 			statement.setObject(2,shop.getShopWaitlisted());
 			statement.setObject(3,shop.isOpen());
-			statement.setObject(4,shop.getShopID());
+			statement.setObject(4,shop.getExtendedCreditLimit());
+
+			statement.setObject(5,shop.getShopID());
 
 			updatedRows = statement.executeUpdate();
 
@@ -630,6 +634,8 @@ public class ShopDAO {
 							+ Shop.PICK_FROM_SHOP_AVAILABLE + ","
 							+ Shop.HOME_DELIVERY_AVAILABLE + ","
 
+							+ Shop.SHOP_ENABLED + ","
+
 							+ Shop.LOGO_IMAGE_PATH + ","
 
 							+ Shop.SHOP_ADDRESS + ","
@@ -644,7 +650,10 @@ public class ShopDAO {
 							+ Shop.LONG_DESCRIPTION + ","
 
 							+ Shop.TIMESTAMP_CREATED + ","
-							+ Shop.IS_OPEN + "" +
+							+ Shop.IS_OPEN + ","
+
+							+ Shop.ACCOUNT_BALANCE + ","
+							+ Shop.EXTENDED_CREDIT_LIMIT + "" +
 
 							" FROM " + Shop.TABLE_NAME +
 							" WHERE " + Shop.SHOP_ADMIN_ID + " = " + shopAdminID ;
@@ -680,7 +689,7 @@ public class ShopDAO {
 				shop.setPickFromShopAvailable(rs.getBoolean(Shop.PICK_FROM_SHOP_AVAILABLE));
 				shop.setHomeDeliveryAvailable(rs.getBoolean(Shop.HOME_DELIVERY_AVAILABLE));
 
-//				shop.setShopEnabled(rs.getBoolean(Shop.SHOP_ENABLED));
+				shop.setShopEnabled(rs.getBoolean(Shop.SHOP_ENABLED));
 //				shop.setShopWaitlisted(rs.getBoolean(Shop.SHOP_WAITLISTED));
 
 				shop.setLogoImagePath(rs.getString(Shop.LOGO_IMAGE_PATH));
@@ -698,6 +707,12 @@ public class ShopDAO {
 
 				shop.setTimestampCreated(rs.getTimestamp(Shop.TIMESTAMP_CREATED));
 				shop.setOpen(rs.getBoolean(Shop.IS_OPEN));
+
+				shop.setAccountBalance(rs.getDouble(Shop.ACCOUNT_BALANCE));
+
+
+				shop.setRt_min_balance(GlobalConstants.MIN_SERVICE_ACCOUNT_BALANCE - rs.getDouble(Shop.EXTENDED_CREDIT_LIMIT));
+
 			}
 
 
@@ -774,6 +789,7 @@ public class ShopDAO {
 				+ lonCenter + "))"
 				+ " + sin( radians(" + latCenter + ")) * sin(radians(lat_center))) as distance" + ","
 
+				+ Shop.TABLE_NAME + "." + Shop.SHOP_ADMIN_ID + ","
 				+ Shop.TABLE_NAME + "." + Shop.SHOP_ID + ","
 				+ Shop.SHOP_NAME + ","
 
@@ -808,8 +824,12 @@ public class ShopDAO {
 				+ Shop.LONG_DESCRIPTION + ","
 
 //				+ Shop.TIMESTAMP_CREATED + " as shop_create_time ,"
-//				+ Shop.TABLE_NAME + "." + Shop.TIMESTAMP_CREATED + " as shop_create_time ,"
+				+ Shop.TABLE_NAME + "." + Shop.TIMESTAMP_CREATED + " as shop_create_time ,"
 				+ Shop.IS_OPEN + ","
+
+				+ Shop.TABLE_NAME + "." + Shop.ACCOUNT_BALANCE + " as shop_account_balance,"
+				+ Shop.TABLE_NAME + "." + Shop.EXTENDED_CREDIT_LIMIT + " as extended_credit_limit,"
+
 
 
 //				+ User.TABLE_NAME + "." + User.USER_ID + ","
@@ -1078,6 +1098,7 @@ public class ShopDAO {
 				shop.setRt_rating_avg(rs.getFloat("avg_rating"));
 				shop.setRt_rating_count(rs.getFloat("rating_count"));
 
+				shop.setShopAdminID(rs.getInt(Shop.SHOP_ADMIN_ID));
 				shop.setShopID(rs.getInt(Shop.SHOP_ID));
 
 				shop.setShopName(rs.getString(Shop.SHOP_NAME));
@@ -1111,6 +1132,9 @@ public class ShopDAO {
 
 				shop.setOpen(rs.getBoolean(Shop.IS_OPEN));
 
+				shop.setTimestampCreated(rs.getTimestamp("shop_create_time"));
+				shop.setExtendedCreditLimit(rs.getDouble("extended_credit_limit"));
+				shop.setAccountBalance(rs.getDouble("shop_account_balance"));
 
 
 				endPoint.setItemCount(rs.getInt("full_count"));

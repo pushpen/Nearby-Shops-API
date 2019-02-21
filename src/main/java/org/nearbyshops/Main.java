@@ -72,7 +72,7 @@ public class Main {
         GlobalConfig.loadGlobalConfiguration();
 
 //        createDB();
-//        upgradeTables();
+        upgradeTables();
 
         createTables();
         startJettyServer();
@@ -319,6 +319,88 @@ public class Main {
             }
         }
     }
+
+
+
+
+    private static void upgradeTables()
+    {
+
+        Connection connection = null;
+        Statement statement = null;
+
+
+//        Configuration configuration = GlobalConfig.getConfiguration();
+//
+//
+//        if(configuration==null)
+//        {
+//            System.out.println("Configuration is null : Upgrade Tables !");
+//
+//            return;
+//        }
+//
+//
+//        String connection_url = configuration.getString(ConfigurationKeys.CONNECTION_URL);
+//        String username = configuration.getString(ConfigurationKeys.POSTGRES_USERNAME);
+//        String password = configuration.getString(ConfigurationKeys.POSTGRES_PASSWORD);
+
+
+        try {
+
+//            connection = DriverManager.getConnection(connection_url, username,password);
+
+            connection = DriverManager.getConnection(GlobalConstants.POSTGRES_CONNECTION_URL,
+                    GlobalConstants.POSTGRES_USERNAME, GlobalConstants.POSTGRES_PASSWORD);
+
+
+            statement = connection.createStatement();
+
+
+            statement.executeUpdate(Shop.addColumns);
+
+
+
+            System.out.println("Tables Upgrade Complete ... !");
+
+
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        finally{
+
+
+            // close the connection and statement accountApproved
+
+            if(statement !=null)
+            {
+
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+
+            }
+
+
+            if(connection!=null)
+            {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        }
+
+    }
+
+
 
 
 }

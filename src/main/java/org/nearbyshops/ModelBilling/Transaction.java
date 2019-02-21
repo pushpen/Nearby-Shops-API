@@ -39,19 +39,12 @@ public class Transaction {
 
     public static final String TITLE = "TITLE";
     public static final String DESCRIPTION = "DESCRIPTION";
-
     public static final String TRANSACTION_TYPE = "TRANSACTION_TYPE";
-
     public static final String TRANSACTION_AMOUNT = "TRANSACTION_AMOUNT";
-//    public static final String TAX_AMOUNT = "TAX_AMOUNT";
-
     public static final String IS_CREDIT = "IS_CREDIT"; // indicates whether transaction is credit or debit
-
     public static final String TIMESTAMP_OCCURRED = "TIMESTAMP_OCCURRED";
 
-//    public static final String CURRENT_DUES_BEFORE_TRANSACTION = "CURRENT_DUES_BEFORE_TRANSACTION";
-    public static final String SERVICE_BALANCE_AFTER_TRANSACTION = "SERVICE_BALANCE_AFTER_TRANSACTION";
-//    public static final String TAX_BALANCE_AFTER_TRANSACTION = "TAX_BALANCE_AFTER_TRANSACTION";
+    public static final String BALANCE_AFTER_TRANSACTION = "SERVICE_BALANCE_AFTER_TRANSACTION";
 
 
 
@@ -69,15 +62,10 @@ public class Transaction {
 
                     + " " + Transaction.TRANSACTION_TYPE + " int,"
                     + " " + Transaction.TRANSACTION_AMOUNT + " float NOT NULL,"
-//                    + " " + Transaction.TAX_AMOUNT + " float NOT NULL default 0,"
 
                     + " " + Transaction.IS_CREDIT + " boolean NOT NULL,"
-
                     + " " + Transaction.TIMESTAMP_OCCURRED + " timestamp with time zone NOT NULL default now(),"
-
-//                    + " " + Transaction.CURRENT_DUES_BEFORE_TRANSACTION + " float NOT NULL,"
-                    + " " + Transaction.SERVICE_BALANCE_AFTER_TRANSACTION + " float NOT NULL,"
-//                    + " " + Transaction.TAX_BALANCE_AFTER_TRANSACTION + " float NOT NULL,"
+                    + " " + Transaction.BALANCE_AFTER_TRANSACTION + " float NOT NULL,"
 
                     + " FOREIGN KEY(" + Transaction.USER_ID +") REFERENCES " + User.TABLE_NAME + "(" + User.USER_ID + ") ON DELETE CASCADE"
                     + ")";
@@ -94,17 +82,17 @@ public class Transaction {
 //
 
 
-
-    public static final String dropColumns =
-            " ALTER TABLE IF EXISTS " + Transaction.TABLE_NAME +
-                    " DROP COLUMN IF EXISTS CURRENT_DUES_BEFORE_TRANSACTION";
-
-
-
-    public static final String renameColumns =
-                    " ALTER TABLE IF EXISTS " + Transaction.TABLE_NAME +
-                    " RENAME COLUMN " + " CURRENT_DUES_AFTER_TRANSACTION " + " TO " + Transaction.SERVICE_BALANCE_AFTER_TRANSACTION;
-
+//
+//    public static final String dropColumns =
+//            " ALTER TABLE IF EXISTS " + Transaction.TABLE_NAME +
+//                    " DROP COLUMN IF EXISTS CURRENT_DUES_BEFORE_TRANSACTION";
+//
+//
+//
+//    public static final String renameColumns =
+//                    " ALTER TABLE IF EXISTS " + Transaction.TABLE_NAME +
+//                    " RENAME COLUMN " + " CURRENT_DUES_AFTER_TRANSACTION " + " TO " + Transaction.SERVICE_BALANCE_AFTER_TRANSACTION;
+//
 
 
 
