@@ -4,6 +4,7 @@ import org.nearbyshops.DAOPushNotifications.DAOOneSignal;
 import org.nearbyshops.Globals.GlobalConstants;
 import org.nearbyshops.Globals.Globals;
 import org.nearbyshops.Model.Order;
+import org.nearbyshops.Model.Shop;
 import org.nearbyshops.ModelEndpoint.OrderEndPoint;
 import org.nearbyshops.ModelRoles.User;
 
@@ -174,9 +175,11 @@ public class OrderResource {
 
 
 
+
+
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	@RolesAllowed({GlobalConstants.ROLE_END_USER})
+	@RolesAllowed({GlobalConstants.ROLE_END_USER,GlobalConstants.ROLE_ADMIN})
 	public Response getOrders(
 			@QueryParam("OrderID")Integer orderID,
 			@QueryParam("ShopID")Integer shopID,
@@ -198,11 +201,11 @@ public class OrderResource {
 		//							  @QueryParam("EndUserID")Integer endUserID,
 
 
-		int endUserID = ((User)Globals.accountApproved).getUserID();
+
 
 		// *********************** second Implementation
 
-//		User user = (User) Globals.accountApproved;
+		User user = (User) Globals.accountApproved;
 
 //		if(user.getRole()==GlobalConstants.ROLE_END_USER_CODE)
 //		{
@@ -216,50 +219,85 @@ public class OrderResource {
 //			throw new ForbiddenException("Not Permitted !");
 //		}
 
+		Integer endUserID = null;
 
 
-		if(limit!=null)
+
+		if(user.getRole()==GlobalConstants.ROLE_END_USER_CODE)
 		{
-			if(limit >= GlobalConstants.max_limit)
-			{
-				limit = GlobalConstants.max_limit;
-			}
-
-			if(offset==null)
-			{
-				offset = 0;
-			}
+			endUserID = ((User)Globals.accountApproved).getUserID();
 		}
-
-
-		getRowCount=true;
-
-
-
-		OrderEndPoint endpoint = Globals.orderService.readOrders(orderID,
-				endUserID,shopID, pickFromShop,
-				homeDeliveryStatus,pickFromShopStatus,
-				deliveryGuyID,
-				latCenter,lonCenter,
-				pendingOrders,
-				searchString,
-				sortBy,limit,offset,
-				getRowCount,getOnlyMetaData);
-
-
-
-
-		if(limit!=null)
+		else if(user.getRole()==GlobalConstants.ROLE_ADMIN_CODE)
 		{
-			endpoint.setLimit(limit);
-			endpoint.setOffset(offset);
-			endpoint.setMax_limit(GlobalConstants.max_limit);
+
+		}
+		else
+		{
+			throw new ForbiddenException("Not Permitted !");
 		}
 
 
 
 
+		try
+		{
 
+			if(limit!=null)
+			{
+				if(limit >= GlobalConstants.max_limit)
+				{
+					limit = GlobalConstants.max_limit;
+				}
+
+				if(offset==null)
+				{
+					offset = 0;
+				}
+			}
+
+
+			getRowCount=true;
+
+
+
+			OrderEndPoint endpoint = Globals.orderService.readOrders(orderID,
+					null,shopID, pickFromShop,
+					homeDeliveryStatus,pickFromShopStatus,
+					deliveryGuyID,
+					latCenter,lonCenter,
+					pendingOrders,
+					searchString,
+					sortBy,limit,offset,
+					getRowCount,getOnlyMetaData);
+
+
+
+
+			if(limit!=null)
+			{
+				endpoint.setLimit(limit);
+				endpoint.setOffset(offset);
+				endpoint.setMax_limit(GlobalConstants.max_limit);
+			}
+
+
+
+			return Response.status(Status.OK)
+					.entity(endpoint)
+					.build();
+
+
+		}
+		catch (Exception e)
+		{
+
+			e.printStackTrace();
+		}
+
+
+
+
+		return null;
 
 
 
@@ -271,9 +309,6 @@ public class OrderResource {
 
 		//Marker
 
-		return Response.status(Status.OK)
-				.entity(endpoint)
-				.build();
 	}
 
 

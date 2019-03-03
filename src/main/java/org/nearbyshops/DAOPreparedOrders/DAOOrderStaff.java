@@ -707,9 +707,6 @@ public class DAOOrderStaff {
 
 
 
-
-
-
     public int confirmOrderPFS(int orderID)
     {
         String updateStatement = "UPDATE " + Order.TABLE_NAME
