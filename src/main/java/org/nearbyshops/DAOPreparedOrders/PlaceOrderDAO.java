@@ -205,29 +205,40 @@ public class PlaceOrderDAO {
             double netPayable = 0;
 
 
+
+
+
             if(cartStats.size()==1)
             {
-                if(cartStats.get(0).getCart_Total() < shop.getBillAmountForFreeDelivery())
-                {
-                    itemCount = cartStats.get(0).getItemsInCart();
-                    itemTotal = cartStats.get(0).getCart_Total();
+
+                itemCount = cartStats.get(0).getItemsInCart();
+                itemTotal = cartStats.get(0).getCart_Total();
 //                    appServiceCharge = 10;
 
-                    if(order.isPickFromShop())
-                    {
+                if(order.isPickFromShop())
+                {
 
-                        deliveryCharges = 0;
-                        appServiceCharge = GlobalConstants.app_service_charge_pick_for_shop;
+                    deliveryCharges = 0;
+                    appServiceCharge = GlobalConstants.app_service_charge_pick_for_shop;
+                }
+                else
+                {
+
+
+                    if(cartStats.get(0).getCart_Total() < shop.getBillAmountForFreeDelivery())
+                    {
+                        deliveryCharges = shop.getDeliveryCharges();
                     }
                     else
                     {
-                        deliveryCharges = shop.getDeliveryCharges();
-                        appServiceCharge = GlobalConstants.app_service_charge_home_delivery;
+                        deliveryCharges = 0; // delivery free above this amount
                     }
 
-                    netPayable = itemTotal + appServiceCharge + deliveryCharges;
-
+                    appServiceCharge = GlobalConstants.app_service_charge_home_delivery;
                 }
+
+                netPayable = itemTotal + appServiceCharge + deliveryCharges;
+
             }
 
 
