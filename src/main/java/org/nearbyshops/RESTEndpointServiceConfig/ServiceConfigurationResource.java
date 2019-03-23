@@ -28,7 +28,7 @@ import java.util.List;
 
 
 
-@Path("/api/ServiceConfiguration")
+@Path("/api/serviceconfiguration")
 public class ServiceConfigurationResource {
 
 

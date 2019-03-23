@@ -33,6 +33,12 @@ public class GlobalConfig {
 
         GlobalConstants.MSG91_SMS_SERVICE_API_KEY = configuration.getString("msg91.apikey");
 
+        GlobalConstants.MAILGUN_DOMAIN = configuration.getString("mailgun.domain");
+        GlobalConstants.MAILGUN_API_KEY = configuration.getString("mailgun.apikey");
+        GlobalConstants.MAILGUN_NAME = configuration.getString("mailgun.name");
+        GlobalConstants.MAILGUN_EMAIL = configuration.getString("mailgun.email");
+
+
         GlobalConstants.FIREBASE_DRIVER_KEY = configuration.getString("firebase.driverkey");
         GlobalConstants.FIREBASE_END_USER_KEY = configuration.getString("firebase.enduserkey");
 

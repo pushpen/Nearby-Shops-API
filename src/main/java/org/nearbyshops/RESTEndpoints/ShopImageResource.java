@@ -480,10 +480,10 @@ public class ShopImageResource {
                     .toFile(new File(BASE_DIR.toString() + "/" + "five_hundred_" + filename));
 
 
-//            Thumbnails.of(BASE_DIR.toString() + "/" + filename)
-//                    .size(700,700)
-//                    .outputFormat("jpg")
-//                    .toFile(new File(BASE_DIR.toString() + "/" + "seven_hundred_" + filename));
+            Thumbnails.of(BASE_DIR.toString() + "/" + filename)
+                    .size(700,700)
+                    .outputFormat("jpg")
+                    .toFile(new File(BASE_DIR.toString() + "/" + "seven_hundred_" + filename));
 
 
             Thumbnails.of(BASE_DIR.toString() + "/" + filename)

@@ -107,6 +107,10 @@ public class Globals {
 
 
 
+
+
+
+
     // Configure Connection Pooling
 
 
@@ -124,7 +128,8 @@ public class Globals {
 
             if(configuration==null)
             {
-                System.out.println("Configuration is null : getDataSource() HikariCP !");
+                System.out.println("failed to load api configuration ... " +
+                        "Configuration is null ...  : getDataSource() HikariCP !");
 
                 return null ;
             }
@@ -151,11 +156,6 @@ public class Globals {
 
 
 
-
-
-
-
-
 //    // mailgun configuration
 
     private static Configuration configurationMailgun;
@@ -179,8 +179,6 @@ public class Globals {
             return configurationMailgun;
         }
     }
-
-
 
 
 }
