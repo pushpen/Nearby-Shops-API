@@ -261,7 +261,7 @@ public class OrderResource {
 
 
 			OrderEndPoint endpoint = Globals.orderService.readOrders(orderID,
-					null,shopID, pickFromShop,
+					endUserID,shopID, pickFromShop,
 					homeDeliveryStatus,pickFromShopStatus,
 					deliveryGuyID,
 					latCenter,lonCenter,

@@ -832,6 +832,29 @@ public class ItemDAO {
 		}
 		finally
 		{
+
+
+
+
+			try {
+				if(resultSetCount!=null)
+				{resultSetCount.close();}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			try {
+
+				if(statementCount!=null)
+				{statementCount.close();}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+
+
 			
 			try {
 					if(rs!=null)

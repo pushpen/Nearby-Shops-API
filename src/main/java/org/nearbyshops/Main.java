@@ -8,6 +8,8 @@ import org.nearbyshops.Globals.GlobalConfig;
 import org.nearbyshops.Globals.GlobalConstants;
 import org.nearbyshops.Globals.Globals;
 import org.nearbyshops.Model.*;
+import org.nearbyshops.ModelAnalytics.ItemAnalytics;
+import org.nearbyshops.ModelAnalytics.ShopAnalytics;
 import org.nearbyshops.ModelBilling.Transaction;
 import org.nearbyshops.ModelDelivery.DeliveryAddress;
 import org.nearbyshops.ModelItemSpecification.ItemSpecificationItem;
@@ -152,6 +154,15 @@ public class Main {
             statement.executeUpdate(ServiceConfigurationLocal.createTablePostgres);
 
 
+
+            // tables for storing analytics data
+            statement.executeUpdate(ItemAnalytics.createTable);
+            statement.executeUpdate(ShopAnalytics.createTable);
+
+
+
+
+
 //            statement.executeUpdate(User.createTable);
 //            statement.executeUpdate(StaffPermissions.createTablePostgres);
 
@@ -163,31 +174,57 @@ public class Main {
             // developers Note: whenever adding a table please check that tables it depends on are created first
 
 
-            // Insert the default administrator if it does not exit
+            // Create admin account with given username and password if it does not exit | or update in case admin account exist
 
             User admin = new User();
-            admin.setUsername("admin");
+            admin.setUsername(GlobalConstants.ADMIN_USERNAME);
             admin.setRole(1);
-            admin.setPassword("password");
+            admin.setPassword(GlobalConstants.ADMIN_PASSWORD);
 
-            try
+
+            System.out.println("Admin Username : " + GlobalConstants.ADMIN_USERNAME + " | " + " Admin Password : " + GlobalConstants.ADMIN_PASSWORD);
+
+
+
+            boolean adminRoleExist = Globals.daoUserSignUp.checkRoleExists(GlobalConstants.ROLE_ADMIN_CODE);
+
+            if(adminRoleExist)
             {
-                int rowCount = Globals.daoUserSignUp.registerUsingUsername(admin,true);
-
-                if(rowCount==1)
-                {
-                    System.out.println("Admin Account created !");
-                }
+                Globals.daoUserSignUp.updateAdminUsername(admin);
             }
-            catch (Exception ex)
+            else
             {
-                System.out.println(ex.toString());
+                Globals.daoUserSignUp.createAdmin(admin,true);
             }
 
 
 
 
-            // Insert the root category whose DELIVERY_GUY_SELF_ID is 1
+//            User admin = new User();
+//            admin.setUsername("admin");
+//            admin.setRole(1);
+//            admin.setPassword("password");
+//
+//
+//
+//            try
+//            {
+//                int rowCount = Globals.daoUserSignUp.registerUsingUsername(admin,true);
+//
+//                if(rowCount==1)
+//                {
+//                    System.out.println("Admin Account created !");
+//                }
+//            }
+//            catch (Exception ex)
+//            {
+//                System.out.println(ex.toString());
+//            }
+
+
+
+
+            // Insert the root category whose ID is 1
 
             String insertItemCategory = "";
 

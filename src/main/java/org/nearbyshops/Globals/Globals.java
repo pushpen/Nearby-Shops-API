@@ -3,6 +3,7 @@ package org.nearbyshops.Globals;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import net.sargue.mailgun.Configuration;
+import org.nearbyshops.DAOAnalytics.DAOItemAnalytics;
 import org.nearbyshops.DAOBilling.DAOAddBalance;
 import org.nearbyshops.DAOBilling.DAOTransaction;
 import org.nearbyshops.DAOPreparedCartOrder.CartItemService;
@@ -103,11 +104,11 @@ public class Globals {
     public static DAOTransaction daoTransaction = new DAOTransaction();
 
 
+    public static DAOItemAnalytics daoItemAnalytics = new DAOItemAnalytics();
+
+
+
     public static Object accountApproved;
-
-
-
-
 
 
 

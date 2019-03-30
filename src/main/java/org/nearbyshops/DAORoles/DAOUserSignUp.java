@@ -1451,6 +1451,10 @@ public class DAOUserSignUp {
 
 
 
+
+
+
+
     public boolean checkUsernameExists(String username)
     {
 
@@ -1530,6 +1534,262 @@ public class DAOUserSignUp {
         return false;
     }
 
+
+
+
+
+
+
+    public int createAdmin(User user, boolean getRowCount)
+    {
+
+        Connection connection = null;
+        PreparedStatement statement = null;
+
+        int idOfInsertedRow = -1;
+        int rowCountItems = -1;
+
+        String insertItemSubmission = "INSERT INTO "
+                + User.TABLE_NAME
+                + "("
+                + User.USERNAME + ","
+                + User.PASSWORD + ""
+                + ") values(?,? )";
+
+
+
+
+        try {
+
+            connection = dataSource.getConnection();
+            connection.setAutoCommit(false);
+
+
+            statement = connection.prepareStatement(insertItemSubmission,PreparedStatement.RETURN_GENERATED_KEYS);
+            int i = 0;
+
+            statement.setString(++i,user.getUsername());
+            statement.setString(++i,user.getPassword());
+
+
+            rowCountItems = statement.executeUpdate();
+
+
+            ResultSet rs = statement.getGeneratedKeys();
+
+            if(rs.next())
+            {
+                idOfInsertedRow = rs.getInt(1);
+            }
+
+
+            connection.commit();
+
+
+
+
+
+            System.out.println("Admin profile Created : Row count : " + rowCountItems);
+
+
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+
+            if (connection != null) {
+                try {
+
+                    idOfInsertedRow=-1;
+                    rowCountItems = 0;
+
+                    connection.rollback();
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        }
+        finally
+        {
+
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
+
+            try {
+
+                if(connection!=null)
+                {connection.close();}
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+
+        if(getRowCount)
+        {
+            return rowCountItems;
+        }
+        else
+        {
+            return idOfInsertedRow;
+        }
+    }
+
+
+
+
+
+    public int updateAdminUsername(User user)
+    {
+
+        String updateStatement = "UPDATE " + User.TABLE_NAME
+
+                + " SET "
+
+                + User.USERNAME + "=?,"
+                + User.PASSWORD + "=?"
+
+                + " WHERE " + User.ROLE + " = " + GlobalConstants.ROLE_ADMIN_CODE;
+
+        // Please note there is supposed to be only one admin for the service. If that is not the case
+        // then this method will not work for updating admin profile
+
+
+
+        Connection connection = null;
+        PreparedStatement statement = null;
+
+        int rowCountUpdated = 0;
+
+        try {
+
+            connection = dataSource.getConnection();
+            statement = connection.prepareStatement(updateStatement);
+
+            int i = 0;
+
+
+            statement.setString(++i,user.getUsername());
+            statement.setObject(++i,user.getPassword());
+
+            rowCountUpdated = statement.executeUpdate();
+
+
+            System.out.println("Admin profile updated : Row count : " + rowCountUpdated);
+
+
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        finally
+
+        {
+
+            try {
+
+                if(statement!=null)
+                {statement.close();}
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+            try {
+
+                if(connection!=null)
+                {connection.close();}
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+
+        return rowCountUpdated;
+    }
+
+
+
+
+
+
+    public boolean checkRoleExists(int role)
+    {
+
+        String query = "SELECT " + User.USERNAME
+                    + " FROM " + User.TABLE_NAME
+                    + " WHERE " + User.ROLE + " = ?";
+
+
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+
+        System.out.println("Checked User Role  : " + role);
+
+//		ShopAdmin shopAdmin = null;
+
+
+
+        try {
+
+            connection = dataSource.getConnection();
+            statement = connection.prepareStatement(query);
+
+            int i = 0;
+            statement.setObject(++i,role);
+
+            rs = statement.executeQuery();
+
+
+            while(rs.next())
+            {
+
+                return true;
+            }
+
+
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } finally
+
+        {
+
+            try {
+                if(rs!=null)
+                {rs.close();}
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+            try {
+
+                if(statement!=null)
+                {statement.close();}
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+            try {
+
+                if(connection!=null)
+                {connection.close();}
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+
+        return false;
+    }
 
 
 

@@ -11,8 +11,23 @@ public class GlobalConstants {
 
 	public static String POSTGRES_CONNECTION_URL;
     public static String CONNECTION_URL_CREATE_DB;
+
 	public static String POSTGRES_USERNAME;
 	public static String POSTGRES_PASSWORD;
+
+
+	public static String ADMIN_USERNAME;
+	public static String ADMIN_PASSWORD;
+
+
+	public static String SERVICE_NAME;
+	public static String SERVICE_DESCRIPTION;
+
+
+	public static String LOCALE_COUNTRY_CODE;
+	public static String LOCALE_CURRENCY_CODE;
+
+
 
 //    public static final int NOTIFICATION_TYPE_TRIP_REQUESTS = 1;
 //    public static final int NOTIFICATION_TYPE_CURRENT_TRIP = 2;

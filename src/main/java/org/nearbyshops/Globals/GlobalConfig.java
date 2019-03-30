@@ -31,6 +31,18 @@ public class GlobalConfig {
         GlobalConstants.POSTGRES_USERNAME = configuration.getString("postgres.username");
         GlobalConstants.POSTGRES_PASSWORD = configuration.getString("postgres.password");
 
+
+        GlobalConstants.ADMIN_USERNAME = configuration.getString("admin_username");
+        GlobalConstants.ADMIN_PASSWORD = configuration.getString("admin_password");
+
+        GlobalConstants.SERVICE_NAME = configuration.getString("service_name");
+        GlobalConstants.SERVICE_DESCRIPTION = configuration.getString("service_description");
+
+        GlobalConstants.LOCALE_COUNTRY_CODE = configuration.getString("locale_country_code");
+        GlobalConstants.LOCALE_CURRENCY_CODE = configuration.getString("locale_currency_code");
+
+
+
         GlobalConstants.MSG91_SMS_SERVICE_API_KEY = configuration.getString("msg91.apikey");
 
         GlobalConstants.MAILGUN_DOMAIN = configuration.getString("mailgun.domain");
