@@ -100,7 +100,7 @@ public class Shop {
 			+ " " + Shop.PICK_FROM_SHOP_AVAILABLE + " boolean,"
 			+ " " + Shop.HOME_DELIVERY_AVAILABLE + " boolean,"
 
-			+ " " + Shop.SHOP_ENABLED + " boolean NOT NULL,"
+			+ " " + Shop.SHOP_ENABLED + " boolean,"
 			+ " " + Shop.SHOP_WAITLISTED + " boolean NOT NULL,"
 
 			+ " " + Shop.LOGO_IMAGE_PATH + " text,"
@@ -136,6 +136,14 @@ public class Shop {
 					" ALTER TABLE IF EXISTS " + Shop.TABLE_NAME
 					+ "  ADD COLUMN IF NOT EXISTS  " + Shop.ACCOUNT_BALANCE + "  float NOT NULL default 0 ,"
 					+ "  ADD COLUMN IF NOT EXISTS  " + Shop.EXTENDED_CREDIT_LIMIT + "  float NOT NULL default 0 ";
+
+
+//	alter table tbl alter col1 drop not null,
+
+	
+	public static final String removeNotNull =
+			" ALTER TABLE IF EXISTS " + Shop.TABLE_NAME  + "  ALTER  " + Shop.SHOP_ENABLED + "  drop NOT NULL ";
+
 
 
 

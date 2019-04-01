@@ -764,6 +764,7 @@ public class ShopDAO {
 
 
 	public ShopEndPoint getShopsListQuerySimple(
+			Boolean underReview,
 			Boolean enabled, Boolean waitlisted,
 			Boolean filterByVisibility,
 			Double latCenter, Double lonCenter,
@@ -779,7 +780,7 @@ public class ShopDAO {
 		String queryJoin = "";
 
 		// flag for tracking whether to put "AND" or "WHERE"
-		boolean isFirst = true;
+//		boolean isFirst = true;
 
 
 		String queryNormal = "SELECT "
@@ -853,7 +854,8 @@ public class ShopDAO {
 
 				+ " FROM " + Shop.TABLE_NAME
 				+ " INNER JOIN " + User.TABLE_NAME + " ON ( " + Shop.TABLE_NAME + "." + Shop.SHOP_ADMIN_ID + " = " + User.TABLE_NAME + "." + User.USER_ID + ")"
-				+ " LEFT OUTER JOIN " + ShopReview.TABLE_NAME  + " ON (" + ShopReview.TABLE_NAME + "." + ShopReview.SHOP_ID + " = " + Shop.TABLE_NAME + "." + Shop.SHOP_ID + ")";
+				+ " LEFT OUTER JOIN " + ShopReview.TABLE_NAME  + " ON (" + ShopReview.TABLE_NAME + "." + ShopReview.SHOP_ID + " = " + Shop.TABLE_NAME + "." + Shop.SHOP_ID + ")"
+				+ " WHERE TRUE ";
 
 
 
@@ -863,10 +865,14 @@ public class ShopDAO {
 
 			String queryPartlatLonCenter = "";
 
-			queryNormal = queryNormal + " WHERE ";
+//			queryNormal = queryNormal + " WHERE ";
+
 
 			// reset the flag
-			isFirst = false;
+//			isFirst = false;
+
+
+			queryNormal = queryNormal + " AND ";
 
 			queryPartlatLonCenter = queryPartlatLonCenter + " 6371.01 * acos( cos( radians("
 					+ latCenter + ")) * cos( radians( lat_center) ) * cos(radians( lon_center ) - radians("
@@ -890,17 +896,21 @@ public class ShopDAO {
 			queryPartDeliveryRange = queryPartDeliveryRange
 					+ Shop.TABLE_NAME + "." + Shop.DELIVERY_RANGE + " BETWEEN " + deliveryRangeMin + " AND " + deliveryRangeMax;
 
-			if(isFirst)
-			{
-				queryNormal = queryNormal + " WHERE " + queryPartDeliveryRange;
 
-				// reset the flag
-				isFirst = false;
+//			if(isFirst)
+//			{
+//				queryNormal = queryNormal + " WHERE " + queryPartDeliveryRange;
+//
+//				// reset the flag
+//				isFirst = false;
+//
+//			}else
+//			{
+//				queryNormal = queryNormal + " AND " + queryPartDeliveryRange;
+//			}
 
-			}else
-			{
-				queryNormal = queryNormal + " AND " + queryPartDeliveryRange;
-			}
+
+			queryNormal = queryNormal + " AND " + queryPartDeliveryRange;
 
 		}
 
@@ -921,17 +931,20 @@ public class ShopDAO {
 					+ Shop.LAT_CENTER + ")))) <= " + proximity ;
 
 
-			if(isFirst)
-			{
-				queryNormal = queryNormal + " WHERE " + queryPartProximity;
+			queryNormal = queryNormal + " AND " + queryPartProximity;
 
-				// reset the flag
-				isFirst = false;
 
-			}else
-			{
-				queryNormal = queryNormal + " AND " + queryPartProximity;
-			}
+//			if(isFirst)
+//			{
+//				queryNormal = queryNormal + " WHERE " + queryPartProximity;
+//
+//				// reset the flag
+//				isFirst = false;
+//
+//			}else
+//			{
+//				queryNormal = queryNormal + " AND " + queryPartProximity;
+//			}
 
 		}
 
@@ -945,51 +958,56 @@ public class ShopDAO {
 					+ " or CAST ( " + Shop.TABLE_NAME + "." + Shop.SHOP_ID + " AS text )" + " ilike '%" + searchString + "%'" + "";
 
 
-			if(isFirst)
-			{
-//				queryJoin = queryJoin + " WHERE " + queryPartSearch;
+			queryNormal = queryNormal + " AND " + queryPartSearch;
 
-				queryNormal = queryNormal + " WHERE " + queryPartSearch;
 
-				isFirst = false;
-			}
-			else
-			{
-				queryNormal = queryNormal + " AND " + queryPartSearch;
-			}
+//			if(isFirst)
+//			{
+////				queryJoin = queryJoin + " WHERE " + queryPartSearch;
+//
+//				queryNormal = queryNormal + " WHERE " + queryPartSearch;
+//
+//				isFirst = false;
+//			}
+//			else
+//			{
+//				queryNormal = queryNormal + " AND " + queryPartSearch;
+//			}
+
+
 		}
+
+
+
+
+
+		if(underReview !=null)
+		{
+			queryNormal = queryNormal + " AND " + Shop.SHOP_ENABLED + " IS NULL ";
+		}
+
 
 
 		if(enabled !=null)
 		{
-
-			if(isFirst)
-			{
-				queryNormal = queryNormal + " WHERE " + Shop.SHOP_ENABLED + " = "  + enabled;
-
-				isFirst = false;
-			}
-			else
-			{
-				queryNormal = queryNormal + " AND " + Shop.SHOP_ENABLED + " = "  + enabled;
-			}
-
-
+			queryNormal = queryNormal + " AND " + Shop.SHOP_ENABLED + " = "  + enabled;
 		}
 
 
 		if(waitlisted !=null)
 		{
-			if(isFirst)
-			{
-				queryNormal = queryNormal + " WHERE " + Shop.SHOP_WAITLISTED + " = "  + waitlisted;
+			queryNormal = queryNormal + " AND " + Shop.SHOP_WAITLISTED + " = "  + waitlisted;
 
-				isFirst = false;
-			}
-			else
-			{
-				queryNormal = queryNormal + " AND " + Shop.SHOP_WAITLISTED + " = "  + waitlisted;
-			}
+//			if(isFirst)
+//			{
+//				queryNormal = queryNormal + " WHERE " + Shop.SHOP_WAITLISTED + " = "  + waitlisted;
+//
+//				isFirst = false;
+//			}
+//			else
+//			{
+//				queryNormal = queryNormal + " AND " + Shop.SHOP_WAITLISTED + " = "  + waitlisted;
+//			}
 		}
 
 

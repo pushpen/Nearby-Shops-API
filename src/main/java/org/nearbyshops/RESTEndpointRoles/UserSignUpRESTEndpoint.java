@@ -273,14 +273,14 @@ public class UserSignUpRESTEndpoint {
             idOfInsertedRow = daoUser.registerUsingPhoneNoCredits(user,false);
 
 
-            System.out.println("Phone : " + user.getPhone()
-                    + "\nEmail : " + user.getEmail()
-                    + "\nPassword : " + user.getPassword()
-                    + "\nRegistration Mode : " + user.getRt_registration_mode()
-                    + "\nName : " + user.getName()
-                    + "\nInsert Count : " + idOfInsertedRow
-                    + "\nVerificationCode : " + user.getRt_phone_verification_code()
-            );
+//            System.out.println("Phone : " + user.getPhone()
+//                    + "\nEmail : " + user.getEmail()
+//                    + "\nPassword : " + user.getPassword()
+//                    + "\nRegistration Mode : " + user.getRt_registration_mode()
+//                    + "\nName : " + user.getName()
+//                    + "\nInsert Count : " + idOfInsertedRow
+//                    + "\nVerificationCode : " + user.getRt_phone_verification_code()
+//            );
 
             // send notification to the mobile number via SMS
 

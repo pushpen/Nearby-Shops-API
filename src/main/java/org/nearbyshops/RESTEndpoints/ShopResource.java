@@ -343,10 +343,14 @@ public class ShopResource {
 
 
 
+
+
+
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/QuerySimple")
 	public Response getShopListSimple(
+			@QueryParam("UnderReview")Boolean underReview,
             @QueryParam("Enabled")Boolean enabled,
             @QueryParam("Waitlisted") Boolean waitlisted,
             @QueryParam("FilterByVisibility") Boolean filterByVisibility,
@@ -378,6 +382,7 @@ public class ShopResource {
 
 
 		ShopEndPoint endPoint = shopDAO.getShopsListQuerySimple(
+									underReview,
 									enabled,waitlisted,
 									filterByVisibility,
 									latCenter,lonCenter,

@@ -394,8 +394,9 @@ public class Main {
             statement = connection.createStatement();
 
 
-            statement.executeUpdate(Shop.addColumns);
+//            statement.executeUpdate(Shop.addColumns);
 
+            statement.executeUpdate(Shop.removeNotNull);
 
 
             System.out.println("Tables Upgrade Complete ... !");

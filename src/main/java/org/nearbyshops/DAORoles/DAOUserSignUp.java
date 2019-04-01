@@ -918,6 +918,7 @@ public class DAOUserSignUp {
 
 
 
+
             if(user.getRole()== GlobalConstants.ROLE_SHOP_ADMIN_CODE)
             {
                 if (rowCountItems == 1)
@@ -927,12 +928,14 @@ public class DAOUserSignUp {
                     i = 0;
 
                     statementInsertShop.setObject(++i,idOfInsertedRow);
-                    statementInsertShop.setObject(++i,false);
+                    statementInsertShop.setObject(++i,null);
                     statementInsertShop.setObject(++i,false);
 
                     statementInsertShop.executeUpdate();
                 }
             }
+
+
 
 
 
