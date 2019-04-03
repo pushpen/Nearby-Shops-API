@@ -12,13 +12,11 @@ import javax.annotation.security.DenyAll;
 import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.ForbiddenException;
 import javax.ws.rs.NotAuthorizedException;
-import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.container.ResourceInfo;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MultivaluedMap;
-import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.ext.Provider;
 import java.lang.reflect.Method;
@@ -32,8 +30,8 @@ import java.util.*;
 
 
 
-@Provider
-public class AuthenticationFilter implements ContainerRequestFilter {
+//@Provider
+public class AuthenticationFilterBackup implements ContainerRequestFilter {
 
 
     private DAOUserNew daoUser = Globals.daoUserNew;
@@ -99,27 +97,27 @@ public class AuthenticationFilter implements ContainerRequestFilter {
 
 
 
-//            requestContext.setSecurityContext(new SecurityContext() {
-//                @Override
-//                public Principal getUserPrincipal() {
-//                    return null;
-//                }
-//
-//                @Override
-//                public boolean isUserInRole(String s) {
-//                    return false;
-//                }
-//
-//                @Override
-//                public boolean isSecure() {
-//                    return false;
-//                }
-//
-//                @Override
-//                public String getAuthenticationScheme() {
-//                    return null;
-//                }
-//            });
+            requestContext.setSecurityContext(new SecurityContext() {
+                @Override
+                public Principal getUserPrincipal() {
+                    return null;
+                }
+
+                @Override
+                public boolean isUserInRole(String s) {
+                    return false;
+                }
+
+                @Override
+                public boolean isSecure() {
+                    return false;
+                }
+
+                @Override
+                public String getAuthenticationScheme() {
+                    return null;
+                }
+            });
 
 //            requestContext.setProperty("sample",);
 
@@ -135,9 +133,6 @@ public class AuthenticationFilter implements ContainerRequestFilter {
 
 
 
-
-
-
     private Object isUserAllowed(final String username, final String password, final Set<String> rolesSet)
     {
 
@@ -146,11 +141,11 @@ public class AuthenticationFilter implements ContainerRequestFilter {
         if(user == null)
         {
 //            System.out.println("User NULL ");
-            throw new NotAuthorizedException("We are not able to identify you !");
+            throw new NotAuthorizedException("Not Permitted");
         }
 
 
-//        System.out.println("Role : " + user.getRole());
+        System.out.println("Role : " + user.getRole());
 
 
 
@@ -165,7 +160,8 @@ public class AuthenticationFilter implements ContainerRequestFilter {
 //        }
 
 
-
+        
+        //        boolean isAllowed = false;
 
         //        boolean isEnabled = false;
 
@@ -174,7 +170,7 @@ public class AuthenticationFilter implements ContainerRequestFilter {
         //Access the database and do this part yourself
         //String userRole = userMgr.getUserRole(username);
 
-//        int roleID = -1;
+        int roleID = -1;
 
         for(String role : rolesSet)
         {
@@ -183,15 +179,7 @@ public class AuthenticationFilter implements ContainerRequestFilter {
 
             if(role.equals(GlobalConstants.ROLE_ADMIN))
             {
-
-                if(user.getRole()==GlobalConstants.ROLE_ADMIN_CODE)
-                {
-                    return user;
-                }
-
-            }
-            else if(role.equals(GlobalConstants.ROLE_STAFF))
-            {
+                roleID = GlobalConstants.ROLE_ADMIN_CODE;
 
                 if(user.getRole()==GlobalConstants.ROLE_ADMIN_CODE ||
                         user.getRole()==GlobalConstants.ROLE_STAFF_CODE)
@@ -200,10 +188,17 @@ public class AuthenticationFilter implements ContainerRequestFilter {
                 }
 
             }
+            else if(role.equals(GlobalConstants.ROLE_STAFF))
+            {
+                roleID = GlobalConstants.ROLE_STAFF_CODE;
+            }
             else if(role.equals(GlobalConstants.ROLE_SHOP_ADMIN))
             {
+                roleID = GlobalConstants.ROLE_SHOP_ADMIN_CODE;
 
-                if(user.getRole()==GlobalConstants.ROLE_SHOP_ADMIN_CODE)
+                if(user.getRole()==GlobalConstants.ROLE_SHOP_ADMIN_CODE ||
+                        user.getRole()==GlobalConstants.ROLE_SHOP_STAFF_CODE ||
+                        user.getRole()==GlobalConstants.ROLE_DELIVERY_GUY_CODE)
                 {
                     return user;
                 }
@@ -211,43 +206,72 @@ public class AuthenticationFilter implements ContainerRequestFilter {
             }
             else if(role.equals(GlobalConstants.ROLE_DELIVERY_GUY_SELF))
             {
-
-                if(user.getRole()==GlobalConstants.ROLE_DELIVERY_GUY_CODE)
-                {
-                    return user;
-                }
-
+                roleID=GlobalConstants.ROLE_DELIVERY_GUY_SELF_CODE;
             }
             else if(role.equals(GlobalConstants.ROLE_SHOP_STAFF))
             {
-
-                if(user.getRole()==GlobalConstants.ROLE_SHOP_STAFF_CODE)
-                {
-                    return user;
-                }
+                roleID = GlobalConstants.ROLE_SHOP_STAFF_CODE;
             }
             else if(role.equals(GlobalConstants.ROLE_DELIVERY_GUY))
             {
-
-                if(user.getRole()==GlobalConstants.ROLE_DELIVERY_GUY_CODE)
-                {
-                    return user;
-                }
-
+                roleID = GlobalConstants.ROLE_DELIVERY_GUY_CODE;
             }
             else if(role.equals(GlobalConstants.ROLE_END_USER))
             {
 
-                return user;
+                roleID = GlobalConstants.ROLE_END_USER_CODE;
+
+                // any role can login in place of end user
+
+
+                if(user.getRole()==GlobalConstants.ROLE_SHOP_ADMIN_CODE ||
+                        user.getRole()==GlobalConstants.ROLE_SHOP_STAFF_CODE ||
+                        user.getRole()==GlobalConstants.ROLE_DELIVERY_GUY_CODE)
+                {
+                    return user;
+                }
             }
 
+
+
+
+
+
+
+
+
+
+//            System.out.println("User ROLE ID  = " + roleID);
+
+            if(user.getRole()==roleID)
+            {
+
+                return user;
+
+                // do not check for whether account is enabled
+//                if(user.getRole()==GlobalConstants.ROLE_ADMIN_CODE)
+//                {
+//
+//                    return user;
+//                }
+//                else if(user.isEnabled())
+//                {
+//                    return user;
+//                }
+//                else
+//                {
+//                    System.out.println("Access Denied  :  account not enabled ");
+//                    throw new ForbiddenException("Not Permitted");
+//                }
+
+            }
         }
 
 
 
 
 //        System.out.println("Access Denied  : Role not allowed ");
-        throw new NotAuthorizedException("Access is Denied ! Not permitted !. ");
+        throw new NotAuthorizedException("Access is Denied ! We are not able to Identify you. ");
     }
 
 

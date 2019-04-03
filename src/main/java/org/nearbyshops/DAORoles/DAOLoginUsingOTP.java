@@ -1,6 +1,7 @@
 package org.nearbyshops.DAORoles;
 
 import com.zaxxer.hikari.HikariDataSource;
+import org.nearbyshops.Globals.GlobalConstants;
 import org.nearbyshops.Globals.Globals;
 import org.nearbyshops.ModelAnalytics.ItemAnalytics;
 import org.nearbyshops.ModelRoles.User;
@@ -28,14 +29,17 @@ public class DAOLoginUsingOTP {
 
                 "INSERT INTO " + User.TABLE_NAME
                         + "(" + User.PHONE + ","
+                        + User.ROLE + ","
                         + User.PASSWORD + ""
-                        + ") values(?,?)"
+                        + ") values(?,?,?)"
                         + " ON CONFLICT (" + User.PHONE + ")"
                         + " DO UPDATE "
                         + " SET " + User.PASSWORD + " = " + " excluded." + User.PASSWORD + "";
 
 
         //        + EmailVerificationCode.TABLE_NAME
+
+
 
 
         try {
@@ -48,7 +52,12 @@ public class DAOLoginUsingOTP {
             int i = 0;
 
             statement.setObject(++i,userProfile.getPhone());
+            statement.setObject(++i, GlobalConstants.ROLE_END_USER_CODE);
             statement.setObject(++i,userProfile.getPassword());
+
+
+
+
 
             rowCountItems = statement.executeUpdate();
 

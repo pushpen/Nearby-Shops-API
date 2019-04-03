@@ -91,17 +91,18 @@ public class Shop {
 			+ " " + Shop.SHOP_ID + " SERIAL PRIMARY KEY,"
 			+ " " + Shop.SHOP_NAME + " text,"
 
-			+ " " + Shop.DELIVERY_RANGE + " FLOAT,"
+
+			+ " " + Shop.DELIVERY_RANGE + " FLOAT not null default 0,"
 			+ " " + Shop.LON_CENTER + " FLOAT,"
 			+ " " + Shop.LAT_CENTER + " FLOAT,"
 
 			+ " " + Shop.DELIVERY_CHARGES + " FLOAT,"
 			+ " " + Shop.BILL_AMOUNT_FOR_FREE_DELIVERY + " INT,"
-			+ " " + Shop.PICK_FROM_SHOP_AVAILABLE + " boolean,"
-			+ " " + Shop.HOME_DELIVERY_AVAILABLE + " boolean,"
+			+ " " + Shop.PICK_FROM_SHOP_AVAILABLE + " boolean not null default true,"
+			+ " " + Shop.HOME_DELIVERY_AVAILABLE + " boolean not null default true,"
 
-			+ " " + Shop.SHOP_ENABLED + " boolean,"
-			+ " " + Shop.SHOP_WAITLISTED + " boolean NOT NULL,"
+			+ " " + Shop.SHOP_ENABLED + " boolean not null default false,"
+			+ " " + Shop.SHOP_WAITLISTED + " boolean not null default false,"
 
 			+ " " + Shop.LOGO_IMAGE_PATH + " text,"
 

@@ -13,6 +13,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.math.BigInteger;
 import java.sql.Timestamp;
+import java.util.Random;
 
 /**
  * Created by sumeet on 14/8/17.
@@ -861,11 +862,15 @@ public class UserSignUpRESTEndpoint {
             // verification code not generated for this email so generate one and send this to the user
 
 
-            BigInteger phoneCode = new BigInteger(15, Globals.random);
+//            BigInteger phoneCode = new BigInteger(15, Globals.random);
+//            int phoneOTP = phoneCode.intValue();
 
 //            String emailVerificationCode = new BigInteger(30, Globals.random).toString(32);
 
-            int phoneOTP = phoneCode.intValue();
+
+
+
+            char[] phoneOTP = generateOTP(4);
 
             Timestamp timestampExpiry
                     = new Timestamp(
@@ -952,6 +957,25 @@ public class UserSignUpRESTEndpoint {
 
         return null;
     }
+
+
+
+
+
+
+
+    private static char[] generateOTP(int length) {
+        String numbers = "1234567890";
+        Random random = new Random();
+        char[] otp = new char[length];
+
+        for(int i = 0; i< length ; i++) {
+            otp[i] = numbers.charAt(random.nextInt(numbers.length()));
+        }
+
+        return otp;
+    }
+
 
 
 

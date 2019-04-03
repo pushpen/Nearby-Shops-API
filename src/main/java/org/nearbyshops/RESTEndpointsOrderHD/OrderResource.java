@@ -183,6 +183,7 @@ public class OrderResource {
 	public Response getOrders(
 			@QueryParam("OrderID")Integer orderID,
 			@QueryParam("ShopID")Integer shopID,
+			@QueryParam("FilterByUserID")boolean filterByUserID,
 			@QueryParam("PickFromShop") Boolean pickFromShop,
 			@QueryParam("StatusHomeDelivery")Integer homeDeliveryStatus,
 			@QueryParam("StatusPickFromShopStatus")Integer pickFromShopStatus,
@@ -205,7 +206,7 @@ public class OrderResource {
 
 		// *********************** second Implementation
 
-		User user = (User) Globals.accountApproved;
+//		User user = (User) Globals.accountApproved;
 
 //		if(user.getRole()==GlobalConstants.ROLE_END_USER_CODE)
 //		{
@@ -219,22 +220,16 @@ public class OrderResource {
 //			throw new ForbiddenException("Not Permitted !");
 //		}
 
+
+
 		Integer endUserID = null;
 
-
-
-		if(user.getRole()==GlobalConstants.ROLE_END_USER_CODE)
+		if(filterByUserID)
 		{
 			endUserID = ((User)Globals.accountApproved).getUserID();
 		}
-		else if(user.getRole()==GlobalConstants.ROLE_ADMIN_CODE)
-		{
 
-		}
-		else
-		{
-			throw new ForbiddenException("Not Permitted !");
-		}
+
 
 
 
