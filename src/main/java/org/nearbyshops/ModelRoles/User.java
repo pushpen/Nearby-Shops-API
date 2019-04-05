@@ -74,6 +74,7 @@ public class User {
                     + " " + User.NAME + " text,"
 
                     + " " + User.GENDER + " boolean,"
+
                     + " " + User.PROFILE_IMAGE_URL + " text,"
                     + " " + User.ROLE + " int,"
 

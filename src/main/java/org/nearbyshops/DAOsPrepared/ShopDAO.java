@@ -711,7 +711,7 @@ public class ShopDAO {
 				shop.setAccountBalance(rs.getDouble(Shop.ACCOUNT_BALANCE));
 
 
-				shop.setRt_min_balance(GlobalConstants.MIN_SERVICE_ACCOUNT_BALANCE - rs.getDouble(Shop.EXTENDED_CREDIT_LIMIT));
+				shop.setRt_min_balance(GlobalConstants.min_account_balance_for_shop - rs.getDouble(Shop.EXTENDED_CREDIT_LIMIT));
 
 			}
 

@@ -23,8 +23,8 @@ public class ItemReviewThanks {
             + " " + ItemReviewThanks.END_USER_ID + " INT,"
             + " " + ItemReviewThanks.ITEM_REVIEW_ID + " INT,"
 
-            + " FOREIGN KEY(" + ItemReviewThanks.END_USER_ID +") REFERENCES " + User.TABLE_NAME + "(" + User.USER_ID + "),"
-            + " FOREIGN KEY(" + ItemReviewThanks.ITEM_REVIEW_ID +") REFERENCES " + ItemReview.TABLE_NAME + "(" + ItemReview.ITEM_REVIEW_ID + "),"
+            + " FOREIGN KEY(" + ItemReviewThanks.END_USER_ID +") REFERENCES " + User.TABLE_NAME + "(" + User.USER_ID + ") ON DELETE CASCADE,"
+            + " FOREIGN KEY(" + ItemReviewThanks.ITEM_REVIEW_ID +") REFERENCES " + ItemReview.TABLE_NAME + "(" + ItemReview.ITEM_REVIEW_ID + ") ON DELETE CASCADE,"
             + " PRIMARY KEY (" + ItemReviewThanks.END_USER_ID + ", " + ItemReviewThanks.ITEM_REVIEW_ID + ")"
             + ")";
 

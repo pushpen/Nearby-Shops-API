@@ -481,13 +481,13 @@ public class DAOUserSignUp {
 
                 if(user.getRole()== GlobalConstants.ROLE_SHOP_ADMIN_CODE)
                 {
-                    statementUpdateDUES.setObject(++i, GlobalConstants.JOINING_CREDIT_FOR_DRIVER);
-                    statementUpdateDUES.setObject(++i, GlobalConstants.JOINING_CREDIT_FOR_DRIVER);
+                    statementUpdateDUES.setObject(++i, GlobalConstants.joining_credit_for_shop_owner_value);
+                    statementUpdateDUES.setObject(++i, GlobalConstants.joining_credit_for_shop_owner_value);
                 }
                 else if(user.getRole()== GlobalConstants.ROLE_END_USER_CODE)
                 {
-                    statementUpdateDUES.setObject(++i, GlobalConstants.JOINING_CREDIT_FOR_END_USER);
-                    statementUpdateDUES.setObject(++i, GlobalConstants.JOINING_CREDIT_FOR_END_USER);
+                    statementUpdateDUES.setObject(++i, GlobalConstants.joining_credit_for_end_user_value);
+                    statementUpdateDUES.setObject(++i, GlobalConstants.joining_credit_for_end_user_value);
                 }
                 else
                 {
@@ -510,12 +510,12 @@ public class DAOUserSignUp {
                 if(user.getRole()== GlobalConstants.ROLE_SHOP_ADMIN_CODE)
                 {
 //                    statementCreateTransaction.setObject(++i,GlobalConstantsNBS.JOINING_CREDIT_FOR_DRIVER);
-                    statementCreateTransaction.setObject(++i, GlobalConstants.JOINING_CREDIT_FOR_DRIVER);
+                    statementCreateTransaction.setObject(++i, GlobalConstants.joining_credit_for_shop_owner_value);
                 }
                 else if(user.getRole()== GlobalConstants.ROLE_END_USER_CODE)
                 {
 //                    statementCreateTransaction.setObject(++i,GlobalConstantsNBS.JOINING_CREDIT_FOR_END_USER);
-                    statementCreateTransaction.setObject(++i, GlobalConstants.JOINING_CREDIT_FOR_END_USER);
+                    statementCreateTransaction.setObject(++i, GlobalConstants.joining_credit_for_end_user_value);
                 }
                 else
                 {

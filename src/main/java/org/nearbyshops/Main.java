@@ -85,6 +85,8 @@ public class Main {
 
 
 
+
+
     private static void createTables()
     {
 
@@ -138,7 +140,6 @@ public class Main {
             statement.executeUpdate(ItemReview.createTableItemReviewPostgres);
             statement.executeUpdate(FavouriteItem.createTableFavouriteItemPostgres);
             statement.executeUpdate(ItemReviewThanks.createTableItemReviewThanksPostgres);
-
 
 
 

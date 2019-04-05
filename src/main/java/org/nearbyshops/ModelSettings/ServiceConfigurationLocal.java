@@ -36,7 +36,7 @@ public class ServiceConfigurationLocal {
     public static final String ISO_LANGUAGE_CODE = "ISO_LANGUAGE_CODE";
     public static final String ISO_CURRENCY_CODE = "ISO_CURRENCY_CODE";
 
-    public static final String SERVICE_TYPE = "SERVICE_TYPE";
+//    public static final String SERVICE_TYPE = "SERVICE_TYPE";
 //    public static final String SERVICE_LEVEL = "SERVICE_LEVEL";
 
     public static final String LAT_CENTER = "LAT_CENTER";
@@ -47,8 +47,8 @@ public class ServiceConfigurationLocal {
     public static final String CREATED = "CREATED";
     public static final String UPDATED = "UPDATED";
 
-    public static final String STYLE_URL = "STYLE_URL";
-    public static final String MQTT_SERVER_ADDRESS = "MQTT_SERVER_ADDRESS";
+//    public static final String STYLE_URL = "STYLE_URL";
+//    public static final String MQTT_SERVER_ADDRESS = "MQTT_SERVER_ADDRESS";
 
     // to be taken out to global Service Configuration
 //    public static final String IS_OFFICIAL_SERVICE_PROVIDER = "IS_OFFICIAL_SERVICE_PROVIDER";
@@ -63,7 +63,6 @@ public class ServiceConfigurationLocal {
             = "CREATE TABLE IF NOT EXISTS " + ServiceConfigurationLocal.TABLE_NAME + "("
             + " " + ServiceConfigurationLocal.SERVICE_CONFIGURATION_ID + " SERIAL PRIMARY KEY,"
 
-//            + " " + ServiceConfigurationLocal.IMAGE_PATH + " text,"
             + " " + ServiceConfigurationLocal.LOGO_IMAGE_PATH + " text,"
             + " " + ServiceConfigurationLocal.BACKDROP_IMAGE_PATH + " text,"
 
@@ -85,19 +84,22 @@ public class ServiceConfigurationLocal {
             + " " + ServiceConfigurationLocal.ISO_LANGUAGE_CODE + " text,"
             + " " + ServiceConfigurationLocal.ISO_CURRENCY_CODE + " text,"
 
-            + " " + ServiceConfigurationLocal.SERVICE_TYPE + " INT,"
+//            + " " + ServiceConfigurationLocal.SERVICE_TYPE + " INT,"
 //            + " " + ServiceConfigurationLocal.SERVICE_LEVEL + " INT,"
 
-            + " " + ServiceConfigurationLocal.LAT_CENTER + " FLOAT,"
-            + " " + ServiceConfigurationLocal.LON_CENTER + " FLOAT,"
-            + " " + ServiceConfigurationLocal.SERVICE_RANGE + " FLOAT,"
+            + " " + ServiceConfigurationLocal.LAT_CENTER + " FLOAT not null default 0,"
+            + " " + ServiceConfigurationLocal.LON_CENTER + " FLOAT not null default 0,"
+            + " " + ServiceConfigurationLocal.SERVICE_RANGE + " FLOAT not null default 0,"
 
             + " " + ServiceConfigurationLocal.UPDATED + " timestamp with time zone,"
-            + " " + ServiceConfigurationLocal.CREATED + " timestamp with time zone NOT NULL DEFAULT now(),"
+            + " " + ServiceConfigurationLocal.CREATED + " timestamp with time zone NOT NULL DEFAULT now()"
 
-            + " " + ServiceConfigurationLocal.STYLE_URL + " text,"
-            + " " + ServiceConfigurationLocal.MQTT_SERVER_ADDRESS + " text"
+//            + " " + ServiceConfigurationLocal.STYLE_URL + " text,"
+//            + " " + ServiceConfigurationLocal.MQTT_SERVER_ADDRESS + " text"
             + ")";
+
+
+
 
 
 
@@ -117,7 +119,7 @@ public class ServiceConfigurationLocal {
 
     private String address;
     private String city;
-    private Long pincode;
+    private long pincode;
 
     private String landmark;
     private String state;
@@ -127,25 +129,23 @@ public class ServiceConfigurationLocal {
     private String ISOLanguageCode;
     private String ISOCurrencyCode;
 
-    private Integer serviceType;
-    private Integer serviceLevel;
+//    private Integer serviceType;
+//    private Integer serviceLevel;
 
-    private Double latCenter;
-    private Double lonCenter;
+    private double latCenter;
+    private double lonCenter;
 
-    private Integer serviceRange;
+    private int serviceRange;
 //    private Integer shopDeliveryRangeMax;
 
     private Timestamp created;
     private Timestamp updated;
 
-    private String styleURL;
-    private String geocoderAddress;
-    private String mqttServerAddress;
 
 
     // real time variables : the values of these variables are generated in real time.
     private Double rt_distance;
+    private String rt_styleURL;
 
 
 
@@ -155,6 +155,7 @@ public class ServiceConfigurationLocal {
     public static ServiceConfigurationLocal getDefaultConfig()
     {
         ServiceConfigurationLocal serviceConfig = new ServiceConfigurationLocal();
+
 
         serviceConfig.setServiceID(1);
         serviceConfig.setServiceName("Service name not set !");
@@ -168,16 +169,18 @@ public class ServiceConfigurationLocal {
         serviceConfig.setState("state");
         serviceConfig.setCountry("country");
 
+
         serviceConfig.setISOCountryCode("country code not provided");
         serviceConfig.setISOCurrencyCode("currency code not provided");
         serviceConfig.setISOLanguageCode("language code not provided");
 
-        serviceConfig.setLatCenter(17.5343);
-        serviceConfig.setLonCenter(78.3432);
-        serviceConfig.setServiceRange(234);
+        serviceConfig.setLatCenter(0);
+        serviceConfig.setLonCenter(0);
+        serviceConfig.setServiceRange(0);
 
-        serviceConfig.setStyleURL("https://example.com");
-        serviceConfig.setMqttServerAddress("tcp://mqtt.example.com:1883");
+
+//        serviceConfig.setStyleURL("https://example.com");
+//        serviceConfig.setMqttServerAddress("tcp://mqtt.example.com:1883");
 
         return serviceConfig;
     }
@@ -189,94 +192,6 @@ public class ServiceConfigurationLocal {
     //    Getter and Setters
 
 
-    public String getGeocoderAddress() {
-        return geocoderAddress;
-    }
-
-    public void setGeocoderAddress(String geocoderAddress) {
-        this.geocoderAddress = geocoderAddress;
-    }
-
-    public String getMqttServerAddress() {
-        return mqttServerAddress;
-    }
-
-    public void setMqttServerAddress(String mqttServerAddress) {
-        this.mqttServerAddress = mqttServerAddress;
-    }
-
-    public String getStyleURL() {
-        return styleURL;
-    }
-
-    public void setStyleURL(String styleURL) {
-        this.styleURL = styleURL;
-    }
-
-    public String getDescriptionShort() {
-        return descriptionShort;
-    }
-
-    public void setDescriptionShort(String descriptionShort) {
-        this.descriptionShort = descriptionShort;
-    }
-
-    public String getDescriptionLong() {
-        return descriptionLong;
-    }
-
-    public void setDescriptionLong(String descriptionLong) {
-        this.descriptionLong = descriptionLong;
-    }
-
-    public String getISOCurrencyCode() {
-        return ISOCurrencyCode;
-    }
-
-    public void setISOCurrencyCode(String ISOCurrencyCode) {
-        this.ISOCurrencyCode = ISOCurrencyCode;
-    }
-
-    public Timestamp getCreated() {
-        return created;
-    }
-
-    public void setCreated(Timestamp created) {
-        this.created = created;
-    }
-
-    public Timestamp getUpdated() {
-        return updated;
-    }
-
-    public void setUpdated(Timestamp updated) {
-        this.updated = updated;
-    }
-
-    public Double getRt_distance() {
-        return rt_distance;
-    }
-
-    public void setRt_distance(Double rt_distance) {
-        this.rt_distance = rt_distance;
-    }
-
-    public String getISOCountryCode() {
-        return ISOCountryCode;
-    }
-
-    public void setISOCountryCode(String ISOCountryCode) {
-        this.ISOCountryCode = ISOCountryCode;
-    }
-
-    public String getISOLanguageCode() {
-        return ISOLanguageCode;
-    }
-
-    public void setISOLanguageCode(String ISOLanguageCode) {
-        this.ISOLanguageCode = ISOLanguageCode;
-    }
-
     public int getServiceID() {
         return serviceID;
     }
@@ -284,7 +199,6 @@ public class ServiceConfigurationLocal {
     public void setServiceID(int serviceID) {
         this.serviceID = serviceID;
     }
-
 
     public String getLogoImagePath() {
         return logoImagePath;
@@ -318,6 +232,22 @@ public class ServiceConfigurationLocal {
         this.helplineNumber = helplineNumber;
     }
 
+    public String getDescriptionShort() {
+        return descriptionShort;
+    }
+
+    public void setDescriptionShort(String descriptionShort) {
+        this.descriptionShort = descriptionShort;
+    }
+
+    public String getDescriptionLong() {
+        return descriptionLong;
+    }
+
+    public void setDescriptionLong(String descriptionLong) {
+        this.descriptionLong = descriptionLong;
+    }
+
     public String getAddress() {
         return address;
     }
@@ -334,11 +264,11 @@ public class ServiceConfigurationLocal {
         this.city = city;
     }
 
-    public Long getPincode() {
+    public long getPincode() {
         return pincode;
     }
 
-    public void setPincode(Long pincode) {
+    public void setPincode(long pincode) {
         this.pincode = pincode;
     }
 
@@ -366,45 +296,83 @@ public class ServiceConfigurationLocal {
         this.country = country;
     }
 
-
-    public Integer getServiceType() {
-        return serviceType;
+    public String getISOCountryCode() {
+        return ISOCountryCode;
     }
 
-    public void setServiceType(Integer serviceType) {
-        this.serviceType = serviceType;
+    public void setISOCountryCode(String ISOCountryCode) {
+        this.ISOCountryCode = ISOCountryCode;
     }
 
-    public Integer getServiceLevel() {
-        return serviceLevel;
+    public String getISOLanguageCode() {
+        return ISOLanguageCode;
     }
 
-    public void setServiceLevel(Integer serviceLevel) {
-        this.serviceLevel = serviceLevel;
+    public void setISOLanguageCode(String ISOLanguageCode) {
+        this.ISOLanguageCode = ISOLanguageCode;
     }
 
-    public Double getLatCenter() {
+    public String getISOCurrencyCode() {
+        return ISOCurrencyCode;
+    }
+
+    public void setISOCurrencyCode(String ISOCurrencyCode) {
+        this.ISOCurrencyCode = ISOCurrencyCode;
+    }
+
+    public double getLatCenter() {
         return latCenter;
     }
 
-    public void setLatCenter(Double latCenter) {
+    public void setLatCenter(double latCenter) {
         this.latCenter = latCenter;
     }
 
-    public Double getLonCenter() {
+    public double getLonCenter() {
         return lonCenter;
     }
 
-    public void setLonCenter(Double lonCenter) {
+    public void setLonCenter(double lonCenter) {
         this.lonCenter = lonCenter;
     }
 
-    public Integer getServiceRange() {
+    public int getServiceRange() {
         return serviceRange;
     }
 
-    public void setServiceRange(Integer serviceRange) {
+    public void setServiceRange(int serviceRange) {
         this.serviceRange = serviceRange;
     }
 
+    public Timestamp getCreated() {
+        return created;
+    }
+
+    public void setCreated(Timestamp created) {
+        this.created = created;
+    }
+
+    public Timestamp getUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(Timestamp updated) {
+        this.updated = updated;
+    }
+
+    public Double getRt_distance() {
+        return rt_distance;
+    }
+
+    public void setRt_distance(Double rt_distance) {
+        this.rt_distance = rt_distance;
+    }
+
+    public String getRt_styleURL() {
+        return rt_styleURL;
+    }
+
+    public void setRt_styleURL(String rt_styleURL) {
+        this.rt_styleURL = rt_styleURL;
+    }
 }

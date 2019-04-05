@@ -23,10 +23,12 @@ public class ShopReviewThanks {
             + " " + ShopReviewThanks.END_USER_ID + " INT,"
             + " " + ShopReviewThanks.SHOP_REVIEW_ID + " INT,"
 
-            + " FOREIGN KEY(" + ShopReviewThanks.END_USER_ID +") REFERENCES " + User.TABLE_NAME + "(" + User.USER_ID + "),"
-            + " FOREIGN KEY(" + ShopReviewThanks.SHOP_REVIEW_ID +") REFERENCES " + ShopReview.TABLE_NAME + "(" + ShopReview.SHOP_REVIEW_ID + "),"
+            + " FOREIGN KEY(" + ShopReviewThanks.END_USER_ID +") REFERENCES " + User.TABLE_NAME + "(" + User.USER_ID + ") ON DELETE CASCADE,"
+            + " FOREIGN KEY(" + ShopReviewThanks.SHOP_REVIEW_ID +") REFERENCES " + ShopReview.TABLE_NAME + "(" + ShopReview.SHOP_REVIEW_ID + ") ON DELETE CASCADE,"
             + " PRIMARY KEY (" + ShopReviewThanks.END_USER_ID + ", " + ShopReviewThanks.SHOP_REVIEW_ID + ")"
             + ")";
+
+
 
 
     // instance Variables

@@ -35,53 +35,34 @@ public class ServiceConfigurationResource {
 	private ServiceConfigurationDAOPrepared daoPrepared = Globals.serviceConfigDAO;
 
 
-	public ServiceConfigurationResource() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
 
 
 
-	
-//	@POST
-//	@Consumes(MediaType.APPLICATION_JSON)
-//	@Produces(MediaType.APPLICATION_JSON)
-	public Response createService(ServiceConfigurationLocal serviceConfigurationLocal)
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getService(@QueryParam("latCenter")Double latCenter,
+							   @QueryParam("lonCenter")Double lonCenter)
 	{
+//		@PathParam("ServiceID")int service
 
-		int idOfInsertedRow = daoPrepared.saveService(serviceConfigurationLocal);
+		ServiceConfigurationLocal serviceConfigurationLocal = daoPrepared.getServiceConfiguration(latCenter,lonCenter);
 
-		serviceConfigurationLocal.setServiceID(idOfInsertedRow);
-
-		if(idOfInsertedRow >=1)
+		if(serviceConfigurationLocal != null)
 		{
-			
-			
-			Response response = Response.status(Status.CREATED)
-					.location(URI.create("/api/CurrentServiceConfiguration/" + idOfInsertedRow))
+
+			return Response.status(Status.OK)
 					.entity(serviceConfigurationLocal)
 					.build();
-			
-			return response;
-			
-		}else if(idOfInsertedRow <=0)
+
+		} else
 		{
-			Response response = Response.status(Status.NOT_MODIFIED)
-					.entity(null)
+
+			return Response.status(Status.NO_CONTENT)
 					.build();
-			
-			//Response.status(Status.CREATED).location(arg0)
-			
-			return response;
 		}
-		
-		return null;
-		
+
 	}
 
-
-	//	@Path("/{ServiceID}")
-//@PathParam("ServiceID")int serviceID,
 
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -96,14 +77,12 @@ public class ServiceConfigurationResource {
 		{
 
 			return Response.status(Status.OK)
-					.entity(null)
 					.build();
 		}
 		if(rowCount == 0)
 		{
 
 			return Response.status(Status.NOT_MODIFIED)
-					.entity(null)
 					.build();
 		}
 
@@ -112,9 +91,51 @@ public class ServiceConfigurationResource {
 	}
 
 
+
+
+
+	//	@POST
+//	@Consumes(MediaType.APPLICATION_JSON)
+//	@Produces(MediaType.APPLICATION_JSON)
+	public Response createService(ServiceConfigurationLocal serviceConfigurationLocal)
+	{
+
+		int idOfInsertedRow = daoPrepared.saveService(serviceConfigurationLocal);
+
+		serviceConfigurationLocal.setServiceID(idOfInsertedRow);
+
+		if(idOfInsertedRow >=1)
+		{
+
+
+			return Response.status(Status.CREATED)
+					.location(URI.create("/api/CurrentServiceConfiguration/" + idOfInsertedRow))
+					.entity(serviceConfigurationLocal)
+					.build();
+			
+		}else if(idOfInsertedRow <=0)
+		{
+
+
+			//Response.status(Status.CREATED).location(arg0)
+			
+			return Response.status(Status.NOT_MODIFIED)
+					.build();
+		}
+		
+		return null;
+		
+	}
+
+
+	//	@Path("/{ServiceID}")
+//@PathParam("ServiceID")int serviceID,
+
+
+
 //	@DELETE
 //	@Path("/{ServiceID}")
-	public Response deleteCart(@PathParam("ServiceID")int serviceID)
+	public Response deleteService(@PathParam("ServiceID")int serviceID)
 	{
 
 		//int rowCount = Globals.cartService.deleteCart(cartID);
@@ -188,31 +209,6 @@ public class ServiceConfigurationResource {
 
 
 
-
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response getService(@QueryParam("latCenter")Double latCenter,
-                               @QueryParam("lonCenter")Double lonCenter)
-	{
-//		@PathParam("ServiceID")int service
-
-		ServiceConfigurationLocal serviceConfigurationLocal = daoPrepared.getServiceConfiguration(latCenter,lonCenter);
-		
-		if(serviceConfigurationLocal != null)
-		{
-
-			return Response.status(Status.OK)
-			.entity(serviceConfigurationLocal)
-			.build();
-			
-		} else 
-		{
-
-			return Response.status(Status.NO_CONTENT)
-					.build();
-		}
-		
-	}
 
 
 

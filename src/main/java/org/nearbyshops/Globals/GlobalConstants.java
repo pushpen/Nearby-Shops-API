@@ -10,7 +10,7 @@ public class GlobalConstants {
     public static String BASE_URI = "http://0.0.0.0:5500";
 
 	public static String POSTGRES_CONNECTION_URL;
-    public static String CONNECTION_URL_CREATE_DB;
+//    public static String CONNECTION_URL_CREATE_DB;
 
 	public static String POSTGRES_USERNAME;
 	public static String POSTGRES_PASSWORD;
@@ -20,12 +20,11 @@ public class GlobalConstants {
 	public static String ADMIN_PASSWORD;
 
 
-	public static String SERVICE_NAME;
-	public static String SERVICE_DESCRIPTION;
+//	public static String SERVICE_NAME;
+//	public static String SERVICE_DESCRIPTION;
 
-
-	public static String LOCALE_COUNTRY_CODE;
-	public static String LOCALE_CURRENCY_CODE;
+//	public static String LOCALE_COUNTRY_CODE;
+//	public static String LOCALE_CURRENCY_CODE;
 
 
 
@@ -41,13 +40,6 @@ public class GlobalConstants {
 
 
 
-    // credits and offers
-    public static int REFERRAL_CREDIT_FOR_SHOP_OWNER_REGISTRATION; // credited in the account of the one who refers
-    public static int REFERRAL_CREDIT_FOR_END_USER_REGISTRATION; // referral credit - credited into the account of the one who refers
-
-    public static int JOINING_CREDIT_FOR_DRIVER; // credit applied when a driver joins the platform
-    public static int JOINING_CREDIT_FOR_END_USER; // credit applied when a end user joins the platform
-
 
     public static String ONE_SIGNAL_API_KEY_ADMIN_APP;
     public static String ONE_SIGNAL_APP_ID_ADMIN_APP;
@@ -59,8 +51,42 @@ public class GlobalConstants {
     public static String ONE_SIGNAL_APP_ID_END_USER_APP;
 
 
-    public static int app_service_charge_pick_for_shop;
-    public static int app_service_charge_home_delivery;
+    public static String style_url_for_maps;
+
+    public static String faqs_url_for_end_user;
+    public static String tos_url_for_end_user;
+    public static String privacy_policy_url_for_end_user;
+
+
+    public static String faqs_url_for_shop_owner;
+    public static String tos_url_for_shop_owner;
+    public static String privacy_policy_url_for_shop_owner;
+
+
+    public static String MSG91_SMS_SERVICE_API_KEY = null;
+
+    public static String default_country_code_value;
+
+    public static String sender_id_for_sms_value;
+
+
+    public static int delivery_range_for_shop_max_value;
+    public static int delivery_range_for_shop_min_value;
+
+
+
+    public static int app_service_charge_pick_for_shop_value;
+    public static int app_service_charge_home_delivery_value;
+
+    public static int min_account_balance_for_shop;
+
+    // credits and offers
+    public static int REFERRAL_CREDIT_FOR_SHOP_OWNER_REGISTRATION; // credited in the account of the one who refers
+    public static int REFERRAL_CREDIT_FOR_END_USER_REGISTRATION; // referral credit - credited into the account of the one who refers
+
+
+    public static int joining_credit_for_end_user_value;
+    public static int joining_credit_for_shop_owner_value;
 
 
 
@@ -77,18 +103,8 @@ public class GlobalConstants {
 
     public static int max_limit;
 
-    public static int MIN_TAX_ACCOUNT_BALANCE;
-    public static int MIN_SERVICE_ACCOUNT_BALANCE;
 
 
-    // style url for maps
-    public static String NOTIFICATION_SERVER_HOST_MQTT;
-
-
-
-    public static String FIREBASE_DRIVER_KEY = null;
-    public static String FIREBASE_END_USER_KEY = null;
-    public static String MSG91_SMS_SERVICE_API_KEY = null;
 
 
 

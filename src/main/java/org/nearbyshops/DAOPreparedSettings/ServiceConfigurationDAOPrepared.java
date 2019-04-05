@@ -55,7 +55,7 @@ public class ServiceConfigurationDAOPrepared {
 				+ ServiceConfigurationLocal.ISO_LANGUAGE_CODE + ","
 				+ ServiceConfigurationLocal.ISO_CURRENCY_CODE + ","
 
-				+ ServiceConfigurationLocal.SERVICE_TYPE + ","
+//				+ ServiceConfigurationLocal.SERVICE_TYPE + ","
 //				+ ServiceConfigurationLocal.SERVICE_LEVEL + ","
 
 				+ ServiceConfigurationLocal.LAT_CENTER + ","
@@ -64,7 +64,7 @@ public class ServiceConfigurationDAOPrepared {
 
 				+ ServiceConfigurationLocal.UPDATED + ","
 				+ ServiceConfigurationLocal.SERVICE_CONFIGURATION_ID + ""
-				+ " ) VALUES (?,? ,?,?,  ?,? ,?,?,?,? ,?,?,?,?,? ,?,? ,?,?,? ,?)";
+				+ " ) VALUES (?,? ,?,?,  ?,? ,?,?,?,? ,?,?,?,?,? ,?,?,? ,?,?)";
 		
 		try {
 			
@@ -94,7 +94,7 @@ public class ServiceConfigurationDAOPrepared {
 			statement.setString(++i, serviceConfigurationLocal.getISOLanguageCode());
 			statement.setString(++i, serviceConfigurationLocal.getISOCurrencyCode());
 
-			statement.setObject(++i, serviceConfigurationLocal.getServiceType());
+//			statement.setObject(++i, serviceConfigurationLocal.getServiceType());
 //			statement.setObject(++i, serviceConfigurationLocal.getServiceLevel());
 
 			statement.setObject(++i, serviceConfigurationLocal.getLatCenter());
@@ -189,7 +189,8 @@ public class ServiceConfigurationDAOPrepared {
 
 				+ ServiceConfigurationLocal.ISO_LANGUAGE_CODE + " = ?,"
 				+ ServiceConfigurationLocal.ISO_CURRENCY_CODE + " = ?,"
-				+ ServiceConfigurationLocal.SERVICE_TYPE + " = ?,"
+
+//				+ ServiceConfigurationLocal.SERVICE_TYPE + " = ?,"
 //				+ ServiceConfigurationLocal.SERVICE_LEVEL + " = ?,"
 
 				+ ServiceConfigurationLocal.LAT_CENTER + " = ?,"
@@ -235,7 +236,7 @@ public class ServiceConfigurationDAOPrepared {
 			statement.setString(++i, serviceConfigurationLocal.getISOLanguageCode());
 			statement.setString(++i, serviceConfigurationLocal.getISOCurrencyCode());
 
-			statement.setObject(++i, serviceConfigurationLocal.getServiceType());
+//			statement.setObject(++i, serviceConfigurationLocal.getServiceType());
 //			statement.setObject(++i, serviceConfigurationLocal.getServiceLevel());
 
 			statement.setObject(++i, serviceConfigurationLocal.getLatCenter());
@@ -350,7 +351,7 @@ public class ServiceConfigurationDAOPrepared {
                                                              Double latCenterQuery, Double lonCenterQuery,
                                                              String sortBy,
                                                              int limit, int offset)
-{
+	{
 
 
 		String queryNormal = "SELECT " + " 6371 * acos(cos( radians("
@@ -381,7 +382,7 @@ public class ServiceConfigurationDAOPrepared {
 							+ ServiceConfigurationLocal.ISO_LANGUAGE_CODE + ","
 							+ ServiceConfigurationLocal.ISO_CURRENCY_CODE + ","
 
-							+ ServiceConfigurationLocal.SERVICE_TYPE + ","
+//							+ ServiceConfigurationLocal.SERVICE_TYPE + ","
 //							+ ServiceConfigurationLocal.SERVICE_LEVEL + ","
 
 							+ ServiceConfigurationLocal.LAT_CENTER + ","
@@ -406,21 +407,21 @@ public class ServiceConfigurationDAOPrepared {
 
 
 
-		if(serviceType !=null)
-		{
-			if(isFirst)
-			{
-				queryNormal = queryNormal + " WHERE " + ServiceConfigurationLocal.SERVICE_TYPE + " = " + serviceType;
-
-				isFirst = false;
-
-			}else
-			{
-				queryNormal = queryNormal + " AND " + ServiceConfigurationLocal.SERVICE_TYPE + " = " + serviceType;
-
-			}
-
-		}
+//		if(serviceType !=null)
+//		{
+//			if(isFirst)
+//			{
+//				queryNormal = queryNormal + " WHERE " + ServiceConfigurationLocal.SERVICE_TYPE + " = " + serviceType;
+//
+//				isFirst = false;
+//
+//			}else
+//			{
+//				queryNormal = queryNormal + " AND " + ServiceConfigurationLocal.SERVICE_TYPE + " = " + serviceType;
+//
+//			}
+//
+//		}
 
 
 
@@ -544,9 +545,9 @@ public class ServiceConfigurationDAOPrepared {
 				serviceConfigurationLocal.setISOLanguageCode(rs.getString(ServiceConfigurationLocal.ISO_LANGUAGE_CODE));
 				serviceConfigurationLocal.setISOCurrencyCode(rs.getString(ServiceConfigurationLocal.ISO_CURRENCY_CODE));
 
-				serviceConfigurationLocal.setServiceType(rs.getInt(ServiceConfigurationLocal.SERVICE_TYPE));
-
+//				serviceConfigurationLocal.setServiceType(rs.getInt(ServiceConfigurationLocal.SERVICE_TYPE));
 //				serviceConfigurationLocal.setServiceLevel(rs.getInt(ServiceConfigurationLocal.SERVICE_LEVEL));
+
 				serviceConfigurationLocal.setLatCenter(rs.getDouble(ServiceConfigurationLocal.LAT_CENTER));
 				serviceConfigurationLocal.setLonCenter(rs.getDouble(ServiceConfigurationLocal.LON_CENTER));
 
@@ -643,7 +644,7 @@ public class ServiceConfigurationDAOPrepared {
 						+ ServiceConfigurationLocal.ISO_LANGUAGE_CODE + ","
 						+ ServiceConfigurationLocal.ISO_CURRENCY_CODE + ","
 
-						+ ServiceConfigurationLocal.SERVICE_TYPE + ","
+//						+ ServiceConfigurationLocal.SERVICE_TYPE + ","
 //						+ ServiceConfigurationLocal.SERVICE_LEVEL + ","
 
 						+ ServiceConfigurationLocal.LAT_CENTER + ","
@@ -694,9 +695,10 @@ public class ServiceConfigurationDAOPrepared {
 				serviceConfigurationLocal.setISOLanguageCode(rs.getString(ServiceConfigurationLocal.ISO_LANGUAGE_CODE));
 				serviceConfigurationLocal.setISOCurrencyCode(rs.getString(ServiceConfigurationLocal.ISO_CURRENCY_CODE));
 
-				serviceConfigurationLocal.setServiceType(rs.getInt(ServiceConfigurationLocal.SERVICE_TYPE));
-
+//				serviceConfigurationLocal.setServiceType(rs.getInt(ServiceConfigurationLocal.SERVICE_TYPE));
 //				serviceConfigurationLocal.setServiceLevel(rs.getInt(ServiceConfigurationLocal.SERVICE_LEVEL));
+
+
 				serviceConfigurationLocal.setLatCenter(rs.getDouble(ServiceConfigurationLocal.LAT_CENTER));
 				serviceConfigurationLocal.setLonCenter(rs.getDouble(ServiceConfigurationLocal.LON_CENTER));
 

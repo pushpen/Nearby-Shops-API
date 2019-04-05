@@ -219,7 +219,7 @@ public class PlaceOrderDAO {
                 {
 
                     deliveryCharges = 0;
-                    appServiceCharge = GlobalConstants.app_service_charge_pick_for_shop;
+                    appServiceCharge = GlobalConstants.app_service_charge_pick_for_shop_value;
                 }
                 else
                 {
@@ -234,7 +234,7 @@ public class PlaceOrderDAO {
                         deliveryCharges = 0; // delivery free above this amount
                     }
 
-                    appServiceCharge = GlobalConstants.app_service_charge_home_delivery;
+                    appServiceCharge = GlobalConstants.app_service_charge_home_delivery_value;
                 }
 
                 netPayable = itemTotal + appServiceCharge + deliveryCharges;
