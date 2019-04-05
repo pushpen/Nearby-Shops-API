@@ -146,9 +146,6 @@ public class UserSignUpRESTEndpoint {
 
 
 
-
-
-
     @POST
     @Path("/DeliveryGuyRegistration")
     @Produces(MediaType.APPLICATION_JSON)
@@ -471,13 +468,13 @@ public class UserSignUpRESTEndpoint {
             idOfInsertedRow = Globals.daoUserSignUp.registerUsingEmail(user,false);
 
 
-            System.out.println("Email : " + user.getEmail()
-                    + "\nPassword : " + user.getPassword()
-                    + "\nRegistration Mode : " + user.getRt_registration_mode()
-                    + "\nName : " + user.getName()
-                    + "\nInsert Count : " + idOfInsertedRow
-                    + "\nVerificationCode : " + user.getRt_email_verification_code()
-            );
+//            System.out.println("Email : " + user.getEmail()
+//                    + "\nPassword : " + user.getPassword()
+//                    + "\nRegistration Mode : " + user.getRt_registration_mode()
+//                    + "\nName : " + user.getName()
+//                    + "\nInsert Count : " + idOfInsertedRow
+//                    + "\nVerificationCode : " + user.getRt_email_verification_code()
+//            );
 
 
             if(idOfInsertedRow>=1)
@@ -516,14 +513,14 @@ public class UserSignUpRESTEndpoint {
 
 
 
-            System.out.println("Phone : " + user.getPhone()
-                    + "\nEmail : " + user.getEmail()
-                    + "\nPassword : " + user.getPassword()
-                    + "\nRegistration Mode : " + user.getRt_registration_mode()
-                    + "\nName : " + user.getName()
-                    + "\nInsert Count : " + idOfInsertedRow
-                    + "\nVerificationCode : " + user.getRt_phone_verification_code()
-            );
+//            System.out.println("Phone : " + user.getPhone()
+//                    + "\nEmail : " + user.getEmail()
+//                    + "\nPassword : " + user.getPassword()
+//                    + "\nRegistration Mode : " + user.getRt_registration_mode()
+//                    + "\nName : " + user.getName()
+//                    + "\nInsert Count : " + idOfInsertedRow
+//                    + "\nVerificationCode : " + user.getRt_phone_verification_code()
+//            );
 
             // send notification to the mobile number via SMS
 
@@ -957,7 +954,6 @@ public class UserSignUpRESTEndpoint {
 
         return null;
     }
-
 
 
 

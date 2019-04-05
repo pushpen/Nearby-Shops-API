@@ -7,7 +7,11 @@ import org.apache.commons.configuration2.builder.FileBasedConfigurationBuilder;
 import org.apache.commons.configuration2.builder.fluent.Parameters;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 
+
+
+
 public class GlobalConfig {
+
 
 
 
@@ -19,11 +23,12 @@ public class GlobalConfig {
 
         if(configuration==null)
         {
-            System.out.println("Configuration is null : Unable to load Global Configuration !");
+            System.out.println("Configuration is null : Unable to load Global Configuration ... " +
+                    "please ensure that you have configuration file with name api_config.properties and jar file in the same folder !");
+
+
             return;
         }
-
-
 
 
 
@@ -79,6 +84,10 @@ public class GlobalConfig {
         GlobalConstants.MSG91_SMS_SERVICE_API_KEY = configuration.getString("msg91.apikey");
         GlobalConstants.default_country_code_value = configuration.getString("default_country_code");
         GlobalConstants.sender_id_for_sms_value = configuration.getString("sender_id_for_sms");
+        GlobalConstants.service_name_for_sms_value = configuration.getString("service_name_for_sms");
+
+
+
 
         GlobalConstants.delivery_range_for_shop_max_value = configuration.getInt("delivery_range_for_shop_max");
         GlobalConstants.delivery_range_for_shop_min_value = configuration.getInt("delivery_range_for_shop_min");
@@ -116,8 +125,6 @@ public class GlobalConfig {
 
         printGlobalConfiguration();
     }
-
-
 
 
 
@@ -162,7 +169,6 @@ public class GlobalConfig {
 
 
 
-
     public static void reloadConfiguration()
     {
 
@@ -187,9 +193,6 @@ public class GlobalConfig {
             configuration = null;
         }
     }
-
-
-
 
 
 
@@ -223,7 +226,6 @@ public class GlobalConfig {
             return configuration;
         }
     }
-
 
 
 }

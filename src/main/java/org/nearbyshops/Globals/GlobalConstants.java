@@ -64,10 +64,10 @@ public class GlobalConstants {
 
 
     public static String MSG91_SMS_SERVICE_API_KEY = null;
-
     public static String default_country_code_value;
-
     public static String sender_id_for_sms_value;
+
+    public static String service_name_for_sms_value;
 
 
     public static int delivery_range_for_shop_max_value;

@@ -10,6 +10,9 @@ import java.io.IOException;
 /**
  * Created by sumeet on 15/8/17.
  */
+
+
+
 public class SendSMS {
 
 
@@ -29,12 +32,13 @@ public class SendSMS {
 
         String urlOTP = "https://control.msg91.com/api/sendotp.php?authkey=" +
                 GlobalConstants.MSG91_SMS_SERVICE_API_KEY +
-                "&mobile=91" +
+                "&mobile=" + GlobalConstants.default_country_code_value +
                 phone +
-                "&message=Your%20one time password (OTP) for Nearby Shops is " +
+                "&message=Your one time password (OTP) for " + GlobalConstants.service_name_for_sms_value + " is " +
                 otp +
-                "&sender=NBSAPP&otp=" +
+                "&sender=" + GlobalConstants.sender_id_for_sms_value  + "&otp=" +
                 otp;
+
 
 
 
@@ -77,11 +81,6 @@ public class SendSMS {
     }
 
 
-
-
-
-
-
     public static void sendSMS(String message, String phone)
     {
 
@@ -93,15 +92,16 @@ public class SendSMS {
 //        String json = gson.toJson(firebaseNotification);
 
 
-
         String urlMessage = "http://api.msg91.com/api/sendhttp.php?authkey=" +
                 GlobalConstants.MSG91_SMS_SERVICE_API_KEY +
                 "&mobiles=" +
-                "91" +
+                GlobalConstants.default_country_code_value +
                 phone +
                 "&message=" +
                 message +
-                "&sender=NBSAPP&route=4&country=91";
+                "&sender=" + GlobalConstants.sender_id_for_sms_value + "&route=4&country=" + GlobalConstants.default_country_code_value;
+
+
 
 
         final Request request = new Request.Builder()
@@ -141,5 +141,6 @@ public class SendSMS {
             }
         });
     }
+
 
 }

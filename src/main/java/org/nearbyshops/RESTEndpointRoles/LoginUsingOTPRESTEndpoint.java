@@ -123,6 +123,12 @@ public class LoginUsingOTPRESTEndpoint {
             if(rowsUpdated==1)
             {
 
+
+
+                SendSMS.sendSMS("You are logged in successfully !",
+                        user.getPhone());
+
+
                 return Response.status(Response.Status.OK)
                         .entity(userProfile)
                         .build();
