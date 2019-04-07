@@ -81,7 +81,7 @@ public class OrderResource {
 
 				oneSignalNotifications.sendNotificationToEndUser(
 						orderResult.getEndUserID(),
-						"https://i1.wp.com/nearbyshops.org/wp-content/uploads/2017/02/cropped-backdrop_play_store-1.png?w=250&ssl=1",
+						GlobalConstants.url_for_notification_icon_value,
 						null,
 						null,
 						10,
@@ -118,7 +118,7 @@ public class OrderResource {
 							playerIDs,
 							GlobalConstants.ONE_SIGNAL_APP_ID_SHOP_OWNER_APP,
 							GlobalConstants.ONE_SIGNAL_API_KEY_SHOP_OWNER_APP,
-							"https://i1.wp.com/nearbyshops.org/wp-content/uploads/2017/02/cropped-backdrop_play_store-1.png?w=250&ssl=1",
+							GlobalConstants.url_for_notification_icon_value,
 							null,
 							null,
 							10,

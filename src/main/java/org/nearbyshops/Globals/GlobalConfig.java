@@ -32,6 +32,7 @@ public class GlobalConfig {
 
 
 
+
         GlobalConstants.BASE_URI = configuration.getString("base.url");
         GlobalConstants.POSTGRES_CONNECTION_URL = configuration.getString("connection.url");
 
@@ -87,6 +88,9 @@ public class GlobalConfig {
         GlobalConstants.service_name_for_sms_value = configuration.getString("service_name_for_sms");
 
 
+        GlobalConstants.enable_passwordless_login_value = configuration.getBoolean("enable_passwordless_login");
+
+        GlobalConstants.url_for_notification_icon_value = configuration.getString("url_for_notification_icon");
 
 
         GlobalConstants.delivery_range_for_shop_max_value = configuration.getInt("delivery_range_for_shop_max");
@@ -95,7 +99,6 @@ public class GlobalConfig {
 
         GlobalConstants.app_service_charge_pick_for_shop_value = configuration.getInt("app_service_charge_for_pick_from_shop");
         GlobalConstants.app_service_charge_home_delivery_value = configuration.getInt("app_service_charge_for_home_delivery");
-
 
 
         GlobalConstants.min_account_balance_for_shop = configuration.getInt("min_account_balance_for_shop_owner");
@@ -125,6 +128,8 @@ public class GlobalConfig {
 
         printGlobalConfiguration();
     }
+
+
 
 
 

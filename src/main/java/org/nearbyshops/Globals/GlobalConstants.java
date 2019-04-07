@@ -70,9 +70,13 @@ public class GlobalConstants {
     public static String service_name_for_sms_value;
 
 
+    public static boolean enable_passwordless_login_value;
+
+    public static String url_for_notification_icon_value;
+
+
     public static int delivery_range_for_shop_max_value;
     public static int delivery_range_for_shop_min_value;
-
 
 
     public static int app_service_charge_pick_for_shop_value;

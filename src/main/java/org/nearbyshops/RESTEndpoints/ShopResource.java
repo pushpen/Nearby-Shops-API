@@ -36,8 +36,9 @@ public class ShopResource {
 //	private GeoLocation pointTwo;
 
 
-	private ShopDAO shopDAO = Globals.shopDAO;
 
+
+	private ShopDAO shopDAO = Globals.shopDAO;
 	private DAOAddBalance addBalanceDAO = Globals.daoAddBalance;
 
 

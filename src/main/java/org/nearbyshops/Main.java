@@ -274,6 +274,9 @@ public class Main {
 //                defaultConfiguration.setServiceType(GlobalConstants.SERVICE_TYPE_NONPROFIT);
                 defaultConfiguration.setServiceID(1);
                 defaultConfiguration.setServiceName("DEFAULT_CONFIGURATION");
+                defaultConfiguration.setISOCountryCode("IN");
+                defaultConfiguration.setCountry("India");
+
 
                 Globals.serviceConfigDAO.saveService(defaultConfiguration);
 

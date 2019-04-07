@@ -78,9 +78,9 @@ public class ServiceConfigurationLocal {
             + " " + ServiceConfigurationLocal.PINCODE + " BIGINT,"
             + " " + ServiceConfigurationLocal.LANDMARK + " text,"
             + " " + ServiceConfigurationLocal.STATE + " text,"
-            + " " + ServiceConfigurationLocal.COUNTRY + " text,"
+            + " " + ServiceConfigurationLocal.COUNTRY + " text not null default 'India',"
 
-            + " " + ServiceConfigurationLocal.ISO_COUNTRY_CODE + " text,"
+            + " " + ServiceConfigurationLocal.ISO_COUNTRY_CODE + " text not null default 'IN',"
             + " " + ServiceConfigurationLocal.ISO_LANGUAGE_CODE + " text,"
             + " " + ServiceConfigurationLocal.ISO_CURRENCY_CODE + " text,"
 
