@@ -25,6 +25,8 @@ public class DAOLoginUsingOTP {
         int idOfInsertedRow = -1;
         int rowCountItems = -1;
 
+
+
         String insertItemSubmission =
 
                 "INSERT INTO " + User.TABLE_NAME

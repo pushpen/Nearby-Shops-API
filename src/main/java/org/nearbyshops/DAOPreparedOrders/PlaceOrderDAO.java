@@ -1,7 +1,6 @@
 package org.nearbyshops.DAOPreparedOrders;
 
 import com.zaxxer.hikari.HikariDataSource;
-import jdk.nashorn.internal.objects.Global;
 import org.nearbyshops.Globals.GlobalConstants;
 import org.nearbyshops.Globals.Globals;
 import org.nearbyshops.Model.*;

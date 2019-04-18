@@ -1,5 +1,7 @@
 package org.nearbyshops.ModelRoles;
 
+import org.nearbyshops.ModelSettings.ServiceConfigurationLocal;
+
 import java.sql.Timestamp;
 
 /**
@@ -148,7 +150,13 @@ public class User {
     private ShopStaffPermissions rt_shop_staff_permissions;
     private DeliveryGuyData rt_delivery_guy_data;
 
+    private User userProfileGlobal;
+
+
     private String rt_oneSignalPlayerID;
+
+
+    private ServiceConfigurationLocal serviceConfigurationLocal;
 
 
 
@@ -162,6 +170,24 @@ public class User {
 
     // Getters and Setters
 
+
+    public User getUserProfileGlobal() {
+        return userProfileGlobal;
+    }
+
+    public void setUserProfileGlobal(User userProfileGlobal) {
+        this.userProfileGlobal = userProfileGlobal;
+    }
+
+
+
+    public ServiceConfigurationLocal getServiceConfigurationLocal() {
+        return serviceConfigurationLocal;
+    }
+
+    public void setServiceConfigurationLocal(ServiceConfigurationLocal serviceConfigurationLocal) {
+        this.serviceConfigurationLocal = serviceConfigurationLocal;
+    }
 
     public DeliveryGuyData getRt_delivery_guy_data() {
         return rt_delivery_guy_data;

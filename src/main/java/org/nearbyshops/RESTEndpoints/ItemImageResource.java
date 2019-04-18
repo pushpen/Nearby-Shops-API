@@ -28,6 +28,9 @@ import java.util.List;
  * Created by sumeet on 28/2/17.
  */
 
+
+
+
 @Path("/api/v1/ItemImage")
 public class ItemImageResource {
 
@@ -42,27 +45,31 @@ public class ItemImageResource {
     {
         int idOfInsertedRow = -1;
 
-        if(Globals.accountApproved instanceof User) {
 
-            // checking permission
-            User staff = (User) Globals.accountApproved;
 
+//        if(Globals.accountApproved instanceof User) {
 //
-//            if (!staff.isPermitCreateItems())
-//            {
-//                // the staff member doesnt have persmission to post Item Category
-//                throw new ForbiddenException("Not Permitted");
-//            }
+//            // checking permission
+//            User staff = (User) Globals.accountApproved;
+//
+////
+////            if (!staff.isPermitCreateItems())
+////            {
+////                // the staff member doesnt have persmission to post Item Category
+////                throw new ForbiddenException("Not Permitted");
+////            }
+//
+//
+//            idOfInsertedRow = itemImagesDAO.saveItemImage(itemImage,false);
+//
+//        }
+//        else if(Globals.accountApproved instanceof User)
+//        {
+//            idOfInsertedRow = itemImagesDAO.saveItemImage(itemImage,false);
+//        }
 
 
-            idOfInsertedRow = itemImagesDAO.saveItemImage(itemImage,false);
-
-        }
-        else if(Globals.accountApproved instanceof User)
-        {
-            idOfInsertedRow = itemImagesDAO.saveItemImage(itemImage,false);
-        }
-
+        idOfInsertedRow = itemImagesDAO.saveItemImage(itemImage,false);
 
 
 
@@ -75,8 +82,7 @@ public class ItemImageResource {
                     .entity(itemImage)
                     .build();
 
-        }else if(idOfInsertedRow <= 0)
-        {
+        }else {
 
             return Response.status(Response.Status.NOT_MODIFIED)
                     .entity(null)
@@ -84,7 +90,7 @@ public class ItemImageResource {
         }
 
 
-        return null;
+
     }
 
 

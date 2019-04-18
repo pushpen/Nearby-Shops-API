@@ -1,5 +1,10 @@
 package org.nearbyshops.RESTEndpointRoles;
 
+import com.google.gson.Gson;
+import okhttp3.Credentials;
+import okhttp3.Headers;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import org.nearbyshops.DAORoles.DAOLoginUsingOTP;
 import org.nearbyshops.DAORoles.DAOPhoneVerificationCodes;
 import org.nearbyshops.DAORoles.DAOUserNew;
@@ -14,6 +19,7 @@ import org.nearbyshops.ModelRoles.User;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.io.IOException;
 import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.util.Base64;
@@ -125,8 +131,8 @@ public class LoginUsingOTPRESTEndpoint {
 
 
 
-                SendSMS.sendSMS("You are logged in successfully !",
-                        user.getPhone());
+//                SendSMS.sendSMS("You are logged in successfully !",
+//                        user.getPhone());
 
 
                 return Response.status(Response.Status.OK)
@@ -292,6 +298,202 @@ public class LoginUsingOTPRESTEndpoint {
     }
 
 
+
+
+
+
+    private final OkHttpClient client = new OkHttpClient();
+
+
+
+
+
+
+    @GET
+    @Path("/LoginUsingGlobalCredentials")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getProfileWithLogin(
+            @HeaderParam("Authorization")String headerParam,
+            @QueryParam("ServiceURLSDS")String serviceURLForSDS,
+            @QueryParam("MarketID")int marketID,
+            @QueryParam("GetServiceConfiguration")boolean getServiceConfig,
+            @QueryParam("GetUserProfileGlobal")boolean getUserProfileGlobal
+    ) throws IOException
+    {
+
+
+
+
+//        System.out.println("Login using global credentials !");
+
+
+        boolean trusted = false;
+
+        for(String url : GlobalConstants.trusted_market_aggregators_value)
+        {
+
+//            System.out.println("URL SDS : " + url);
+
+            if(url.equals(serviceURLForSDS))
+            {
+                trusted = true;
+                break;
+            }
+        }
+
+
+        if(!trusted)
+        {
+            return Response.status(Response.Status.UNAUTHORIZED)
+                    .build();
+        }
+
+
+
+
+
+
+        final String encodedUserPassword = headerParam.replaceFirst(AUTHENTICATION_SCHEME + " ", "");
+
+        //Decode username and password
+        String usernameAndPassword = new String(Base64.getDecoder().decode(encodedUserPassword.getBytes()));
+
+        //Split username and password tokens
+        final StringTokenizer tokenizer = new StringTokenizer(usernameAndPassword, ":");
+        final String phone = tokenizer.nextToken();
+        final String password = tokenizer.nextToken();
+
+        //Verifying Username and password
+//        System.out.println(username);
+//        System.out.println(password);
+
+
+//            try {
+//                Thread.sleep(3000);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+
+
+
+//        System.out.println("Username : " + phone + " | Password : " + password);
+
+
+
+        String credentials = Credentials.basic(phone, password);
+
+
+
+
+        String url = serviceURLForSDS + "/api/v1/User/LoginGlobal/VerifyCredentials";
+
+        if(getUserProfileGlobal)
+        {
+            url = url + "?GetUserProfile=true";
+        }
+
+
+
+        Request request = new Request.Builder()
+                .url(url)
+                .header("Authorization", credentials)
+                .build();
+
+
+
+        User userProfileGlobal;
+
+
+
+
+        try (okhttp3.Response response = client.newCall(request).execute()) {
+
+
+//            if (!response.isSuccessful())
+//            {
+//                return Response.status(Response.Status.BAD_REQUEST)
+//                        .build();
+//            }
+
+//            Headers responseHeaders = response.headers();
+//            for (int i = 0; i < responseHeaders.size(); i++) {
+//                System.out.println(responseHeaders.name(i) + ": " + responseHeaders.value(i));
+//            }
+
+
+
+            if(response.code()!=200)
+            {
+                return Response.status(Response.Status.UNAUTHORIZED)
+                        .build();
+            }
+
+
+
+
+//            System.out.println(response.body().string());
+            userProfileGlobal = Globals.getGson().fromJson(response.body().string(),User.class);
+
+        }
+
+
+
+
+
+
+        String generatedPassword = new BigInteger(130, Globals.random).toString(32);
+
+
+        User user = new User();
+        user.setPassword(generatedPassword);
+        user.setPhone(phone);
+
+
+
+        int rowsUpdated = daoLoginUsingOTP.upsertUserProfile(user,true);
+
+
+
+        // get profile information and send it to user
+        User userProfile = daoUser.getProfile(phone,generatedPassword);
+        userProfile.setPassword(generatedPassword);
+        userProfile.setPhone(phone);
+
+
+
+
+
+        if(rowsUpdated==1)
+        {
+
+
+            if(getServiceConfig)
+            {
+                userProfile.setServiceConfigurationLocal(Globals.serviceConfigDAO.getServiceConfiguration(0.0,0.0));
+            }
+
+            if(getUserProfileGlobal)
+            {
+                userProfile.setUserProfileGlobal(userProfileGlobal);
+            }
+
+
+//                SendSMS.sendSMS("You are logged in successfully !",
+//                        user.getPhone());
+
+            return Response.status(Response.Status.OK)
+                    .entity(userProfile)
+                    .build();
+        }
+        else
+        {
+            return Response.status(Response.Status.NO_CONTENT)
+                    .build();
+        }
+
+
+
+    }
 
 
 }

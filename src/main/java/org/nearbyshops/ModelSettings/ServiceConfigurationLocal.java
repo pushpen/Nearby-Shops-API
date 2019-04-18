@@ -147,6 +147,8 @@ public class ServiceConfigurationLocal {
     private Double rt_distance;
     private String rt_styleURL;
 
+    private boolean rt_login_using_otp_enabled;
+
 
 
 
@@ -191,6 +193,14 @@ public class ServiceConfigurationLocal {
 
     //    Getter and Setters
 
+
+    public boolean isRt_login_using_otp_enabled() {
+        return rt_login_using_otp_enabled;
+    }
+
+    public void setRt_login_using_otp_enabled(boolean rt_login_using_otp_enabled) {
+        this.rt_login_using_otp_enabled = rt_login_using_otp_enabled;
+    }
 
     public int getServiceID() {
         return serviceID;

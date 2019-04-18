@@ -1,6 +1,5 @@
 package org.nearbyshops.DAOPreparedOrders;
 
-import com.sun.org.apache.xpath.internal.operations.Or;
 import com.zaxxer.hikari.HikariDataSource;
 import org.nearbyshops.Globals.Globals;
 import org.nearbyshops.Model.Order;

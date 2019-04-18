@@ -858,14 +858,18 @@ public class DAOUserNew {
 
 
 
+
+
     public int updatePassword(User user, String oldPassword)
     {
 
 //        + User.USERNAME + " = ?"
 
 
-        Gson gson = new Gson();
-        System.out.println(gson.toJson(user) + "\nOldPassword : " + oldPassword);
+
+
+//        Gson gson = new Gson();
+//        System.out.println(gson.toJson(user) + "\nOldPassword : " + oldPassword);
 
 
         String updateStatement = "UPDATE " + User.TABLE_NAME

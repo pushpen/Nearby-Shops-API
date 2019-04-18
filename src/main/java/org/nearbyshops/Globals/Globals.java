@@ -1,5 +1,7 @@
 package org.nearbyshops.Globals;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import net.sargue.mailgun.Configuration;
@@ -179,6 +181,23 @@ public class Globals {
         {
             return configurationMailgun;
         }
+    }
+
+
+
+
+    private static Gson gson;
+
+    //Customize the gson behavior here
+    public static Gson getGson() {
+        if (gson == null) {
+            final GsonBuilder gsonBuilder = new GsonBuilder();
+            gson = gsonBuilder
+                    .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
+                    .create();
+
+        }
+        return gson;
     }
 
 

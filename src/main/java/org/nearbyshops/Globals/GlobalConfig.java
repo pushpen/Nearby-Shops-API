@@ -5,6 +5,7 @@ import org.apache.commons.configuration2.FileBasedConfiguration;
 import org.apache.commons.configuration2.PropertiesConfiguration;
 import org.apache.commons.configuration2.builder.FileBasedConfigurationBuilder;
 import org.apache.commons.configuration2.builder.fluent.Parameters;
+import org.apache.commons.configuration2.convert.DefaultListDelimiterHandler;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 
 
@@ -88,7 +89,10 @@ public class GlobalConfig {
         GlobalConstants.service_name_for_sms_value = configuration.getString("service_name_for_sms");
 
 
-        GlobalConstants.enable_passwordless_login_value = configuration.getBoolean("enable_passwordless_login");
+        GlobalConstants.enable_login_using_otp_value = configuration.getBoolean("enable_login_using_otp");
+
+        GlobalConstants.trusted_market_aggregators_value = configuration.getStringArray("trusted_market_aggregators");
+
 
         GlobalConstants.url_for_notification_icon_value = configuration.getString("url_for_notification_icon");
 
@@ -110,11 +114,6 @@ public class GlobalConfig {
 
         GlobalConstants.joining_credit_for_shop_owner_value = configuration.getInt("joining_credit_for_shop_owner");
         GlobalConstants.joining_credit_for_end_user_value  = configuration.getInt("joining_credit_for_end_user");
-
-
-
-//        GlobalConstants.JOINING_CREDIT_FOR_DRIVER = configuration.getInt(ConfigurationKeys.JOINING_CREDIT_DRIVER);
-//        GlobalConstants.JOINING_CREDIT_FOR_END_USER = configuration.getInt("joiningcredit.enduser");
 
 
         GlobalConstants.TOKEN_DURATION_MINUTES = configuration.getInt("token_duration_minutes");
@@ -161,12 +160,12 @@ public class GlobalConfig {
         System.out.println("Phone OTP Expiry Minutes : " + GlobalConstants.PHONE_OTP_EXPIRY_MINUTES);
         System.out.println("Password Reset Code Expiry Minutes : " + GlobalConstants.PASSWORD_RESET_CODE_EXPIRY_MINUTES);
 
-        System.out.println("Trip Request Code Expiry Minutes : " + GlobalConstants.TRIP_REQUEST_EXPIRY_MINUTES);
-        System.out.println("Trip Request Code Expiry Extension Minutes : " + GlobalConstants.TRIP_REQUEST_EXPIRY_EXTENSION_MINUTES);
-
-
-        System.out.println("Months to extend Taxi Registration Minimum : " + GlobalConstants.MONTHS_TO_EXTEND_TAXI_REGISTRATION_MIN);
-        System.out.println("Months to extend Taxi Registration Maximum : " + GlobalConstants.MONTHS_TO_EXTEND_TAXI_REGISTRATION_MAX);
+//        System.out.println("Trip Request Code Expiry Minutes : " + GlobalConstants.TRIP_REQUEST_EXPIRY_MINUTES);
+//        System.out.println("Trip Request Code Expiry Extension Minutes : " + GlobalConstants.TRIP_REQUEST_EXPIRY_EXTENSION_MINUTES);
+//
+//
+//        System.out.println("Months to extend Taxi Registration Minimum : " + GlobalConstants.MONTHS_TO_EXTEND_TAXI_REGISTRATION_MIN);
+//        System.out.println("Months to extend Taxi Registration Maximum : " + GlobalConstants.MONTHS_TO_EXTEND_TAXI_REGISTRATION_MAX);
 
         System.out.println("MAX LIMIT : " + GlobalConstants.max_limit);
 //        System.out.println("MQTT Host address : " + GlobalConstants.NOTIFICATION_SERVER_HOST_MQTT);
@@ -212,7 +211,9 @@ public class GlobalConfig {
             FileBasedConfigurationBuilder<FileBasedConfiguration> builder =
                     new FileBasedConfigurationBuilder<FileBasedConfiguration>(PropertiesConfiguration.class)
                             .configure(params.properties()
+                                    .setListDelimiterHandler(new DefaultListDelimiterHandler(','))
                                     .setFileName("api_config.properties"));
+
 
 
             try {

@@ -36,8 +36,6 @@ public class ServiceConfigurationResource {
 
 
 
-
-
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getService(@QueryParam("latCenter")Double latCenter,
@@ -49,6 +47,8 @@ public class ServiceConfigurationResource {
 
 		if(serviceConfigurationLocal != null)
 		{
+			serviceConfigurationLocal.setRt_login_using_otp_enabled(GlobalConstants.enable_login_using_otp_value);
+
 
 			return Response.status(Status.OK)
 					.entity(serviceConfigurationLocal)

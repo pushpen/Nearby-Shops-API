@@ -69,8 +69,10 @@ public class GlobalConstants {
 
     public static String service_name_for_sms_value;
 
+    public static boolean enable_login_using_otp_value;
 
-    public static boolean enable_passwordless_login_value;
+    public static String[] trusted_market_aggregators_value;
+
 
     public static String url_for_notification_icon_value;
 
@@ -99,11 +101,11 @@ public class GlobalConstants {
     public static int EMAIL_VERIFICATION_CODE_EXPIRY_MINUTES;
     public static int PHONE_OTP_EXPIRY_MINUTES;
     public static int PASSWORD_RESET_CODE_EXPIRY_MINUTES;
-    public static int TRIP_REQUEST_EXPIRY_MINUTES;
-    public static int TRIP_REQUEST_EXPIRY_EXTENSION_MINUTES;
+//    public static int TRIP_REQUEST_EXPIRY_MINUTES;
+//    public static int TRIP_REQUEST_EXPIRY_EXTENSION_MINUTES;
 
-    public static int MONTHS_TO_EXTEND_TAXI_REGISTRATION_MIN;
-    public static int MONTHS_TO_EXTEND_TAXI_REGISTRATION_MAX;
+//    public static int MONTHS_TO_EXTEND_TAXI_REGISTRATION_MIN;
+//    public static int MONTHS_TO_EXTEND_TAXI_REGISTRATION_MAX;
 
     public static int max_limit;
 

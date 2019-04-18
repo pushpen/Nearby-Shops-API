@@ -237,7 +237,7 @@ public class DAOUserSignUp {
         int rowCountItems = -1;
 
 
-        String insertItemSubmission = "";
+        String insertProfile = "";
 
         String insertShop = "";
 
@@ -249,7 +249,7 @@ public class DAOUserSignUp {
 
 
 
-        insertItemSubmission = "INSERT INTO "
+        insertProfile = "INSERT INTO "
                 + User.TABLE_NAME
                 + "("
 
@@ -401,7 +401,7 @@ public class DAOUserSignUp {
             connection.setAutoCommit(false);
 
 
-            statement = connection.prepareStatement(insertItemSubmission,PreparedStatement.RETURN_GENERATED_KEYS);
+            statement = connection.prepareStatement(insertProfile,PreparedStatement.RETURN_GENERATED_KEYS);
             int i = 0;
 
 //            statement.setString(++i,user.getUsername());
@@ -1555,9 +1555,10 @@ public class DAOUserSignUp {
         String insertItemSubmission = "INSERT INTO "
                 + User.TABLE_NAME
                 + "("
+                + User.ROLE + ","
                 + User.USERNAME + ","
                 + User.PASSWORD + ""
-                + ") values(?,? )";
+                + ") values(?,?,?)";
 
 
 
@@ -1571,8 +1572,10 @@ public class DAOUserSignUp {
             statement = connection.prepareStatement(insertItemSubmission,PreparedStatement.RETURN_GENERATED_KEYS);
             int i = 0;
 
+            statement.setObject(++i,GlobalConstants.ROLE_ADMIN_CODE);
             statement.setString(++i,user.getUsername());
             statement.setString(++i,user.getPassword());
+
 
 
             rowCountItems = statement.executeUpdate();
