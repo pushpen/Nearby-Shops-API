@@ -176,6 +176,8 @@ public class OrderResource {
 
 
 
+//	@RolesAllowed({GlobalConstants.ROLE_END_USER,GlobalConstants.ROLE_ADMIN})
+
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -221,65 +223,72 @@ public class OrderResource {
 //		}
 
 
-
-		Integer endUserID = null;
-
-		if(filterByUserID)
-		{
-			endUserID = ((User)Globals.accountApproved).getUserID();
-		}
-
-
-
+//		System.out.println("Order Endpoint fetch !");
 
 
 
 		try
 		{
 
-			if(limit!=null)
-			{
-				if(limit >= GlobalConstants.max_limit)
+
+
+
+
+				Integer endUserID = null;
+
+				if(filterByUserID)
 				{
-					limit = GlobalConstants.max_limit;
+					endUserID = ((User)Globals.accountApproved).getUserID();
 				}
 
-				if(offset==null)
-				{
-					offset = 0;
-				}
-			}
-
-
-			getRowCount=true;
-
-
-
-			OrderEndPoint endpoint = Globals.orderService.readOrders(orderID,
-					endUserID,shopID, pickFromShop,
-					homeDeliveryStatus,pickFromShopStatus,
-					deliveryGuyID,
-					latCenter,lonCenter,
-					pendingOrders,
-					searchString,
-					sortBy,limit,offset,
-					getRowCount,getOnlyMetaData);
 
 
 
 
-			if(limit!=null)
-			{
-				endpoint.setLimit(limit);
-				endpoint.setOffset(offset);
-				endpoint.setMax_limit(GlobalConstants.max_limit);
-			}
+
+					if(limit!=null)
+					{
+						if(limit >= GlobalConstants.max_limit)
+						{
+							limit = GlobalConstants.max_limit;
+						}
+
+						if(offset==null)
+						{
+							offset = 0;
+						}
+					}
+
+
+					getRowCount=true;
 
 
 
-			return Response.status(Status.OK)
-					.entity(endpoint)
-					.build();
+					OrderEndPoint endpoint = Globals.orderService.readOrders(orderID,
+							endUserID,shopID, pickFromShop,
+							homeDeliveryStatus,pickFromShopStatus,
+							deliveryGuyID,
+							latCenter,lonCenter,
+							pendingOrders,
+							searchString,
+							sortBy,limit,offset,
+							getRowCount,getOnlyMetaData);
+
+
+
+
+					if(limit!=null)
+					{
+						endpoint.setLimit(limit);
+						endpoint.setOffset(offset);
+						endpoint.setMax_limit(GlobalConstants.max_limit);
+					}
+
+
+
+					return Response.status(Status.OK)
+							.entity(endpoint)
+							.build();
 
 
 		}

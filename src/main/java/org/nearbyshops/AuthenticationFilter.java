@@ -50,8 +50,10 @@ public class AuthenticationFilter implements ContainerRequestFilter {
     public void filter(ContainerRequestContext requestContext) {
         Method method = resourceInfo.getResourceMethod();
 
-//        System.out.println("Security Fileter");
+//        System.out.println("Security Filter");
 
+        try
+        {
             if (method.isAnnotationPresent(DenyAll.class)) {
 
                 throw new ForbiddenException("Access is ErrorNBSAPI !");
@@ -59,40 +61,40 @@ public class AuthenticationFilter implements ContainerRequestFilter {
 
 
 
-        //Verify user access
-        if (method.isAnnotationPresent(RolesAllowed.class)) {
-            RolesAllowed rolesAnnotation = method.getAnnotation(RolesAllowed.class);
-            Set<String> rolesSet = new HashSet<String>(Arrays.asList(rolesAnnotation.value()));
+            //Verify user access
+            if (method.isAnnotationPresent(RolesAllowed.class)) {
+                RolesAllowed rolesAnnotation = method.getAnnotation(RolesAllowed.class);
+                Set<String> rolesSet = new HashSet<String>(Arrays.asList(rolesAnnotation.value()));
 
-            //Get request headers
-            final MultivaluedMap<String, String> headers = requestContext.getHeaders();
+                //Get request headers
+                final MultivaluedMap<String, String> headers = requestContext.getHeaders();
 
-            //Fetch authorization header
-            final List<String> authorization = headers.get(AUTHORIZATION_PROPERTY);
+                //Fetch authorization header
+                final List<String> authorization = headers.get(AUTHORIZATION_PROPERTY);
 
-            //If no authorization information present; block access
-            if (authorization == null || authorization.isEmpty()) {
+                //If no authorization information present; block access
+                if (authorization == null || authorization.isEmpty()) {
 //                requestContext.abortWith(ACCESS_DENIED);
 
 //                System.out.println("Access Denied : Auth header empty ! ");
-                throw new NotAuthorizedException("Access is Denied ! Credentials not present");
-            }
+                    throw new NotAuthorizedException("Access is Denied ! Credentials not present");
+                }
 
 
-            final String encodedUserPassword = authorization.get(0).replaceFirst(AUTHENTICATION_SCHEME + " ", "");
+                final String encodedUserPassword = authorization.get(0).replaceFirst(AUTHENTICATION_SCHEME + " ", "");
 
-            //Decode username and password
-            String usernameAndPassword = new String(Base64.getDecoder().decode(encodedUserPassword.getBytes()));
+                //Decode username and password
+                String usernameAndPassword = new String(Base64.getDecoder().decode(encodedUserPassword.getBytes()));
 
 
 //            System.out.println("Username:Password | " + usernameAndPassword);
 
-            //Split username and password tokens
-            final StringTokenizer tokenizer = new StringTokenizer(usernameAndPassword, ":");
-            final String username = tokenizer.nextToken();
-            final String password = tokenizer.nextToken();
+                //Split username and password tokens
+                final StringTokenizer tokenizer = new StringTokenizer(usernameAndPassword, ":");
+                final String username = tokenizer.nextToken();
+                final String password = tokenizer.nextToken();
 
-            //Verifying Username and password
+                //Verifying Username and password
 //            System.out.println(username);
 //            System.out.println(password);
 
@@ -124,10 +126,19 @@ public class AuthenticationFilter implements ContainerRequestFilter {
 //            requestContext.setProperty("sample",);
 
 
-            Globals.accountApproved = isUserAllowed(username, password, rolesSet);
+                Globals.accountApproved = isUserAllowed(username, password, rolesSet);
 
-            
+
             }
+
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
+
+
+
     }
 
 

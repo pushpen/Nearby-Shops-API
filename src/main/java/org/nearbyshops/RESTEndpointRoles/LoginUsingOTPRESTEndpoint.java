@@ -360,7 +360,7 @@ public class LoginUsingOTPRESTEndpoint {
 
         //Split username and password tokens
         final StringTokenizer tokenizer = new StringTokenizer(usernameAndPassword, ":");
-        final String phone = tokenizer.nextToken();
+        final String username = tokenizer.nextToken();
         final String password = tokenizer.nextToken();
 
         //Verifying Username and password
@@ -380,17 +380,19 @@ public class LoginUsingOTPRESTEndpoint {
 
 
 
-        String credentials = Credentials.basic(phone, password);
+        String credentials = Credentials.basic(username, password);
 
 
 
 
-        String url = serviceURLForSDS + "/api/v1/User/LoginGlobal/VerifyCredentials";
+        String url = serviceURLForSDS + "/api/v1/User/LoginGlobal/VerifyCredentials?GetUserProfile=true";
 
-        if(getUserProfileGlobal)
-        {
-            url = url + "?GetUserProfile=true";
-        }
+
+
+//        if(getUserProfileGlobal)
+//        {
+//            url = url + "?GetUserProfile=true";
+//        }
 
 
 
@@ -444,20 +446,46 @@ public class LoginUsingOTPRESTEndpoint {
         String generatedPassword = new BigInteger(130, Globals.random).toString(32);
 
 
-        User user = new User();
-        user.setPassword(generatedPassword);
-        user.setPhone(phone);
+//        User user = new User();
+//        user.setPassword(generatedPassword);
+//        user.setPhone(phone);
+
+
+        userProfileGlobal.setPassword(generatedPassword);
 
 
 
-        int rowsUpdated = daoLoginUsingOTP.upsertUserProfile(user,true);
+
+        int rowsUpdated = 0;
+
+
+
+        if(daoLoginUsingOTP.checkUserExists(userProfileGlobal.getEmail(),userProfileGlobal.getPhone())!=null)
+        {
+            // user exist ...  update profile
+
+            rowsUpdated = daoLoginUsingOTP.updateUserProfile(userProfileGlobal);
+        }
+        else
+        {
+            // user does not exist ... insert profile
+
+            rowsUpdated = daoLoginUsingOTP.insertUserProfile(userProfileGlobal,true);
+        }
+
+
+
+
+//        int rowsUpdated = daoLoginUsingOTP.upsertUserProfileNew(userProfileGlobal,true);
 
 
 
         // get profile information and send it to user
-        User userProfile = daoUser.getProfile(phone,generatedPassword);
+        User userProfile = daoUser.getProfile(username,generatedPassword);
         userProfile.setPassword(generatedPassword);
-        userProfile.setPhone(phone);
+
+
+//        userProfile.setPhone(phone);
 
 
 

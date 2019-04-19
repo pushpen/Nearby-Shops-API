@@ -518,6 +518,9 @@ public class ItemCategoryResource {
 	{
 
 
+
+//		System.out.println("Get Item Categories : Fetched !");
+
 		int set_limit = 30;
 		int set_offset = 0;
 		final int max_limit = 100;
