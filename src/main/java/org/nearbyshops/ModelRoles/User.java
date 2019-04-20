@@ -100,10 +100,12 @@ public class User {
                     + " " + User.IS_REFERRER_CREDITED + " boolean NOT NULL default 'f',"
                     + " " + User.IS_VERIFIED + " boolean NOT NULL default 'f',"
 
-                    + " CHECK (" + User.USERNAME + " IS NOT NULL OR " + User.E_MAIL + " IS NOT NULL OR " + User.PHONE + " IS NOT NULL " +  "),"
-                    + " UNIQUE (" + User.E_MAIL + "," + User.PHONE + ")"
+                    + " CHECK (" + User.USERNAME + " IS NOT NULL OR " + User.E_MAIL + " IS NOT NULL OR " + User.PHONE + " IS NOT NULL " +  ")"
                     + ")";
 
+
+
+//    + " UNIQUE (" + User.E_MAIL + "," + User.PHONE + ")"
 
 
 
