@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import net.sargue.mailgun.Configuration;
 import org.nearbyshops.DAOAnalytics.DAOItemAnalytics;
 import org.nearbyshops.DAOBilling.DAOAddBalance;
 import org.nearbyshops.DAOBilling.DAOTransaction;
@@ -25,6 +24,8 @@ import org.nearbyshops.DAOPushNotifications.DAOOneSignal;
 import org.nearbyshops.DAORoles.*;
 import org.nearbyshops.DAOsPrepared.*;
 import org.nearbyshops.RESTEndpointRoles.UserSignUpRESTEndpoint;
+import org.simplejavamail.mailer.Mailer;
+import org.simplejavamail.mailer.MailerBuilder;
 
 import java.security.SecureRandom;
 
@@ -161,27 +162,27 @@ public class Globals {
 
 //    // mailgun configuration
 
-    private static Configuration configurationMailgun;
-
-
-    public static Configuration getMailgunConfiguration()
-    {
-
-        if(configurationMailgun==null)
-        {
-
-            configurationMailgun = new Configuration()
-                    .domain(GlobalConstants.MAILGUN_DOMAIN)
-                    .apiKey(GlobalConstants.MAILGUN_API_KEY)
-                    .from(GlobalConstants.MAILGUN_NAME,GlobalConstants.MAILGUN_EMAIL);
-
-            return configurationMailgun;
-        }
-        else
-        {
-            return configurationMailgun;
-        }
-    }
+//    private static Configuration configurationMailgun;
+//
+//
+//    public static Configuration getMailgunConfiguration()
+//    {
+//
+//        if(configurationMailgun==null)
+//        {
+//
+//            configurationMailgun = new Configuration()
+//                    .domain(GlobalConstants.MAILGUN_DOMAIN)
+//                    .apiKey(GlobalConstants.MAILGUN_API_KEY)
+//                    .from(GlobalConstants.MAILGUN_NAME,GlobalConstants.MAILGUN_EMAIL);
+//
+//            return configurationMailgun;
+//        }
+//        else
+//        {
+//            return configurationMailgun;
+//        }
+//    }
 
 
 
@@ -200,5 +201,31 @@ public class Globals {
         return gson;
     }
 
+
+
+
+
+
+
+
+        public static Mailer inHouseMailer;
+
+
+        public static Mailer getMailerInstance()
+        {
+            if(inHouseMailer==null)
+            {
+                inHouseMailer = MailerBuilder
+                        .withSMTPServer(GlobalConstants.SMTP_SERVER_URL, GlobalConstants.SMTP_PORT,
+                                GlobalConstants.SMTP_USERNAME, GlobalConstants.SMTP_PASSWORD)
+                        .buildMailer();
+
+                return inHouseMailer;
+            }
+            else
+            {
+                return inHouseMailer;
+            }
+        }
 
 }

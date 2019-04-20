@@ -20,6 +20,17 @@ public class GlobalConstants {
 	public static String ADMIN_PASSWORD;
 
 
+    public static String SMTP_SERVER_URL;
+    public static int SMTP_PORT = 587;
+    public static String SMTP_USERNAME;
+    public static String SMTP_PASSWORD;
+
+    public static String EMAIL_SENDER_NAME;
+    public static String EMAIL_ADDRESS_FOR_SENDER;
+
+
+
+
 //	public static String SERVICE_NAME;
 //	public static String SERVICE_DESCRIPTION;
 
@@ -33,10 +44,10 @@ public class GlobalConstants {
 
 
 
-    public static String MAILGUN_DOMAIN;
-    public static String MAILGUN_API_KEY;
-    public static String MAILGUN_NAME;
-    public static String MAILGUN_EMAIL;
+//    public static String MAILGUN_DOMAIN;
+//    public static String MAILGUN_API_KEY;
+//    public static String MAILGUN_NAME;
+//    public static String MAILGUN_EMAIL;
 
 
 

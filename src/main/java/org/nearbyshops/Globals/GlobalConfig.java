@@ -44,6 +44,17 @@ public class GlobalConfig {
         GlobalConstants.ADMIN_USERNAME = configuration.getString("admin_username");
         GlobalConstants.ADMIN_PASSWORD = configuration.getString("admin_password");
 
+        GlobalConstants.SMTP_SERVER_URL = configuration.getString("smtp_server_url");
+        GlobalConstants.SMTP_PORT = configuration.getInt("smtp_port");
+        GlobalConstants.SMTP_USERNAME = configuration.getString("smtp_username");
+        GlobalConstants.SMTP_PASSWORD = configuration.getString("smtp_password");
+
+
+        GlobalConstants.EMAIL_SENDER_NAME = configuration.getString("email_sender_name");
+        GlobalConstants.EMAIL_ADDRESS_FOR_SENDER = configuration.getString("email_address_for_sender");
+
+
+
 //        GlobalConstants.SERVICE_NAME = configuration.getString("service_name");
 //        GlobalConstants.SERVICE_DESCRIPTION = configuration.getString("service_description");
 
@@ -53,10 +64,11 @@ public class GlobalConfig {
 
 
 
-        GlobalConstants.MAILGUN_DOMAIN = configuration.getString("mailgun.domain");
-        GlobalConstants.MAILGUN_API_KEY = configuration.getString("mailgun.apikey");
-        GlobalConstants.MAILGUN_NAME = configuration.getString("mailgun.name");
-        GlobalConstants.MAILGUN_EMAIL = configuration.getString("mailgun.email");
+
+//        GlobalConstants.MAILGUN_DOMAIN = configuration.getString("mailgun.domain");
+//        GlobalConstants.MAILGUN_API_KEY = configuration.getString("mailgun.apikey");
+//        GlobalConstants.MAILGUN_NAME = configuration.getString("mailgun.name");
+//        GlobalConstants.MAILGUN_EMAIL = configuration.getString("mailgun.email");
 
 
 
@@ -140,6 +152,18 @@ public class GlobalConfig {
 
         System.out.println("Postgres Connection URL : " + GlobalConstants.POSTGRES_CONNECTION_URL);
 //        System.out.println("Connection URL Create DB : " + GlobalConstants.CONNECTION_URL_CREATE_DB);min_account_balance_for_shop_owner
+
+
+        System.out.println("SMTP URL : " + GlobalConstants.SMTP_SERVER_URL);
+        System.out.println("SMTP PORT : " + GlobalConstants.SMTP_PORT);
+        System.out.println("SMTP USERNAME : " + GlobalConstants.SMTP_USERNAME);
+        System.out.println("SMTP PASSWORD : " + GlobalConstants.SMTP_PASSWORD);
+
+        System.out.println("Email Sender Name : " + GlobalConstants.EMAIL_SENDER_NAME);
+        System.out.println("Email Address : " + GlobalConstants.EMAIL_ADDRESS_FOR_SENDER);
+
+
+
 
         System.out.println("Postgres Username : " + GlobalConstants.POSTGRES_USERNAME);
         System.out.println("Postgres Password : " + GlobalConstants.POSTGRES_PASSWORD);

@@ -1,17 +1,21 @@
 package org.nearbyshops.RESTEndpointRoles;
 
 
-import net.sargue.mailgun.Mail;
+
 import org.nearbyshops.Globals.GlobalConstants;
 import org.nearbyshops.Globals.Globals;
 import org.nearbyshops.Globals.SendSMS;
 import org.nearbyshops.ModelRoles.User;
+import org.simplejavamail.email.Email;
+import org.simplejavamail.email.EmailBuilder;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.math.BigInteger;
 import java.sql.Timestamp;
+
+import static org.nearbyshops.Globals.Globals.getMailerInstance;
 
 /**
  * Created by sumeet on 14/8/17.
@@ -170,18 +174,47 @@ public class ResetPasswordRESTEndpoint {
                 if(user.getRt_registration_mode()==User.REGISTRATION_MODE_EMAIL)
                 {
 
-                    Mail.using(Globals.getMailgunConfiguration())
-                            .body()
-                            .h1("Your E-mail Verification Code is given below")
-                            .p("You have requested to verify your e-mail. If you did not request the e-mail verification please ignore this e-mail message.")
-                            .h3("The e-mail verification code is : " + resetCode)
-                            .p("This verification code will expire at " + timestampExpiry.toLocaleString() + ". Please use this code before it expires.")
-                            .mail()
-                            .to(user.getEmail())
-                            .subject("E-mail Verification Code for Taxi Referral Service (TRS)")
-                            .from("Taxi Referral Service","noreply@taxireferral.org")
-                            .build()
-                            .send();
+
+
+//                    Mail.using(Globals.getMailgunConfiguration())
+//                            .body()
+//                            .h1("Your E-mail Verification Code is given below")
+//                            .p("You have requested to verify your e-mail. If you did not request the e-mail verification please ignore this e-mail message.")
+//                            .h3("The e-mail verification code is : " + resetCode)
+//                            .p("This verification code will expire at " + timestampExpiry.toLocaleString() + ". Please use this code before it expires.")
+//                            .mail()
+//                            .to(user.getEmail())
+//                            .subject("E-mail Verification Code for Taxi Referral Service (TRS)")
+//                            .from("Taxi Referral Service","noreply@taxireferral.org")
+//                            .build()
+//                            .send();
+//
+//
+
+
+                    String message = "<p>You have made a request to verify your e-mail. If you did not request the e-mail verification please ignore this e-mail message.</p>"
+                            +"<h2>The e-mail verification code is : " + resetCode + "</h2>" +
+                            "<p>This verification code will expire at " + timestampExpiry.toLocaleString()
+                            + ". Please use this code before it expires.</p>";
+
+
+
+
+
+                    Email email = EmailBuilder.startingBlank()
+                            .from(GlobalConstants.EMAIL_SENDER_NAME, GlobalConstants.EMAIL_ADDRESS_FOR_SENDER)
+                            .to(user.getName(),user.getEmail())
+                            .withSubject("E-mail Verification Code")
+                            .withHTMLText(message)
+                            .buildEmail();
+
+
+                    getMailerInstance().sendMail(email,true);
+
+
+
+
+
                 }
                 else if(user.getRt_registration_mode()==User.REGISTRATION_MODE_PHONE)
                 {
@@ -204,18 +237,42 @@ public class ResetPasswordRESTEndpoint {
 
             if(user.getRt_registration_mode()==User.REGISTRATION_MODE_EMAIL)
             {
-                Mail.using(Globals.getMailgunConfiguration())
-                        .body()
-                        .h1("Your E-mail Verification Code is given below")
-                        .p("You have requested to verify your e-mail. If you did not request the e-mail verification please ignore this e-mail message.")
-                        .h3("The e-mail verification code is : " + user_credentials.getPasswordResetCode())
-                        .p("This verification code will expire at " + user_credentials.getResetCodeExpires().toLocaleString() + ". Please use this code before it expires.")
-                        .mail()
-                        .to(user.getEmail())
-                        .subject("E-mail Verification Code for Taxi Referral Service (TRS)")
-                        .from("Taxi Referral Service","noreply@taxireferral.org")
-                        .build()
-                        .send();
+
+//                Mail.using(Globals.getMailgunConfiguration())
+//                        .body()
+//                        .h1("Your E-mail Verification Code is given below")
+//                        .p("You have requested to verify your e-mail. If you did not request the e-mail verification please ignore this e-mail message.")
+//                        .h3("The e-mail verification code is : " + user_credentials.getPasswordResetCode())
+//                        .p("This verification code will expire at " + user_credentials.getResetCodeExpires().toLocaleString() + ". Please use this code before it expires.")
+//                        .mail()
+//                        .to(user.getEmail())
+//                        .subject("E-mail Verification Code for Taxi Referral Service (TRS)")
+//                        .from("Taxi Referral Service","noreply@taxireferral.org")
+//                        .build()
+//                        .send();
+
+
+                String message = "<p>You have made a request to verify your e-mail. If you did not request the e-mail verification please ignore this e-mail message.</p>"
+                        +"<h2>The e-mail verification code is : " + user_credentials.getPasswordResetCode() + "</h2>" +
+                        "<p>This verification code will expire at " + user_credentials.getResetCodeExpires().toLocaleString()
+                        + ". Please use this code before it expires.</p>";
+
+
+
+
+
+                Email email = EmailBuilder.startingBlank()
+                        .from(GlobalConstants.EMAIL_SENDER_NAME, GlobalConstants.EMAIL_ADDRESS_FOR_SENDER)
+                        .to(user.getName(),user.getEmail())
+                        .withSubject("E-mail Verification Code")
+                        .withHTMLText(message)
+                        .buildEmail();
+
+
+                getMailerInstance().sendMail(email,true);
+
+
+
             }
             else if(user.getRt_registration_mode()==User.REGISTRATION_MODE_PHONE)
             {
