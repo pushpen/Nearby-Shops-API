@@ -14,7 +14,9 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.math.BigInteger;
 import java.sql.Timestamp;
+import java.util.Random;
 
+import static org.nearbyshops.Globals.Globals.generateOTP;
 import static org.nearbyshops.Globals.Globals.getMailerInstance;
 
 /**
@@ -151,9 +153,11 @@ public class ResetPasswordRESTEndpoint {
             // code is expired
 
 //            resetCode = new BigInteger(30, Globals.random).toString(32);
-            BigInteger phoneCode = new BigInteger(15, Globals.random);
-            int phoneOTP = phoneCode.intValue();
-            resetCode = String.valueOf(phoneOTP);
+//            BigInteger phoneCode = new BigInteger(15, Globals.random);
+//            int phoneOTP = phoneCode.intValue();
+
+
+            resetCode = String.valueOf(generateOTP(5));
 
 
             timestampExpiry
@@ -306,6 +310,8 @@ public class ResetPasswordRESTEndpoint {
 
         return null;
     }
+
+
 
 
 

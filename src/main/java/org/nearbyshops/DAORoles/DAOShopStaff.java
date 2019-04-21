@@ -3,11 +3,8 @@ package org.nearbyshops.DAORoles;
 import com.zaxxer.hikari.HikariDataSource;
 import org.nearbyshops.Globals.GlobalConstants;
 import org.nearbyshops.Globals.Globals;
-import org.nearbyshops.Model.Shop;
-import org.nearbyshops.ModelOneSignal.OneSignalIDs;
 import org.nearbyshops.ModelRoles.Endpoints.UserEndpoint;
 import org.nearbyshops.ModelRoles.ShopStaffPermissions;
-import org.nearbyshops.ModelRoles.ShopStaffPermissionsOld;
 import org.nearbyshops.ModelRoles.StaffPermissions;
 import org.nearbyshops.ModelRoles.User;
 

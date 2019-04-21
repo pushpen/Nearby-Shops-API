@@ -712,7 +712,10 @@ public class UserSignUpRESTEndpoint {
         {
             // verification code not generated for this email so generate one and send this to the user
 
-            String emailVerificationCode = new BigInteger(30, Globals.random).toString(32);
+//            String emailVerificationCode = new BigInteger(30, Globals.random).toString(32);
+
+
+            String emailVerificationCode = String.valueOf(generateOTP(5));
 
             Timestamp timestampExpiry
                     = new Timestamp(
