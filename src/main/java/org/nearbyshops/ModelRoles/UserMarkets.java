@@ -18,10 +18,10 @@ public class UserMarkets {
 
 
     // Table Name for User
-    public static final String TABLE_NAME = "USER_TABLE";
+    public static final String TABLE_NAME = "USER_MARKETS_TABLE";
 
     // Column names
-    public static final String USER_ID = "USER_ID";
+    public static final String LOCAL_USER_ID = "LOCAL_USER_ID";
     public static final String GLOBAL_USER_ID = "GLOBAL_USER_ID";
     public static final String MARKET_AGGREGATOR_URL = "MARKET_AGGREGATOR_URL";
     public static final String DATE_TIME_CREATED = "DATE_TIME_CREATED";
@@ -33,14 +33,17 @@ public class UserMarkets {
 
             "CREATE TABLE IF NOT EXISTS "
                     + UserMarkets.TABLE_NAME + "("
-                    + " " + UserMarkets.USER_ID + " int not null,"
+                    + " " + UserMarkets.LOCAL_USER_ID + " int not null,"
                     + " " + UserMarkets.GLOBAL_USER_ID + " int not null,"
                     + " " + UserMarkets.MARKET_AGGREGATOR_URL + " text not null,"
                     + " " + UserMarkets.DATE_TIME_CREATED + " timestamp with time zone NOT NULL default now(),"
-                    + " UNIQUE (" + UserMarkets.USER_ID + "," + UserMarkets.GLOBAL_USER_ID + "," + UserMarkets.MARKET_AGGREGATOR_URL + ")"
+                    + " FOREIGN KEY(" + UserMarkets.LOCAL_USER_ID +") REFERENCES " + User.TABLE_NAME + "(" + User.USER_ID + ") ON DELETE CASCADE ,"
+                    + " UNIQUE (" + UserMarkets.LOCAL_USER_ID + "," + UserMarkets.GLOBAL_USER_ID + "," + UserMarkets.MARKET_AGGREGATOR_URL + "),"
+                    + " UNIQUE (" + UserMarkets.GLOBAL_USER_ID + "," + UserMarkets.MARKET_AGGREGATOR_URL + "),"
+                    + " UNIQUE (" + UserMarkets.LOCAL_USER_ID + "," + UserMarkets.MARKET_AGGREGATOR_URL + ")"
                     + ")";
 
-
+    
 
     // Instance Variables
     private int userIDLocal;

@@ -26,7 +26,7 @@ import java.util.Base64;
 import java.util.Random;
 import java.util.StringTokenizer;
 
-
+import static org.nearbyshops.Globals.Globals.generateOTP;
 
 
 @Path("/api/v1/User/LoginUsingOTP")
@@ -283,21 +283,21 @@ public class LoginUsingOTPRESTEndpoint {
 
 
 
-
-
-    private static char[] generateOTP(int length) {
-        String numbers = "1234567890";
-        Random random = new Random();
-        char[] otp = new char[length];
-
-        for(int i = 0; i< length ; i++) {
-            otp[i] = numbers.charAt(random.nextInt(numbers.length()));
-        }
-
-        return otp;
-    }
-
-
+//
+//
+//    private static char[] generateOTP(int length) {
+//        String numbers = "1234567890";
+//        Random random = new Random();
+//        char[] otp = new char[length];
+//
+//        for(int i = 0; i< length ; i++) {
+//            otp[i] = numbers.charAt(random.nextInt(numbers.length()));
+//        }
+//
+//        return otp;
+//    }
+//
+//
 
 
 
@@ -468,9 +468,25 @@ public class LoginUsingOTPRESTEndpoint {
         }
         else
         {
-            // user does not exist ... insert profile
+            // check if user account has existing associations
 
-            rowsUpdated = daoLoginUsingOTP.insertUserProfile(userProfileGlobal,true);
+
+            if(daoLoginUsingOTP.checkUserExistsUsingAssociations(userProfileGlobal.getUserID(),serviceURLForSDS)!=null)
+            {
+                // account exists
+                rowsUpdated = daoLoginUsingOTP.updateUserProfileAssociated(userProfileGlobal,serviceURLForSDS);
+
+            }
+            else
+            {
+                // user account does not exist ... insert profile
+                rowsUpdated = daoLoginUsingOTP.insertUserProfile(userProfileGlobal,serviceURLForSDS,true);
+
+            }
+
+
+//            rowsUpdated = daoLoginUsingOTP.insertUserProfile(userProfileGlobal,serviceURLForSDS,true);
+
         }
 
 
