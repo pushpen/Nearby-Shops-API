@@ -874,7 +874,7 @@ public class DAOUserSignUp {
 //            statement.setString(++i,user.getUsername());
 
             statement.setString(++i, user.getPassword());
-            statement.setString(++i, user.getPhone());
+            statement.setString(++i, user.getPhoneWithCountryCode());
 
             statement.setString(++i, user.getName());
             statement.setObject(++i, user.getGender());
@@ -898,8 +898,11 @@ public class DAOUserSignUp {
             statement.setString(++i, user.getAbout());
 
 
+
+
+
             // check phone is verified or not to ensure phone belongs to user
-            statement.setString(++i, user.getPhone());
+            statement.setString(++i, user.getPhoneWithCountryCode());
             statement.setString(++i, user.getRt_phone_verification_code());
 
             rowCountItems = statement.executeUpdate();
@@ -1171,10 +1174,11 @@ public class DAOUserSignUp {
             statement = connection.prepareStatement(insertUser,PreparedStatement.RETURN_GENERATED_KEYS);
             int i = 0;
 
+
 //            statement.setString(++i,user.getUsername());
 
             statement.setString(++i,user.getPassword());
-            statement.setString(++i,user.getPhone());
+            statement.setString(++i,user.getPhoneWithCountryCode());
 
             statement.setString(++i,user.getName());
             statement.setObject(++i,user.getGender());
@@ -1199,7 +1203,7 @@ public class DAOUserSignUp {
 
 
             // check phone is verified or not to ensure phone belongs to user
-            statement.setString(++i,user.getPhone());
+            statement.setString(++i,user.getPhoneWithCountryCode());
             statement.setString(++i,user.getRt_phone_verification_code());
 
             rowCountItems = statement.executeUpdate();

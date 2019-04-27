@@ -50,8 +50,6 @@ public class ShopImage {
 
 
 
-
-
     // instance variables
 
     private int shopImageID;

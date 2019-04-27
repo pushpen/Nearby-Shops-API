@@ -42,11 +42,8 @@ public class ItemSpecificationValue {
             + " " + ItemSpecificationValue.TIMESTAMP_CREATED + " timestamp with time zone NOT NULL DEFAULT now(),"
             + " " + ItemSpecificationValue.TIMESTAMP_UPDATED + " timestamp with time zone ,"
 
-            + " FOREIGN KEY(" + ItemSpecificationValue.ITEM_SPECIFICATION_NAME_ID +") REFERENCES " + ItemSpecificationName.TABLE_NAME + "(" + ItemSpecificationName.ID + ")"
+            + " FOREIGN KEY(" + ItemSpecificationValue.ITEM_SPECIFICATION_NAME_ID +") REFERENCES " + ItemSpecificationName.TABLE_NAME + "(" + ItemSpecificationName.ID + ") ON DELETE CASCADE"
             + ")";
-
-
-
 
 
 

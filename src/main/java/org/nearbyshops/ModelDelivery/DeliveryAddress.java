@@ -30,6 +30,7 @@ public class DeliveryAddress {
 
 
 
+
     // create Delivery Address
 
     public static final String createTableDeliveryAddressPostgres = "CREATE TABLE IF NOT EXISTS " + DeliveryAddress.TABLE_NAME + "("
@@ -43,7 +44,7 @@ public class DeliveryAddress {
             + " " + DeliveryAddress.LONGITUDE + " FLOAT,"
             + " " + DeliveryAddress.PHONE_NUMBER + " BIGINT,"
             + " " + DeliveryAddress.PINCODE + " BIGINT,"
-            + " FOREIGN KEY(" + DeliveryAddress.END_USER_ID +") REFERENCES " + User.TABLE_NAME + "(" + User.USER_ID + ")"
+            + " FOREIGN KEY(" + DeliveryAddress.END_USER_ID +") REFERENCES " + User.TABLE_NAME + "(" + User.USER_ID + ") ON DELETE CASCADE "
             + ")";
 
 

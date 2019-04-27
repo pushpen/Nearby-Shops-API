@@ -26,8 +26,8 @@ public class Cart {
             + " " + Cart.CART_ID + " SERIAL PRIMARY KEY,"
             + " " + Cart.END_USER_ID + " INT,"
             + " " + Cart.SHOP_ID + " INT,"
-            + " FOREIGN KEY(" + Cart.END_USER_ID +") REFERENCES " + User.TABLE_NAME + "(" + User.USER_ID + "),"
-            + " FOREIGN KEY(" + Cart.SHOP_ID +") REFERENCES " + Shop.TABLE_NAME + "(" + Shop.SHOP_ID + "),"
+            + " FOREIGN KEY(" + Cart.END_USER_ID +") REFERENCES " + User.TABLE_NAME + "(" + User.USER_ID + ") ON DELETE CASCADE,"
+            + " FOREIGN KEY(" + Cart.SHOP_ID +") REFERENCES " + Shop.TABLE_NAME + "(" + Shop.SHOP_ID + ") ON DELETE CASCADE,"
             + " UNIQUE (" + Cart.END_USER_ID + "," + Cart.SHOP_ID + ")"
             + ")";
 

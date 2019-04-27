@@ -56,7 +56,7 @@ public class Item {
 			+ " " + Item.BARCODE_FORMAT + " text,"
 			+ " " + Item.IMAGE_COPYRIGHTS + " text,"
 
-			+ " FOREIGN KEY(" + Item.ITEM_CATEGORY_ID +") REFERENCES " + ItemCategory.TABLE_NAME + "(" + ItemCategory.ITEM_CATEGORY_ID + ")"
+			+ " FOREIGN KEY(" + Item.ITEM_CATEGORY_ID +") REFERENCES " + ItemCategory.TABLE_NAME + "(" + ItemCategory.ITEM_CATEGORY_ID + ") ON DELETE SET NULL"
 			+ ")";
 
 

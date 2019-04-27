@@ -22,10 +22,11 @@ public class CartItem {
             + " " + CartItem.ITEM_ID + " INT,"
             + " " + CartItem.CART_ID + " INT,"
             + " " + CartItem.ITEM_QUANTITY + " FLOAT NOT NULL Default 0,"
-            + " FOREIGN KEY(" + CartItem.ITEM_ID +") REFERENCES " + Item.TABLE_NAME + "(" + Item.ITEM_ID + "),"
-            + " FOREIGN KEY(" + CartItem.CART_ID +") REFERENCES " + Cart.TABLE_NAME + "(" + Cart.CART_ID + "),"
+            + " FOREIGN KEY(" + CartItem.ITEM_ID +") REFERENCES " + Item.TABLE_NAME + "(" + Item.ITEM_ID + ") ON DELETE CASCADE,"
+            + " FOREIGN KEY(" + CartItem.CART_ID +") REFERENCES " + Cart.TABLE_NAME + "(" + Cart.CART_ID + ") ON DELETE CASCADE,"
             + " PRIMARY KEY (" + CartItem.ITEM_ID + ", " + CartItem.CART_ID + ")"
             + ")";
+
 
 
 

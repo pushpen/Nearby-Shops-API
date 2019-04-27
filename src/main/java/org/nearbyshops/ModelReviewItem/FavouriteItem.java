@@ -25,8 +25,8 @@ public class FavouriteItem {
             + " " + FavouriteItem.ITEM_ID + " INT,"
             + " " + FavouriteItem.IS_FAVOURITE + " boolean,"
 
-            + " FOREIGN KEY(" + FavouriteItem.END_USER_ID +") REFERENCES " + User.TABLE_NAME + "(" + User.USER_ID + "),"
-            + " FOREIGN KEY(" + FavouriteItem.ITEM_ID +") REFERENCES " + Item.TABLE_NAME + "(" + Item.ITEM_ID + "),"
+            + " FOREIGN KEY(" + FavouriteItem.END_USER_ID +") REFERENCES " + User.TABLE_NAME + "(" + User.USER_ID + ") ON DELETE CASCADE,"
+            + " FOREIGN KEY(" + FavouriteItem.ITEM_ID +") REFERENCES " + Item.TABLE_NAME + "(" + Item.ITEM_ID + ") ON DELETE CASCADE,"
             + " PRIMARY KEY (" + FavouriteItem.END_USER_ID + ", " + FavouriteItem.ITEM_ID + ")"
             + ")";
 

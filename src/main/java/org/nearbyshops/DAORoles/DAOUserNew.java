@@ -167,8 +167,11 @@ public class DAOUserNew {
             int i = 0;
 
 
+
+
+
             // check email is verification code to ensure email belongs to user
-            statement.setString(++i,user.getPhone());
+            statement.setString(++i,user.getPhoneWithCountryCode());
             statement.setString(++i,user.getRt_phone_verification_code());
             statement.setObject(++i,user.getUserID());
             statement.setString(++i,user.getPassword());

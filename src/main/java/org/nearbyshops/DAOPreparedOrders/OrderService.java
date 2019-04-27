@@ -275,10 +275,16 @@ public class OrderService {
 
                 + Order.SHOP_ID + ","
                 + Order.STATUS_HOME_DELIVERY + ","
-                + Order.STATUS_PICK_FROM_SHOP + ""
+                + Order.STATUS_PICK_FROM_SHOP + ","
+
+                + User.NAME + ","
+                + User.E_MAIL + ","
+                + User.PHONE + ""
 
                 + " FROM " + Order.TABLE_NAME
+                + " INNER JOIN " + User.TABLE_NAME + " ON ( " + User.TABLE_NAME + "." + User.USER_ID + " = " + Order.TABLE_NAME + "." + Order.END_USER_ID + " ) "
                 + " WHERE " + Order.ORDER_ID + " = " + orderID;
+
 
         Connection connection = null;
         Statement statement = null;
@@ -312,6 +318,15 @@ public class OrderService {
 
                 order.setDeliveryAddressID(rs.getInt(Order.DELIVERY_ADDRESS_ID));
                 order.setDeliveryGuySelfID(rs.getInt(Order.DELIVERY_GUY_SELF_ID));
+
+
+                User endUser = new User();
+                endUser.setName(rs.getString(User.NAME));
+                endUser.setEmail(rs.getString(User.E_MAIL));
+                endUser.setPhone(rs.getString(User.PHONE));
+
+                order.setRt_end_user_profile(endUser);
+
             }
 
 

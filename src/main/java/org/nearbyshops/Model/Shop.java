@@ -128,7 +128,7 @@ public class Shop {
 			+ " " + Shop.EXTENDED_CREDIT_LIMIT + " float NOT NULL default 0 ,"
 
 
-			+ " FOREIGN KEY(" + Shop.SHOP_ADMIN_ID +") REFERENCES " + User.TABLE_NAME + "(" + User.USER_ID + ")"
+			+ " FOREIGN KEY(" + Shop.SHOP_ADMIN_ID +") REFERENCES " + User.TABLE_NAME + "(" + User.USER_ID + ") ON DELETE SET NULL "
 			+ ")" ;
 
 

@@ -87,12 +87,15 @@ public class AuthenticationFilter implements ContainerRequestFilter {
                 String usernameAndPassword = new String(Base64.getDecoder().decode(encodedUserPassword.getBytes()));
 
 
+
+
 //            System.out.println("Username:Password | " + usernameAndPassword);
 
                 //Split username and password tokens
                 final StringTokenizer tokenizer = new StringTokenizer(usernameAndPassword, ":");
                 final String username = tokenizer.nextToken();
                 final String password = tokenizer.nextToken();
+
 
                 //Verifying Username and password
 //            System.out.println(username);

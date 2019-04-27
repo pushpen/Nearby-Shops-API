@@ -33,9 +33,9 @@ public class ItemAnalytics {
             + " " + ItemAnalytics.DATE_TIME_CREATED + " timestamp with time zone NOT NULL DEFAULT now(),"
             + " " + ItemAnalytics.LAST_UPDATE + " timestamp with time zone NOT NULL DEFAULT now(),"
 
-
-            + " FOREIGN KEY(" + ItemAnalytics.END_USER_ID +") REFERENCES " + User.TABLE_NAME + "(" + User.USER_ID + "),"
-            + " FOREIGN KEY(" + ItemAnalytics.ITEM_ID +") REFERENCES " + Item.TABLE_NAME + "(" + Item.ITEM_ID + "),"
+            
+            + " FOREIGN KEY(" + ItemAnalytics.END_USER_ID +") REFERENCES " + User.TABLE_NAME + "(" + User.USER_ID + ") ON DELETE SET NULL,"
+            + " FOREIGN KEY(" + ItemAnalytics.ITEM_ID +") REFERENCES " + Item.TABLE_NAME + "(" + Item.ITEM_ID + ") ON DELETE SET NULL,"
             + " PRIMARY KEY (" + ItemAnalytics.END_USER_ID + ", " + ItemAnalytics.ITEM_ID + ")"
             + ")";
 

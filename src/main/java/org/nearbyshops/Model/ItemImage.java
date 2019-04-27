@@ -50,7 +50,6 @@ public class ItemImage {
 
 
 
-
     // instance variables
 
     private int imageID;

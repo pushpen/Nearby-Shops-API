@@ -343,13 +343,13 @@ public class UserSignUpRESTEndpoint {
             idOfInsertedRow = Globals.daoUserSignUp.registerUsingEmail(user,false);
 
 
-            System.out.println("Email : " + user.getEmail()
-                    + "\nPassword : " + user.getPassword()
-                    + "\nRegistration Mode : " + user.getRt_registration_mode()
-                    + "\nName : " + user.getName()
-                    + "\nInsert Count : " + idOfInsertedRow
-                    + "\nVerificationCode : " + user.getRt_email_verification_code()
-            );
+//            System.out.println("Email : " + user.getEmail()
+//                    + "\nPassword : " + user.getPassword()
+//                    + "\nRegistration Mode : " + user.getRt_registration_mode()
+//                    + "\nName : " + user.getName()
+//                    + "\nInsert Count : " + idOfInsertedRow
+//                    + "\nVerificationCode : " + user.getRt_email_verification_code()
+//            );
 
 
             if(idOfInsertedRow>=1)

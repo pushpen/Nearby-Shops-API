@@ -43,7 +43,7 @@ public class UserMarkets {
                     + " UNIQUE (" + UserMarkets.LOCAL_USER_ID + "," + UserMarkets.MARKET_AGGREGATOR_URL + ")"
                     + ")";
 
-    
+
 
     // Instance Variables
     private int userIDLocal;

@@ -38,8 +38,8 @@ public class ItemReview {
             + " " + ItemReview.REVIEW_TITLE + " text,"
             + " " + ItemReview.REVIEW_DATE + "  timestamp with time zone NOT NULL DEFAULT now(),"
 
-            + " FOREIGN KEY(" + ItemReview.ITEM_ID +") REFERENCES " + Item.TABLE_NAME + "(" + Item.ITEM_ID + "),"
-            + " FOREIGN KEY(" + ItemReview.END_USER_ID +") REFERENCES " + User.TABLE_NAME + "(" + User.USER_ID + "),"
+            + " FOREIGN KEY(" + ItemReview.ITEM_ID +") REFERENCES " + Item.TABLE_NAME + "(" + Item.ITEM_ID + ") ON DELETE CASCADE,"
+            + " FOREIGN KEY(" + ItemReview.END_USER_ID +") REFERENCES " + User.TABLE_NAME + "(" + User.USER_ID + ") ON DELETE CASCADE,"
             + " UNIQUE (" + ItemReview.ITEM_ID + "," + ItemReview.END_USER_ID + ")"
             + ")";
 

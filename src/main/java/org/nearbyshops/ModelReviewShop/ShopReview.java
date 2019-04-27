@@ -39,8 +39,8 @@ public class ShopReview {
             + " " + ShopReview.REVIEW_TITLE + " text,"
             + " " + ShopReview.REVIEW_DATE + "  timestamp with time zone NOT NULL DEFAULT now(),"
 
-            + " FOREIGN KEY(" + ShopReview.SHOP_ID +") REFERENCES " + Shop.TABLE_NAME + "(" + Shop.SHOP_ID + "),"
-            + " FOREIGN KEY(" + ShopReview.END_USER_ID +") REFERENCES " + User.TABLE_NAME + "(" + User.USER_ID + "),"
+            + " FOREIGN KEY(" + ShopReview.SHOP_ID +") REFERENCES " + Shop.TABLE_NAME + "(" + Shop.SHOP_ID + ") ON DELETE CASCADE,"
+            + " FOREIGN KEY(" + ShopReview.END_USER_ID +") REFERENCES " + User.TABLE_NAME + "(" + User.USER_ID + ") ON DELETE CASCADE,"
             + " UNIQUE (" + ShopReview.SHOP_ID + "," + ShopReview.END_USER_ID + ")"
             + ")";
 

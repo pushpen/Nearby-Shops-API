@@ -22,13 +22,14 @@ public class ItemSpecificationItem {
 
 
 
+
     // create table statement
     public static final String createTableItemSpecificationItemPostgres = "CREATE TABLE IF NOT EXISTS "
             + ItemSpecificationItem.TABLE_NAME + "("
             + " " + ItemSpecificationItem.ITEM_ID + " int,"
             + " " + ItemSpecificationItem.ITEM_SPECIFICATION_VALUE_ID + " int,"
-            + " FOREIGN KEY(" + ItemSpecificationItem.ITEM_ID +") REFERENCES " + Item.TABLE_NAME + "(" + Item.ITEM_ID + "),"
-            + " FOREIGN KEY(" + ItemSpecificationItem.ITEM_SPECIFICATION_VALUE_ID +") REFERENCES " + ItemSpecificationValue.TABLE_NAME + "(" + ItemSpecificationValue.ID + ")"
+            + " FOREIGN KEY(" + ItemSpecificationItem.ITEM_ID +") REFERENCES " + Item.TABLE_NAME + "(" + Item.ITEM_ID + ") ON DELETE CASCADE,"
+            + " FOREIGN KEY(" + ItemSpecificationItem.ITEM_SPECIFICATION_VALUE_ID +") REFERENCES " + ItemSpecificationValue.TABLE_NAME + "(" + ItemSpecificationValue.ID + ") ON DELETE CASCADE"
             + ")";
 
 

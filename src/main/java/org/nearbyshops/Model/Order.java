@@ -92,11 +92,12 @@ public class Order {
             + " " + Order.STATUS_HOME_DELIVERY + " int not null default 0,"
             + " " + Order.STATUS_PICK_FROM_SHOP + " int not null default 0,"
 
-            + " FOREIGN KEY(" + Order.END_USER_ID +") REFERENCES " + User.TABLE_NAME + "(" + User.USER_ID + "),"
-            + " FOREIGN KEY(" + Order.SHOP_ID +") REFERENCES " + Shop.TABLE_NAME + "(" + Shop.SHOP_ID + "),"
-            + " FOREIGN KEY(" + Order.DELIVERY_ADDRESS_ID +") REFERENCES " + DeliveryAddress.TABLE_NAME + "(" + DeliveryAddress.ID + "),"
-            + " FOREIGN KEY(" + Order.DELIVERY_GUY_SELF_ID +") REFERENCES " + User.TABLE_NAME + "(" + User.USER_ID + ")"
+            + " FOREIGN KEY(" + Order.END_USER_ID +") REFERENCES " + User.TABLE_NAME + "(" + User.USER_ID + ") ON DELETE SET NULL,"
+            + " FOREIGN KEY(" + Order.SHOP_ID +") REFERENCES " + Shop.TABLE_NAME + "(" + Shop.SHOP_ID + ") ON DELETE SET NULL,"
+            + " FOREIGN KEY(" + Order.DELIVERY_ADDRESS_ID +") REFERENCES " + DeliveryAddress.TABLE_NAME + "(" + DeliveryAddress.ID + ") ON DELETE CASCADE,"
+            + " FOREIGN KEY(" + Order.DELIVERY_GUY_SELF_ID +") REFERENCES " + User.TABLE_NAME + "(" + User.USER_ID + ") ON DELETE SET NULL"
             + ")";
+
 
 
 
@@ -155,6 +156,8 @@ public class Order {
     private OrderStats orderStats;
     private User rt_delivery_guy_profile;
 
+    private User rt_end_user_profile;
+
 
 
 
@@ -168,6 +171,14 @@ public class Order {
 
     // getter and setter
 
+
+    public User getRt_end_user_profile() {
+        return rt_end_user_profile;
+    }
+
+    public void setRt_end_user_profile(User rt_end_user_profile) {
+        this.rt_end_user_profile = rt_end_user_profile;
+    }
 
     public int getOrderID() {
         return orderID;

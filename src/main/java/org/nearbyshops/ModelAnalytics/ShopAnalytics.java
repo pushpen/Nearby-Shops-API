@@ -34,10 +34,11 @@ public class ShopAnalytics {
             + " " + ShopAnalytics.DATE_TIME_CREATED + " timestamp with time zone NOT NULL DEFAULT now(),"
             + " " + ShopAnalytics.LAST_UPDATE + " timestamp with time zone NOT NULL DEFAULT now(),"
 
-            + " FOREIGN KEY(" + ShopAnalytics.END_USER_ID +") REFERENCES " + User.TABLE_NAME + "(" + User.USER_ID + "),"
-            + " FOREIGN KEY(" + ShopAnalytics.SHOP_ID +") REFERENCES " + Shop.TABLE_NAME + "(" + Shop.SHOP_ID + "),"
+            + " FOREIGN KEY(" + ShopAnalytics.END_USER_ID +") REFERENCES " + User.TABLE_NAME + "(" + User.USER_ID + ") ON DELETE SET NULL,"
+            + " FOREIGN KEY(" + ShopAnalytics.SHOP_ID +") REFERENCES " + Shop.TABLE_NAME + "(" + Shop.SHOP_ID + ") ON DELETE SET NULL,"
             + " PRIMARY KEY (" + ShopAnalytics.END_USER_ID + ", " + ShopAnalytics.SHOP_ID + ")"
             + ")";
+
 
 
     // instance Variables

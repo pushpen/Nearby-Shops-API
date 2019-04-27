@@ -19,14 +19,16 @@ public class OrderItem {
 
 
 
+
+
     // Create table OrderItemPFS in Postgres
     public static final String createtableOrderItemPostgres = "CREATE TABLE IF NOT EXISTS " + OrderItem.TABLE_NAME + "("
             + " " + OrderItem.ITEM_ID + " INT,"
             + " " + OrderItem.ORDER_ID + " INT,"
             + " " + OrderItem.ITEM_PRICE_AT_ORDER + " FLOAT NOT NULL DEFAULT 0,"
             + " " + OrderItem.ITEM_QUANTITY + " INT NOT NULL DEFAULT 0,"
-            + " FOREIGN KEY(" + OrderItem.ITEM_ID +") REFERENCES " + Item.TABLE_NAME + "(" + Item.ITEM_ID + "),"
-            + " FOREIGN KEY(" + OrderItem.ORDER_ID +") REFERENCES " + Order.TABLE_NAME + "(" + Order.ORDER_ID + "),"
+            + " FOREIGN KEY(" + OrderItem.ITEM_ID +") REFERENCES " + Item.TABLE_NAME + "(" + Item.ITEM_ID + ") ON DELETE SET NULL,"
+            + " FOREIGN KEY(" + OrderItem.ORDER_ID +") REFERENCES " + Order.TABLE_NAME + "(" + Order.ORDER_ID + ") ON DELETE SET NULL,"
             + " PRIMARY KEY (" + OrderItem.ITEM_ID + ", " + OrderItem.ORDER_ID + "),"
             + " UNIQUE (" + OrderItem.ITEM_ID + "," + OrderItem.ORDER_ID  + ")"
             + ")";

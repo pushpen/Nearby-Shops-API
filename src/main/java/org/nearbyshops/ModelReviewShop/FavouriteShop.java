@@ -25,10 +25,11 @@ public class FavouriteShop {
             + " " + FavouriteShop.SHOP_ID + " INT,"
             + " " + FavouriteShop.IS_FAVOURITE + " boolean,"
 
-            + " FOREIGN KEY(" + FavouriteShop.END_USER_ID +") REFERENCES " + User.TABLE_NAME + "(" + User.USER_ID + "),"
-            + " FOREIGN KEY(" + FavouriteShop.SHOP_ID +") REFERENCES " + Shop.TABLE_NAME + "(" + Shop.SHOP_ID + "),"
+            + " FOREIGN KEY(" + FavouriteShop.END_USER_ID +") REFERENCES " + User.TABLE_NAME + "(" + User.USER_ID + ") ON DELETE CASCADE,"
+            + " FOREIGN KEY(" + FavouriteShop.SHOP_ID +") REFERENCES " + Shop.TABLE_NAME + "(" + Shop.SHOP_ID + ") ON DELETE CASCADE,"
             + " PRIMARY KEY (" + FavouriteShop.END_USER_ID + ", " + FavouriteShop.SHOP_ID + ")"
             + ")";
+
 
 
     // instance Variables

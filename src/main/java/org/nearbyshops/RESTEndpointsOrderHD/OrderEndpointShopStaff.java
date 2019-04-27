@@ -10,6 +10,8 @@ import org.nearbyshops.ModelOrderStatus.OrderStatusHomeDelivery;
 import org.nearbyshops.ModelRoles.Endpoints.UserEndpoint;
 import org.nearbyshops.ModelRoles.ShopStaffPermissions;
 import org.nearbyshops.ModelRoles.User;
+import org.simplejavamail.email.Email;
+import org.simplejavamail.email.EmailBuilder;
 
 import javax.annotation.security.RolesAllowed;
 import javax.inject.Singleton;
@@ -20,6 +22,7 @@ import javax.ws.rs.core.Response.Status;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.nearbyshops.Globals.Globals.getMailerInstance;
 import static org.nearbyshops.Globals.Globals.oneSignalNotifications;
 
 
@@ -828,6 +831,10 @@ public class OrderEndpointShopStaff {
 
 
 
+
+
+
+
 		int rowCount = Globals.daoOrderStaff.confirmOrderPFS(orderID);
 
 		if(rowCount >= 1)
@@ -847,6 +854,32 @@ public class OrderEndpointShopStaff {
 					null
 			);
 
+
+//			String htmlText = "";
+
+
+			User endUserProfile = orderResult.getRt_end_user_profile();
+
+
+			if(endUserProfile.getEmail()!=null)
+			{
+				String htmlText = "<h2>Your Order with Order Number : " + orderID + " is confirmed by the seller.</h2>" +
+						"<p>We will let you know when its packed and ready for pickup. <p>";
+
+
+
+				Email emailComposed = EmailBuilder.startingBlank()
+						.from(GlobalConstants.EMAIL_SENDER_NAME, GlobalConstants.EMAIL_ADDRESS_FOR_SENDER)
+						.to(orderResult.getRt_end_user_profile().getName(),orderResult.getRt_end_user_profile().getEmail())
+						.withSubject("Order No. " + orderID + " Confirmed")
+						.withHTMLText(htmlText)
+						.buildEmail();
+
+
+
+
+				getMailerInstance().sendMail(emailComposed,true);
+			}
 
 			return Response.status(Status.OK)
 					.build();
@@ -918,6 +951,32 @@ public class OrderEndpointShopStaff {
 					DAOOneSignal.ORDER_PACKED,
 					null
 			);
+
+
+
+			User endUserProfile = orderResult.getRt_end_user_profile();
+
+
+			if(endUserProfile.getEmail()!=null)
+			{
+				String htmlText = "<h2>Your Order with Order Number : " + orderID + " is packed by the seller.</h2>" +
+						"<p>We will let you know when its ready for pickup. <p>";
+
+
+
+				Email emailComposed = EmailBuilder.startingBlank()
+						.from(GlobalConstants.EMAIL_SENDER_NAME, GlobalConstants.EMAIL_ADDRESS_FOR_SENDER)
+						.to(orderResult.getRt_end_user_profile().getName(),orderResult.getRt_end_user_profile().getEmail())
+						.withSubject("Order No. " + orderID + " Packed")
+						.withHTMLText(htmlText)
+						.buildEmail();
+
+
+
+
+				getMailerInstance().sendMail(emailComposed,true);
+			}
+
 
 
 			return Response.status(Status.OK)
@@ -992,6 +1051,37 @@ public class OrderEndpointShopStaff {
 			);
 
 
+
+
+
+			User endUserProfile = orderResult.getRt_end_user_profile();
+
+
+			if(endUserProfile.getEmail()!=null)
+			{
+				String htmlText = "<h2>Your Order with Order Number : " + orderID + " is Ready for Pickup.</h2>" +
+						"<p>You can collect the items from the shop premises. The address for shop is provided in the shop details.  " +
+						" We advice you to call the shop and confirm timing and availability for pickup before you reach the shop.<p>";
+
+
+
+				Email emailComposed = EmailBuilder.startingBlank()
+						.from(GlobalConstants.EMAIL_SENDER_NAME, GlobalConstants.EMAIL_ADDRESS_FOR_SENDER)
+						.to(orderResult.getRt_end_user_profile().getName(),orderResult.getRt_end_user_profile().getEmail())
+						.withSubject("Order No. " + orderID + " is Ready for Pickup")
+						.withHTMLText(htmlText)
+						.buildEmail();
+
+
+
+
+				getMailerInstance().sendMail(emailComposed,true);
+			}
+
+
+
+
+
 			return Response.status(Status.OK)
 					.entity(null)
 					.build();
@@ -1051,6 +1141,32 @@ public class OrderEndpointShopStaff {
 					DAOOneSignal.ORDER_DELIVERED,
 					null
 			);
+
+
+
+
+			User endUserProfile = orderResult.getRt_end_user_profile();
+
+
+			if(endUserProfile.getEmail()!=null)
+			{
+				String htmlText = "<h2>Your Order with Order Number : " + orderID + " is Delivered.</h2>" +
+						"<p>How was your experience ? Having any issues ... please let us know !" +
+						" For support and feedback please call market helpline provided in the market details section !";
+
+
+
+				Email emailComposed = EmailBuilder.startingBlank()
+						.from(GlobalConstants.EMAIL_SENDER_NAME, GlobalConstants.EMAIL_ADDRESS_FOR_SENDER)
+						.to(orderResult.getRt_end_user_profile().getName(),orderResult.getRt_end_user_profile().getEmail())
+						.withSubject("Order No. " + orderID + " is Delivered")
+						.withHTMLText(htmlText)
+						.buildEmail();
+
+
+				getMailerInstance().sendMail(emailComposed,true);
+			}
+
 
 
 			return Response.status(Status.OK)
