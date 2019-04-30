@@ -597,6 +597,12 @@ public class ItemResource {
 
 
 
+
+
+
+
+
+
 	// Image Utility Methods
 
 	boolean deleteImageFileInternal(String fileName)
