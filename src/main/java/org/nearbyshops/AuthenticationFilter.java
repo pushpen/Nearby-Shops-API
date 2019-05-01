@@ -226,7 +226,7 @@ public class AuthenticationFilter implements ContainerRequestFilter {
             else if(role.equals(GlobalConstants.ROLE_DELIVERY_GUY_SELF))
             {
 
-                if(user.getRole()==GlobalConstants.ROLE_DELIVERY_GUY_CODE)
+                if(user.getRole()==GlobalConstants.ROLE_DELIVERY_GUY_SELF_CODE)
                 {
                     return user;
                 }

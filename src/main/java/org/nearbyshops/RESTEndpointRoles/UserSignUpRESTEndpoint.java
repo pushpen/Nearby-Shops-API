@@ -93,6 +93,44 @@ public class UserSignUpRESTEndpoint {
 
         if(user.getRt_registration_mode()==User.REGISTRATION_MODE_EMAIL)
         {
+            idOfInsertedRow = Globals.daoUserSignUp.registerUsingEmailNoCredits(user,false);
+
+
+//            System.out.println("Email : " + user.getEmail()
+//                    + "\nPassword : " + user.getPassword()
+//                    + "\nRegistration Mode : " + user.getRt_registration_mode()
+//                    + "\nName : " + user.getName()
+//                    + "\nInsert Count : " + idOfInsertedRow
+//                    + "\nVerificationCode : " + user.getRt_email_verification_code()
+//            );
+
+
+            if(idOfInsertedRow>=1)
+            {
+
+
+                String message = "<h2>Your account has been Created for your e-mail id : "+ user.getEmail() + ".</h2>"
+                        + "<p>You can now login with your email and password that you have provided. Thank you for creating your account.<p>";
+
+
+//                Globals.sendEmail(user.getEmail(),user.getEmail(),"Registration successful for your account",message);
+
+
+
+                // registration successful therefore send email to notify the user
+                Email email = EmailBuilder.startingBlank()
+                        .from(GlobalConstants.EMAIL_SENDER_NAME, GlobalConstants.EMAIL_ADDRESS_FOR_SENDER)
+                        .to(user.getName(),user.getEmail())
+                        .withSubject("Registration successful for your account")
+                        .withHTMLText(message)
+                        .buildEmail();
+
+
+                getMailerInstance().sendMail(email,true);
+
+
+
+            }
 
         }
         else if(user.getRt_registration_mode()==User.REGISTRATION_MODE_PHONE)
@@ -139,9 +177,6 @@ public class UserSignUpRESTEndpoint {
         }
 
 
-
-
-
         return null;
     }
 
@@ -177,6 +212,45 @@ public class UserSignUpRESTEndpoint {
 
         if(user.getRt_registration_mode()==User.REGISTRATION_MODE_EMAIL)
         {
+            idOfInsertedRow = Globals.daoUserSignUp.registerUsingEmailNoCredits(user,false);
+
+
+//            System.out.println("Email : " + user.getEmail()
+//                    + "\nPassword : " + user.getPassword()
+//                    + "\nRegistration Mode : " + user.getRt_registration_mode()
+//                    + "\nName : " + user.getName()
+//                    + "\nInsert Count : " + idOfInsertedRow
+//                    + "\nVerificationCode : " + user.getRt_email_verification_code()
+//            );
+
+
+            if(idOfInsertedRow>=1)
+            {
+
+
+                String message = "<h2>Your account has been Created for your e-mail id : "+ user.getEmail() + ".</h2>"
+                        + "<p>You can now login with your email and password that you have provided. Thank you for creating your account.<p>";
+
+
+//                Globals.sendEmail(user.getEmail(),user.getEmail(),"Registration successful for your account",message);
+
+
+
+                // registration successful therefore send email to notify the user
+                Email email = EmailBuilder.startingBlank()
+                        .from(GlobalConstants.EMAIL_SENDER_NAME, GlobalConstants.EMAIL_ADDRESS_FOR_SENDER)
+                        .to(user.getName(),user.getEmail())
+                        .withSubject("Registration successful for your account")
+                        .withHTMLText(message)
+                        .buildEmail();
+
+
+                getMailerInstance().sendMail(email,true);
+
+
+
+            }
+
 
         }
         else if(user.getRt_registration_mode()==User.REGISTRATION_MODE_PHONE)
@@ -267,6 +341,45 @@ public class UserSignUpRESTEndpoint {
 
         if(user.getRt_registration_mode()==User.REGISTRATION_MODE_EMAIL)
         {
+            idOfInsertedRow = Globals.daoUserSignUp.registerUsingEmailNoCredits(user,false);
+
+
+//            System.out.println("Email : " + user.getEmail()
+//                    + "\nPassword : " + user.getPassword()
+//                    + "\nRegistration Mode : " + user.getRt_registration_mode()
+//                    + "\nName : " + user.getName()
+//                    + "\nInsert Count : " + idOfInsertedRow
+//                    + "\nVerificationCode : " + user.getRt_email_verification_code()
+//            );
+
+
+            if(idOfInsertedRow>=1)
+            {
+
+
+                String message = "<h2>Your account has been Created for your e-mail id : "+ user.getEmail() + ".</h2>"
+                        + "<p>You can now login with your email and password that you have provided. Thank you for creating your account.<p>";
+
+
+//                Globals.sendEmail(user.getEmail(),user.getEmail(),"Registration successful for your account",message);
+
+
+
+                // registration successful therefore send email to notify the user
+                Email email = EmailBuilder.startingBlank()
+                        .from(GlobalConstants.EMAIL_SENDER_NAME, GlobalConstants.EMAIL_ADDRESS_FOR_SENDER)
+                        .to(user.getName(),user.getEmail())
+                        .withSubject("Registration successful for your account")
+                        .withHTMLText(message)
+                        .buildEmail();
+
+
+                getMailerInstance().sendMail(email,true);
+
+
+
+            }
+
 
         }
         else if(user.getRt_registration_mode()==User.REGISTRATION_MODE_PHONE)
@@ -316,6 +429,8 @@ public class UserSignUpRESTEndpoint {
         return null;
 
     }
+
+
 
 
 
@@ -456,6 +571,8 @@ public class UserSignUpRESTEndpoint {
 
         return null;
     }
+
+
 
 
 

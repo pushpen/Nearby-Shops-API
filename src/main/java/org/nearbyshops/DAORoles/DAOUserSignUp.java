@@ -31,7 +31,9 @@ public class DAOUserSignUp {
 
         Connection connection = null;
         PreparedStatement statement = null;
-        PreparedStatement statementInsertVehicle = null;
+        PreparedStatement statementInsertShop = null;
+        PreparedStatement statementPermissions = null;
+        PreparedStatement statementDeliveryGuyData = null;
 
 
         int idOfInsertedRow = -1;
@@ -39,7 +41,7 @@ public class DAOUserSignUp {
 
 
         String insertItemSubmission = "";
-        String insertVehicle = "";
+        String insertShop = "";
 
 
 
@@ -76,11 +78,33 @@ public class DAOUserSignUp {
 
 
 
-        insertVehicle = " INSERT INTO " + Shop.TABLE_NAME
+        insertShop = " INSERT INTO " + Shop.TABLE_NAME
                                         + "("
                                         + Shop.SHOP_ADMIN_ID + ""
                                         + ") " +
                         " VALUES( ? )";
+
+
+
+
+        String insertShopStaffPermissions =
+
+                "INSERT INTO " + ShopStaffPermissions.TABLE_NAME
+                        + "("
+                        + ShopStaffPermissions.STAFF_ID + ","
+                        + ShopStaffPermissions.SHOP_ID + ""
+                        + ") values(?,?)";
+
+
+        String insertDeliveryGuyData =
+
+                "INSERT INTO " + DeliveryGuyData.TABLE_NAME
+                        + "("
+                        + DeliveryGuyData.STAFF_USER_ID + ","
+                        + DeliveryGuyData.IS_EMPLOYED_BY_SHOP + ","
+                        + DeliveryGuyData.SHOP_ID + ""
+                        + ") values(?,?,?)";
+
 
 
 
@@ -141,13 +165,60 @@ public class DAOUserSignUp {
                 if (rowCountItems == 1)
                 {
 
-                    statementInsertVehicle = connection.prepareStatement(insertVehicle);
+                    statementInsertShop = connection.prepareStatement(insertShop);
                     i = 0;
 
-                    statementInsertVehicle.setObject(++i,idOfInsertedRow);
-                    statementInsertVehicle.executeUpdate();
+                    statementInsertShop.setObject(++i,idOfInsertedRow);
+                    statementInsertShop.executeUpdate();
                 }
             }
+
+
+
+
+
+            if(idOfInsertedRow!=-1 && user.getRole()==GlobalConstants.ROLE_SHOP_STAFF_CODE)
+            {
+
+                statementPermissions = connection.prepareStatement(insertShopStaffPermissions,PreparedStatement.RETURN_GENERATED_KEYS);
+                i = 0;
+
+
+                ShopStaffPermissions permissions = user.getRt_shop_staff_permissions();
+
+                statementPermissions.setInt(++i,idOfInsertedRow);
+                statementPermissions.setInt(++i,permissions.getShopID());
+
+                rowCountItems = statementPermissions.executeUpdate();
+            }
+
+
+
+
+
+
+
+            if(idOfInsertedRow!=-1)
+            {
+
+                if( (user.getRole()== GlobalConstants.ROLE_DELIVERY_GUY_SELF_CODE || user.getRole() ==GlobalConstants.ROLE_DELIVERY_GUY_CODE))
+                {
+                    statementDeliveryGuyData = connection.prepareStatement(insertDeliveryGuyData,PreparedStatement.RETURN_GENERATED_KEYS);
+                    i = 0;
+
+
+
+                    DeliveryGuyData deliveryGuyData = user.getRt_delivery_guy_data();
+
+                    statementDeliveryGuyData.setInt(++i,idOfInsertedRow);
+                    statementDeliveryGuyData.setBoolean(++i,deliveryGuyData.isEmployedByShop());
+                    statementDeliveryGuyData.setInt(++i,deliveryGuyData.getShopID());
+
+                    rowCountItems = statementDeliveryGuyData.executeUpdate();
+
+                }
+            }
+
 
 
 
@@ -181,13 +252,34 @@ public class DAOUserSignUp {
             }
 
 
-            if (statementInsertVehicle != null) {
+            if (statementInsertShop != null) {
                 try {
-                    statementInsertVehicle.close();
+                    statementInsertShop.close();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
             }
+
+
+
+
+            if (statementDeliveryGuyData != null) {
+                try {
+                    statementDeliveryGuyData.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
+
+            if (statementPermissions != null) {
+                try {
+                    statementPermissions.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
 
 
 
@@ -223,7 +315,7 @@ public class DAOUserSignUp {
 
         Connection connection = null;
         PreparedStatement statement = null;
-        PreparedStatement statementInsertVehicle = null;
+        PreparedStatement statementInsertShop = null;
 
 
         PreparedStatement statementUpdateDUES = null;
@@ -461,11 +553,11 @@ public class DAOUserSignUp {
                 if (rowCountItems == 1)
                 {
 
-                    statementInsertVehicle = connection.prepareStatement(insertShop);
+                    statementInsertShop = connection.prepareStatement(insertShop);
                     i = 0;
 
-                    statementInsertVehicle.setObject(++i,idOfInsertedRow);
-                    statementInsertVehicle.executeUpdate();
+                    statementInsertShop.setObject(++i,idOfInsertedRow);
+                    statementInsertShop.executeUpdate();
                 }
             }
 
@@ -608,9 +700,9 @@ public class DAOUserSignUp {
             }
 
 
-            if (statementInsertVehicle != null) {
+            if (statementInsertShop != null) {
                 try {
-                    statementInsertVehicle.close();
+                    statementInsertShop.close();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
