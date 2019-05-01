@@ -3,6 +3,7 @@ package org.nearbyshops.RESTEndpointsOrderHD;
 import org.nearbyshops.DAOPushNotifications.DAOOneSignal;
 import org.nearbyshops.Globals.GlobalConstants;
 import org.nearbyshops.Globals.Globals;
+import org.nearbyshops.Globals.SendSMS;
 import org.nearbyshops.Model.Order;
 import org.nearbyshops.Model.Shop;
 import org.nearbyshops.ModelEndpoint.OrderEndPoint;
@@ -1100,6 +1101,9 @@ public class OrderEndpointShopStaff {
 
 
 
+
+
+
 	@PUT
 	@Path("/PaymentReceivedPFS/{OrderID}")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -1120,6 +1124,9 @@ public class OrderEndpointShopStaff {
 			}
 
 		}
+
+
+
 
 
 		int rowCount = Globals.daoOrderStaff.paymentReceivedPFS(orderID);
@@ -1169,20 +1176,29 @@ public class OrderEndpointShopStaff {
 
 
 
+
+
+			if(endUserProfile.getPhone()!=null)
+			{
+				SendSMS.sendSMS("Order No. " + orderID + " is Delivered to you ! If you have any issues with the order feel free to contact market administrator !",
+						endUserProfile.getPhone());
+			}
+
+
+
 			return Response.status(Status.OK)
 					.build();
 		}
-		if(rowCount <= 0)
-		{
 
-			return Response.status(Status.NOT_MODIFIED)
-					.build();
-		}
+
+
+
+		return Response.status(Status.NOT_MODIFIED)
+				.build();
 
 //		order.setOrderID(orderID);
 //		int rowCount = Globals.orderService.updateOrder(order);
 
-		return null;
 	}
 
 

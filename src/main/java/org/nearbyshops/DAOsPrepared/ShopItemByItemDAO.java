@@ -1,6 +1,7 @@
 package org.nearbyshops.DAOsPrepared;
 
 import com.zaxxer.hikari.HikariDataSource;
+import org.nearbyshops.Globals.GlobalConstants;
 import org.nearbyshops.Globals.Globals;
 import org.nearbyshops.Model.*;
 import org.nearbyshops.ModelEndpoint.ShopItemEndPoint;
@@ -97,7 +98,12 @@ public class ShopItemByItemDAO {
 					+ " AND " + Item.TABLE_NAME + "." + Item.ITEM_CATEGORY_ID + "=" + ItemCategory.TABLE_NAME + "." + ItemCategory.ITEM_CATEGORY_ID
 					+ " AND " + Shop.TABLE_NAME + "." + Shop.IS_OPEN + " = TRUE "
 					+ " AND " + Shop.TABLE_NAME + "." + Shop.SHOP_ENABLED + " = TRUE "
-					+ " AND " + ShopItem.TABLE_NAME + "." + ShopItem.ITEM_PRICE + " > 0 ";
+					+ " AND " + ShopItem.TABLE_NAME + "." + ShopItem.ITEM_PRICE + " > 0 "
+					+ " AND " + Shop.TABLE_NAME + "." + Shop.ACCOUNT_BALANCE + ">=" + GlobalConstants.min_account_balance_for_shop;
+
+
+
+
 
 
 		if(endUserID!=null)
