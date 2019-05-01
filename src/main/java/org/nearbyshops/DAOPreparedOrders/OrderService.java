@@ -712,7 +712,7 @@ public class OrderService {
                     order.setRt_delivery_guy_profile(deliveryGuy);
 
 
-
+//
 //                    OrderStats orderStats = new OrderStats();
 //                    orderStats.setOrderID(rs.getInt("order_id"));
 //                    orderStats.setItemCount(rs.getInt("item_count"));
