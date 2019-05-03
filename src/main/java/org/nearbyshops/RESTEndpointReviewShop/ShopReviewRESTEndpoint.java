@@ -112,27 +112,20 @@ public class ShopReviewRESTEndpoint {
 
             if(rowCountSum ==  bookReviewsList.size())
             {
-                Response response = Response.status(Response.Status.OK)
-                        .entity(null)
-                        .build();
 
-                return response;
+                return Response.status(Response.Status.OK)
+                        .build();
             }
             else if( rowCountSum < bookReviewsList.size() && rowCountSum > 0)
             {
-                Response response = Response.status(Response.Status.PARTIAL_CONTENT)
-                        .entity(null)
-                        .build();
 
-                return response;
+                return Response.status(Response.Status.PARTIAL_CONTENT)
+                        .build();
             }
             else if(rowCountSum == 0 ) {
 
-                Response response = Response.status(Response.Status.NOT_MODIFIED)
-                        .entity(null)
+                return Response.status(Response.Status.NOT_MODIFIED)
                         .build();
-
-                return response;
             }
 
             return null;
@@ -153,17 +146,15 @@ public class ShopReviewRESTEndpoint {
 
             if(rowCount>=1)
             {
-                Response response = Response.status(Response.Status.OK)
-                        .build();
 
-                return response;
+                return Response.status(Response.Status.OK)
+                        .build();
             }
             else if(rowCount == 0)
             {
-                Response response = Response.status(Response.Status.NOT_MODIFIED)
-                        .build();
 
-                return response;
+                return Response.status(Response.Status.NOT_MODIFIED)
+                        .build();
             }
 
             return null;

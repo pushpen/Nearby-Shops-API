@@ -132,23 +132,20 @@ public class DeliveryAddressResource {
 		GenericEntity<List<DeliveryAddress>> listEntity = new GenericEntity<List<DeliveryAddress>>(addressesList){
 			
 		};
-	
+
+
+
 		
 		if(addressesList.size()<=0)
 		{
-			Response response = Response.status(Status.NO_CONTENT)
-					.entity(listEntity)
+			return Response.status(Status.NO_CONTENT)
 					.build();
-			
-			return response;
-			
-		}else
+		}
+		else
 		{
-			Response response = Response.status(Status.OK)
+			return Response.status(Status.OK)
 					.entity(listEntity)
 					.build();
-			
-			return response;
 		}
 		
 	}

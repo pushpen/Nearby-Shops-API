@@ -6,6 +6,7 @@ import org.nearbyshops.ModelEndpointReview.ShopReviewEndPoint;
 import org.nearbyshops.ModelReviewShop.ShopReview;
 import org.nearbyshops.ModelReviewShop.ShopReviewStatRow;
 import org.nearbyshops.ModelReviewShop.ShopReviewThanks;
+import org.nearbyshops.ModelRoles.User;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -244,6 +245,7 @@ public class ShopReviewDAOPrepared {
 
 
 
+
         public List<ShopReview> getShopReviews(
                 Integer shopID,
                 Integer endUserID,
@@ -253,11 +255,11 @@ public class ShopReviewDAOPrepared {
 
 
 
-            boolean isFirst = true;
+//            boolean isFirst = true;
 
             String query = "";
 
-            String queryNormal = "SELECT * FROM " + ShopReview.TABLE_NAME;
+//            String queryNormal = "SELECT * FROM " + ShopReview.TABLE_NAME;
 
 
             String queryJoin = "SELECT "
@@ -271,9 +273,11 @@ public class ShopReviewDAOPrepared {
                     + ShopReview.TABLE_NAME + "." + ShopReview.REVIEW_TITLE + ","
                     + " count(" + ShopReviewThanks.TABLE_NAME + "." + ShopReviewThanks.SHOP_REVIEW_ID + ") as thanks_count "
 
-                    + " FROM " + ShopReview.TABLE_NAME + " LEFT OUTER JOIN " + ShopReviewThanks.TABLE_NAME
-                    + " ON (" + ShopReview.TABLE_NAME + "." + ShopReview.SHOP_REVIEW_ID
-                    + " = " + ShopReviewThanks.TABLE_NAME + "." + ShopReviewThanks.SHOP_REVIEW_ID + ") ";
+                    + " FROM " + ShopReview.TABLE_NAME
+                    + " LEFT OUTER JOIN " + ShopReviewThanks.TABLE_NAME + " ON (" + ShopReview.TABLE_NAME + "." + ShopReview.SHOP_REVIEW_ID + " = " + ShopReviewThanks.TABLE_NAME + "." + ShopReviewThanks.SHOP_REVIEW_ID + ") "
+                    + " LEFT OUTER JOIN " + User.TABLE_NAME + " ON ( " + User.TABLE_NAME + "." + User.USER_ID + " = " + ShopReview.TABLE_NAME + "." + ShopReview.END_USER_ID + " )";
+
+
 
 
             if(shopID != null)
@@ -284,12 +288,12 @@ public class ShopReviewDAOPrepared {
                         + ShopReview.SHOP_ID + " = " + shopID;
 
 
-                queryNormal = queryNormal + " WHERE "
-                        + ShopReview.TABLE_NAME
-                        + "."
-                        + ShopReview.SHOP_ID + " = " + shopID;
+//                queryNormal = queryNormal + " WHERE "
+//                        + ShopReview.TABLE_NAME
+//                        + "."
+//                        + ShopReview.SHOP_ID + " = " + shopID;
 
-                isFirst = false;
+//                isFirst = false;
             }
 
 
