@@ -215,13 +215,13 @@ public class ShopReviewRESTEndpoint {
                         );
 
 
-                if(getEndUser!=null && getEndUser)
-                {
-                    for(ShopReview shopReview: list)
-                    {
-                        shopReview.setRt_end_user_profile(Globals.daoUserNew.getProfile(shopReview.getEndUserID()));
-                    }
-                }
+//                if(getEndUser!=null && getEndUser)
+//                {
+//                    for(ShopReview shopReview: list)
+//                    {
+//                        shopReview.setRt_end_user_profile(Globals.daoUserNew.getProfile(shopReview.getEndUserID()));
+//                    }
+//                }
 
                 endPoint.setResults(list);
             }

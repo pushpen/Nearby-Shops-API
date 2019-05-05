@@ -264,6 +264,12 @@ public class ShopReviewDAOPrepared {
 
             String queryJoin = "SELECT "
 
+
+
+
+                    + User.TABLE_NAME + "." + User.NAME + ","
+                    + User.TABLE_NAME + "." + User.PROFILE_IMAGE_URL + ","
+
                     + ShopReview.TABLE_NAME + "." + ShopReview.SHOP_REVIEW_ID + ","
                     + ShopReview.TABLE_NAME + "." + ShopReview.SHOP_ID + ","
                     + ShopReview.TABLE_NAME + "." + ShopReview.END_USER_ID + ","
@@ -275,64 +281,38 @@ public class ShopReviewDAOPrepared {
 
                     + " FROM " + ShopReview.TABLE_NAME
                     + " LEFT OUTER JOIN " + ShopReviewThanks.TABLE_NAME + " ON (" + ShopReview.TABLE_NAME + "." + ShopReview.SHOP_REVIEW_ID + " = " + ShopReviewThanks.TABLE_NAME + "." + ShopReviewThanks.SHOP_REVIEW_ID + ") "
-                    + " LEFT OUTER JOIN " + User.TABLE_NAME + " ON ( " + User.TABLE_NAME + "." + User.USER_ID + " = " + ShopReview.TABLE_NAME + "." + ShopReview.END_USER_ID + " )";
+                    + " LEFT OUTER JOIN " + User.TABLE_NAME + " ON ( " + User.TABLE_NAME + "." + User.USER_ID + " = " + ShopReview.TABLE_NAME + "." + ShopReview.END_USER_ID + " )"
+                    + " WHERE TRUE ";
+
+
 
 
 
 
             if(shopID != null)
             {
-                queryJoin = queryJoin + " WHERE "
-                        + ShopReview.TABLE_NAME
-                        + "."
-                        + ShopReview.SHOP_ID + " = " + shopID;
+                queryJoin = queryJoin + " AND " + ShopReview.TABLE_NAME + "." + ShopReview.SHOP_ID + " = " + shopID;
 
-
-//                queryNormal = queryNormal + " WHERE "
-//                        + ShopReview.TABLE_NAME
-//                        + "."
-//                        + ShopReview.SHOP_ID + " = " + shopID;
-
-//                isFirst = false;
             }
+
 
 
             if(endUserID != null)
             {
-
-                String queryPartMember =
-                        ShopReview.TABLE_NAME
-                                + "."
-                        + ShopReview.END_USER_ID + " = " + endUserID;
-
-                if(isFirst)
-                {
-                    queryJoin = queryJoin + " WHERE " + queryPartMember;
-                    queryNormal = queryNormal + " WHERE " + queryPartMember;
-
-                }else
-                {
-                    queryJoin = queryJoin + " AND " + queryPartMember;
-                    queryNormal = queryNormal + " AND " + queryPartMember;
-                }
-
-
-                isFirst = false;
-
+                queryJoin = queryJoin + " AND " + ShopReview.TABLE_NAME + "." + ShopReview.END_USER_ID + " = " + endUserID;
             }
 
 
+
+
+
+
             queryJoin = queryJoin
-
                     + " group by "
-
+                    + User.TABLE_NAME + "." + User.USER_ID + ","
                     + ShopReview.TABLE_NAME + "." + ShopReview.SHOP_REVIEW_ID + ","
                     + ShopReview.TABLE_NAME + "." + ShopReview.SHOP_ID + ","
-                    + ShopReview.TABLE_NAME + "." + ShopReview.END_USER_ID + ","
-                    + ShopReview.TABLE_NAME + "." + ShopReview.RATING + ","
-                    + ShopReview.TABLE_NAME + "." + ShopReview.REVIEW_TEXT + ","
-                    + ShopReview.TABLE_NAME + "." + ShopReview.REVIEW_DATE + ","
-                    + ShopReview.TABLE_NAME + "." + ShopReview.REVIEW_TITLE ;
+                    + ShopReview.TABLE_NAME + "." + ShopReview.END_USER_ID + "";
 
 
 
@@ -347,7 +327,6 @@ public class ShopReviewDAOPrepared {
                 {
                     String queryPartSortBy = " ORDER BY " + sortBy;
 
-                    queryNormal = queryNormal + queryPartSortBy;
                     queryJoin = queryJoin + queryPartSortBy;
                 }
             }
@@ -369,7 +348,7 @@ public class ShopReviewDAOPrepared {
                 }
 
 
-                queryNormal = queryNormal + queryPartLimitOffset;
+
                 queryJoin = queryJoin + queryPartLimitOffset;
             }
 
@@ -429,6 +408,14 @@ public class ShopReviewDAOPrepared {
                     shopReview.setReviewDate(rs.getTimestamp(ShopReview.REVIEW_DATE));
 
                     shopReview.setRt_thanks_count(rs.getInt("thanks_count"));
+
+                    User endUser = new User();
+
+                    endUser.setName(rs.getString(User.NAME));
+                    endUser.setProfileImagePath(rs.getString(User.PROFILE_IMAGE_URL));
+
+                    shopReview.setRt_end_user_profile(endUser);
+
                     shopReviewsList.add(shopReview);
                 }
 
@@ -475,6 +462,10 @@ public class ShopReviewDAOPrepared {
 
             return shopReviewsList;
         }
+
+
+
+
 
 
 
