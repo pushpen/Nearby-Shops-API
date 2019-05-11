@@ -384,7 +384,6 @@ public class LoginUsingOTPRESTEndpoint {
 
 
 
-
         String url = serviceURLForSDS + "/api/v1/User/LoginGlobal/VerifyCredentials?GetUserProfile=true";
 
 

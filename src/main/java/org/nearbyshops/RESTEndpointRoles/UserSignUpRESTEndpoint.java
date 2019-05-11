@@ -37,8 +37,7 @@ public class UserSignUpRESTEndpoint {
 //    public Response checkEmailVerificationCode(
 //    public Response sendVerificationEmail(@PathParam("email")String email)
 
-
-
+    
 
 
     @POST
@@ -561,15 +560,13 @@ public class UserSignUpRESTEndpoint {
                     .entity(user)
                     .build();
 
-        }else if(idOfInsertedRow <= 0)
-        {
+        }else {
 
             return Response.status(Response.Status.NOT_MODIFIED)
                     .build();
         }
 
 
-        return null;
     }
 
 
@@ -721,15 +718,13 @@ public class UserSignUpRESTEndpoint {
                     .entity(user)
                     .build();
 
-        }else if(idOfInsertedRow <= 0)
-        {
+        }else {
 
             return Response.status(Response.Status.NOT_MODIFIED)
                     .build();
         }
 
 
-        return null;
     }
 
 
