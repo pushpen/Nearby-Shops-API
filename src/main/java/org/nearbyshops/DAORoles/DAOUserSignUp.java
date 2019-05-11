@@ -372,13 +372,22 @@ public class DAOUserSignUp {
 
 
 
+//        insertShop = " INSERT INTO " + Shop.TABLE_NAME
+//                + "("
+//                + Shop.SHOP_ADMIN_ID + ""
+//                + ") " +
+//                " VALUES( ? )";
+
 
 
         insertShop = " INSERT INTO " + Shop.TABLE_NAME
-                + "("
-                + Shop.SHOP_ADMIN_ID + ""
+                + "(" + Shop.SHOP_ADMIN_ID + ","
+                + Shop.SHOP_ENABLED + ","
+                + Shop.SHOP_WAITLISTED + ""
+
                 + ") " +
-                " VALUES( ? )";
+                " VALUES( ?,?,? )";
+
 
 
 

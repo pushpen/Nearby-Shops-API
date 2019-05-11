@@ -37,7 +37,7 @@ public class UserSignUpRESTEndpoint {
 //    public Response checkEmailVerificationCode(
 //    public Response sendVerificationEmail(@PathParam("email")String email)
 
-    
+
 
 
     @POST
