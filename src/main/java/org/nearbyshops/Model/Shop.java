@@ -101,8 +101,8 @@ public class Shop {
 			+ " " + Shop.PICK_FROM_SHOP_AVAILABLE + " boolean not null default true,"
 			+ " " + Shop.HOME_DELIVERY_AVAILABLE + " boolean not null default true,"
 
-			+ " " + Shop.SHOP_ENABLED + " boolean not null default false,"
-			+ " " + Shop.SHOP_WAITLISTED + " boolean not null default false,"
+			+ " " + Shop.SHOP_ENABLED + " boolean default false,"
+			+ " " + Shop.SHOP_WAITLISTED + " boolean default false,"
 
 			+ " " + Shop.LOGO_IMAGE_PATH + " text,"
 
@@ -143,7 +143,9 @@ public class Shop {
 
 	
 	public static final String removeNotNull =
-			" ALTER TABLE IF EXISTS " + Shop.TABLE_NAME  + "  ALTER  " + Shop.SHOP_ENABLED + "  drop NOT NULL ";
+			" ALTER TABLE IF EXISTS " + Shop.TABLE_NAME  + "  ALTER  " + Shop.SHOP_ENABLED + "  drop NOT NULL " +
+					"  ALTER  " + Shop.SHOP_WAITLISTED + "  drop NOT NULL ";
+
 
 
 

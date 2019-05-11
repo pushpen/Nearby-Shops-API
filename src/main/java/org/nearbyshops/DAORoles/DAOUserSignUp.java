@@ -78,11 +78,16 @@ public class DAOUserSignUp {
 
 
 
+
+
         insertShop = " INSERT INTO " + Shop.TABLE_NAME
-                                        + "("
-                                        + Shop.SHOP_ADMIN_ID + ""
-                                        + ") " +
-                        " VALUES( ? )";
+                + "(" + Shop.SHOP_ADMIN_ID + ","
+                + Shop.SHOP_ENABLED + ","
+                + Shop.SHOP_WAITLISTED + ""
+
+                + ") " +
+                " VALUES( ?,?,? )";
+
 
 
 
@@ -169,6 +174,8 @@ public class DAOUserSignUp {
                     i = 0;
 
                     statementInsertShop.setObject(++i,idOfInsertedRow);
+                    statementInsertShop.setObject(++i,null);
+                    statementInsertShop.setObject(++i,false);
                     statementInsertShop.executeUpdate();
                 }
             }
@@ -566,7 +573,11 @@ public class DAOUserSignUp {
                     i = 0;
 
                     statementInsertShop.setObject(++i,idOfInsertedRow);
+                    statementInsertShop.setObject(++i,null);
+                    statementInsertShop.setObject(++i,false);
+
                     statementInsertShop.executeUpdate();
+
                 }
             }
 
