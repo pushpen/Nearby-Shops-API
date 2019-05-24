@@ -73,8 +73,9 @@ public class Main {
 
         GlobalConfig.loadGlobalConfiguration();
 
+
 //        createDB();
-        upgradeTables();
+//        upgradeTables();
 
         createTables();
         startJettyServer();

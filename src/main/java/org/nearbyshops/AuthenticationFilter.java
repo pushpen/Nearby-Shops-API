@@ -52,8 +52,6 @@ public class AuthenticationFilter implements ContainerRequestFilter {
 
 //        System.out.println("Security Filter");
 
-        try
-        {
             if (method.isAnnotationPresent(DenyAll.class)) {
 
                 throw new ForbiddenException("Access is ErrorNBSAPI !");
@@ -134,11 +132,7 @@ public class AuthenticationFilter implements ContainerRequestFilter {
 
             }
 
-        }
-        catch (Exception ex)
-        {
-            ex.printStackTrace();
-        }
+
 
 
 

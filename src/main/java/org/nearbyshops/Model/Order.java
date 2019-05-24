@@ -64,7 +64,7 @@ public class Order {
 
             + " " + Order.END_USER_ID + " int not null,"
             + " " + Order.SHOP_ID + " int not null,"
-            + " " + Order.DELIVERY_ADDRESS_ID + " int not null,"
+            + " " + Order.DELIVERY_ADDRESS_ID + " int ,"
             + " " + Order.DELIVERY_GUY_SELF_ID + " int,"
 
             + " " + Order.DELIVERY_OTP + " int not null default 0,"
@@ -94,7 +94,7 @@ public class Order {
 
             + " FOREIGN KEY(" + Order.END_USER_ID +") REFERENCES " + User.TABLE_NAME + "(" + User.USER_ID + ") ON DELETE SET NULL,"
             + " FOREIGN KEY(" + Order.SHOP_ID +") REFERENCES " + Shop.TABLE_NAME + "(" + Shop.SHOP_ID + ") ON DELETE SET NULL,"
-            + " FOREIGN KEY(" + Order.DELIVERY_ADDRESS_ID +") REFERENCES " + DeliveryAddress.TABLE_NAME + "(" + DeliveryAddress.ID + ") ON DELETE CASCADE,"
+            + " FOREIGN KEY(" + Order.DELIVERY_ADDRESS_ID +") REFERENCES " + DeliveryAddress.TABLE_NAME + "(" + DeliveryAddress.ID + ") ON DELETE SET NULL,"
             + " FOREIGN KEY(" + Order.DELIVERY_GUY_SELF_ID +") REFERENCES " + User.TABLE_NAME + "(" + User.USER_ID + ") ON DELETE SET NULL"
             + ")";
 

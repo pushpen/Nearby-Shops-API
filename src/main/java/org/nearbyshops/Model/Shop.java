@@ -128,7 +128,7 @@ public class Shop {
 			+ " " + Shop.EXTENDED_CREDIT_LIMIT + " float NOT NULL default 0 ,"
 
 
-			+ " FOREIGN KEY(" + Shop.SHOP_ADMIN_ID +") REFERENCES " + User.TABLE_NAME + "(" + User.USER_ID + ") ON DELETE SET NULL "
+			+ " FOREIGN KEY(" + Shop.SHOP_ADMIN_ID +") REFERENCES " + User.TABLE_NAME + "(" + User.USER_ID + ") ON DELETE CASCADE "
 			+ ")" ;
 
 
@@ -143,8 +143,7 @@ public class Shop {
 
 	
 	public static final String removeNotNull =
-			" ALTER TABLE IF EXISTS " + Shop.TABLE_NAME  + "  ALTER  " + Shop.SHOP_ENABLED + "  drop NOT NULL " +
-					"  ALTER  " + Shop.SHOP_WAITLISTED + "  drop NOT NULL ";
+			" ALTER TABLE IF EXISTS " + Shop.TABLE_NAME  + "  ALTER  " + Shop.SHOP_ENABLED + "  drop NOT NULL ";
 
 
 

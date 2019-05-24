@@ -70,6 +70,14 @@ public class OrderResource {
 //		Order orderResult = Globals.orderService.placeOrder(order,cartID);
 
 
+
+
+//		try
+//		{
+
+
+
+
 			int orderId = Globals.pladeOrderDAO.placeOrderNew(order, cartID);
 
 			if (orderId != -1) {

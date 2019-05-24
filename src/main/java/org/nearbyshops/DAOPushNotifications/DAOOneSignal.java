@@ -220,6 +220,12 @@ public class DAOOneSignal {
     {
         User user = getPlayerID(userID);
 
+        if(user==null)
+        {
+            return;
+        }
+
+
         SignalNotification notification  = new SignalNotification();
         notification.setApp_id(appID);
         notification.getInclude_player_ids().add(user.getRt_oneSignalPlayerID());

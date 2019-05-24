@@ -109,7 +109,7 @@ public class OrderEndpointShopStaff {
 
 			oneSignalNotifications.sendNotificationToEndUser(
 					orderResult.getEndUserID(),
-					"https://i1.wp.com/nearbyshops.org/wp-content/uploads/2017/02/cropped-backdrop_play_store-1.png?w=250&ssl=1",
+					GlobalConstants.url_for_notification_icon_value,
 					null,
 					null,
 					10,
@@ -123,45 +123,42 @@ public class OrderEndpointShopStaff {
 
 
 
-//			String shopAdminPlayerID = oneSignalNotifications.getPlayerIDforShopAdmin(orderResult.getShopID());
-			ArrayList<String> playerIDs =  Globals.oneSignalNotifications.getPlayerIDsForShopStaff(orderResult.getShopID(),
-					null,true,null,null,null);
-
-
-//			playerIDs.add(shopAdminPlayerID);
-
-
-
-			Globals.oneSignalNotifications.sendNotificationToUser(
-					playerIDs,
-					GlobalConstants.ONE_SIGNAL_APP_ID_SHOP_OWNER_APP,
-					GlobalConstants.ONE_SIGNAL_API_KEY_SHOP_OWNER_APP,
-					"https://i1.wp.com/nearbyshops.org/wp-content/uploads/2017/02/cropped-backdrop_play_store-1.png?w=250&ssl=1",
-					null,
-					null,
-					10,
-					"Order Confirmed",
-					"Order number " + String.valueOf(orderID) + " has been confirmed !",
-					1,
-					DAOOneSignal.ORDER_PLACED,
-					null
-			);
+////			String shopAdminPlayerID = oneSignalNotifications.getPlayerIDforShopAdmin(orderResult.getShopID());
+//			ArrayList<String> playerIDs =  Globals.oneSignalNotifications.getPlayerIDsForShopStaff(orderResult.getShopID(),
+//					null,true,null,null,null);
+//
+//
+////			playerIDs.add(shopAdminPlayerID);
+//
+//
+//
+//			Globals.oneSignalNotifications.sendNotificationToUser(
+//					playerIDs,
+//					GlobalConstants.ONE_SIGNAL_APP_ID_SHOP_OWNER_APP,
+//					GlobalConstants.ONE_SIGNAL_API_KEY_SHOP_OWNER_APP,
+//					GlobalConstants.url_for_notification_icon_value,
+//					null,
+//					null,
+//					10,
+//					"Order Confirmed",
+//					"Order number " + String.valueOf(orderID) + " has been confirmed !",
+//					1,
+//					DAOOneSignal.ORDER_PLACED,
+//					null
+//			);
 
 
 
 			return Response.status(Status.OK)
 					.build();
 		}
-		if(rowCount <= 0)
-		{
-
-			return Response.status(Status.NOT_MODIFIED)
-					.build();
-		}
 
 
 
-		return null;
+		return Response.status(Status.NOT_MODIFIED)
+				.build();
+
+
 	}
 
 
@@ -212,7 +209,7 @@ public class OrderEndpointShopStaff {
 
 				oneSignalNotifications.sendNotificationToEndUser(
 						orderResult.getEndUserID(),
-						"https://i1.wp.com/nearbyshops.org/wp-content/uploads/2017/02/cropped-backdrop_play_store-1.png?w=250&ssl=1",
+						GlobalConstants.url_for_notification_icon_value,
 						null,
 						null,
 						10,
@@ -225,29 +222,30 @@ public class OrderEndpointShopStaff {
 
 
 
-//			String shopAdminPlayerID = oneSignalNotifications.getPlayerIDforShopAdmin(orderResult.getShopID());
-				ArrayList<String> playerIDs =  Globals.oneSignalNotifications.getPlayerIDsForShopStaff(orderResult.getShopID(),
-						null,null,true,null,null);
-
-
-//			playerIDs.add(shopAdminPlayerID);
-
-
-
-				Globals.oneSignalNotifications.sendNotificationToUser(
-						playerIDs,
-						GlobalConstants.ONE_SIGNAL_APP_ID_SHOP_OWNER_APP,
-						GlobalConstants.ONE_SIGNAL_API_KEY_SHOP_OWNER_APP,
-						"https://i1.wp.com/nearbyshops.org/wp-content/uploads/2017/02/cropped-backdrop_play_store-1.png?w=250&ssl=1",
-						null,
-						null,
-						10,
-						"Order Packed",
-						"Order number " + String.valueOf(orderID) + " has been packed !",
-						1,
-						DAOOneSignal.ORDER_PACKED,
-						null
-				);
+//
+////			String shopAdminPlayerID = oneSignalNotifications.getPlayerIDforShopAdmin(orderResult.getShopID());
+//				ArrayList<String> playerIDs =  Globals.oneSignalNotifications.getPlayerIDsForShopStaff(orderResult.getShopID(),
+//						null,null,true,null,null);
+//
+//
+////			playerIDs.add(shopAdminPlayerID);
+//
+//
+//
+//				Globals.oneSignalNotifications.sendNotificationToUser(
+//						playerIDs,
+//						GlobalConstants.ONE_SIGNAL_APP_ID_SHOP_OWNER_APP,
+//						GlobalConstants.ONE_SIGNAL_API_KEY_SHOP_OWNER_APP,
+//						"https://i1.wp.com/nearbyshops.org/wp-content/uploads/2017/02/cropped-backdrop_play_store-1.png?w=250&ssl=1",
+//						null,
+//						null,
+//						10,
+//						"Order Packed",
+//						"Order number " + String.valueOf(orderID) + " has been packed !",
+//						1,
+//						DAOOneSignal.ORDER_PACKED,
+//						null
+//				);
 
 
 
@@ -255,15 +253,12 @@ public class OrderEndpointShopStaff {
 						.entity(null)
 						.build();
 			}
-			if(rowCount <= 0)
-			{
-
-				return Response.status(Status.NOT_MODIFIED)
-						.build();
-			}
 
 
-		return null;
+		return Response.status(Status.NOT_MODIFIED)
+				.build();
+
+
 	}
 
 
@@ -331,7 +326,7 @@ public class OrderEndpointShopStaff {
 					deliveryGuyID,
 					GlobalConstants.ONE_SIGNAL_APP_ID_SHOP_OWNER_APP,
 					GlobalConstants.ONE_SIGNAL_API_KEY_SHOP_OWNER_APP,
-					"https://i1.wp.com/nearbyshops.org/wp-content/uploads/2017/02/cropped-backdrop_play_store-1.png?w=250&ssl=1",
+					GlobalConstants.url_for_notification_icon_value,
 					null,
 					null,
 					10,
@@ -396,18 +391,16 @@ public class OrderEndpointShopStaff {
 					.entity(null)
 					.build();
 		}
-		if(rowCount <= 0)
-		{
 
-			return Response.status(Status.NOT_MODIFIED)
-					.build();
-		}
+
+
+		return Response.status(Status.NOT_MODIFIED)
+				.build();
 
 //		order.setOrderID(orderID);
 //		int rowCount = Globals.orderService.updateOrder(order);
 
 
-		return null;
 	}
 
 
@@ -457,7 +450,7 @@ public class OrderEndpointShopStaff {
 
 			oneSignalNotifications.sendNotificationToEndUser(
 					orderResult.getEndUserID(),
-					"https://i1.wp.com/nearbyshops.org/wp-content/uploads/2017/02/cropped-backdrop_play_store-1.png?w=250&ssl=1",
+					GlobalConstants.url_for_notification_icon_value,
 					null,
 					null,
 					10,
@@ -474,17 +467,14 @@ public class OrderEndpointShopStaff {
 
 
 		}
-		if(rowCount <= 0)
-		{
 
-			return Response.status(Status.NOT_MODIFIED)
-					.build();
-		}
+
+		return Response.status(Status.NOT_MODIFIED)
+				.build();
 
 //		order.setOrderID(orderID);
 //		int rowCount = Globals.orderService.updateOrder(order);
 
-		return null;
 	}
 
 
@@ -528,17 +518,14 @@ public class OrderEndpointShopStaff {
 					.entity(null)
 					.build();
 		}
-		if(rowCount <= 0)
-		{
 
-			return Response.status(Status.NOT_MODIFIED)
-					.build();
-		}
+
+		return Response.status(Status.NOT_MODIFIED)
+				.build();
 
 //		order.setOrderID(orderID);
 //		int rowCount = Globals.orderService.updateOrder(order);
 
-		return null;
 	}
 
 
@@ -577,7 +564,7 @@ public class OrderEndpointShopStaff {
 
 			oneSignalNotifications.sendNotificationToEndUser(
 					orderResult.getEndUserID(),
-					"https://i1.wp.com/nearbyshops.org/wp-content/uploads/2017/02/cropped-backdrop_play_store-1.png?w=250&ssl=1",
+					GlobalConstants.url_for_notification_icon_value,
 					null,
 					null,
 					10,
@@ -594,17 +581,14 @@ public class OrderEndpointShopStaff {
 					.entity(null)
 					.build();
 		}
-		if(rowCount <= 0)
-		{
 
-			return Response.status(Status.NOT_MODIFIED)
-					.build();
-		}
+
+		return Response.status(Status.NOT_MODIFIED)
+				.build();
 
 //		order.setOrderID(orderID);
 //		int rowCount = Globals.orderService.updateOrder(order);
 
-		return null;
 	}
 
 
@@ -844,7 +828,7 @@ public class OrderEndpointShopStaff {
 
 			oneSignalNotifications.sendNotificationToEndUser(
 					orderResult.getEndUserID(),
-					"https://i1.wp.com/nearbyshops.org/wp-content/uploads/2017/02/cropped-backdrop_play_store-1.png?w=250&ssl=1",
+					GlobalConstants.url_for_notification_icon_value,
 					null,
 					null,
 					10,
@@ -885,16 +869,13 @@ public class OrderEndpointShopStaff {
 			return Response.status(Status.OK)
 					.build();
 		}
-		if(rowCount <= 0)
-		{
-
-			return Response.status(Status.NOT_MODIFIED)
-					.build();
-		}
 
 
 
-		return null;
+		return Response.status(Status.NOT_MODIFIED)
+				.build();
+
+
 	}
 
 
@@ -942,7 +923,7 @@ public class OrderEndpointShopStaff {
 
 			oneSignalNotifications.sendNotificationToEndUser(
 					orderResult.getEndUserID(),
-					"https://i1.wp.com/nearbyshops.org/wp-content/uploads/2017/02/cropped-backdrop_play_store-1.png?w=250&ssl=1",
+					GlobalConstants.url_for_notification_icon_value,
 					null,
 					null,
 					10,
@@ -984,15 +965,11 @@ public class OrderEndpointShopStaff {
 					.entity(null)
 					.build();
 		}
-		if(rowCount <= 0)
-		{
 
-			return Response.status(Status.NOT_MODIFIED)
-					.build();
-		}
+		return Response.status(Status.NOT_MODIFIED)
+				.build();
 
 
-		return null;
 	}
 
 
@@ -1040,7 +1017,7 @@ public class OrderEndpointShopStaff {
 
 			oneSignalNotifications.sendNotificationToEndUser(
 					orderResult.getEndUserID(),
-					"https://i1.wp.com/nearbyshops.org/wp-content/uploads/2017/02/cropped-backdrop_play_store-1.png?w=250&ssl=1",
+					GlobalConstants.url_for_notification_icon_value,
 					null,
 					null,
 					10,
@@ -1081,21 +1058,23 @@ public class OrderEndpointShopStaff {
 
 
 
+			if(endUserProfile.getPhone()!=null)
+			{
+				SendSMS.sendSMS("Order No. " + orderID + " is Ready for Pickup. You can collect the order from the Shop !",
+						endUserProfile.getPhone());
+			}
+
 
 
 			return Response.status(Status.OK)
 					.entity(null)
 					.build();
 		}
-		if(rowCount <= 0)
-		{
 
-			return Response.status(Status.NOT_MODIFIED)
-					.build();
-		}
+		return Response.status(Status.NOT_MODIFIED)
+				.build();
 
 
-		return null;
 	}
 
 
@@ -1138,7 +1117,7 @@ public class OrderEndpointShopStaff {
 
 			oneSignalNotifications.sendNotificationToEndUser(
 					orderResult.getEndUserID(),
-					"https://i1.wp.com/nearbyshops.org/wp-content/uploads/2017/02/cropped-backdrop_play_store-1.png?w=250&ssl=1",
+					GlobalConstants.url_for_notification_icon_value,
 					null,
 					null,
 					10,
