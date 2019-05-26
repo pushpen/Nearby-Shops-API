@@ -1,7 +1,9 @@
 package org.nearbyshops.ModelEndpoint;
 
 import org.nearbyshops.Model.Item;
+import org.nearbyshops.Model.ItemCategory;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,9 +16,22 @@ public class ItemEndPoint {
     private Integer limit;
     private Integer max_limit;
     private List<Item> results;
+    private List<ItemCategory> subcategories;
 
 
 
+
+
+
+    // getters and setters
+
+    public List<ItemCategory> getSubcategories() {
+        return subcategories;
+    }
+
+    public void setSubcategories(List<ItemCategory> subcategories) {
+        this.subcategories = subcategories;
+    }
 
     public Integer getItemCount() {
         return itemCount;

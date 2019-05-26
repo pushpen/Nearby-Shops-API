@@ -25,14 +25,6 @@ public class ItemCategoryDAO {
 //	private GeoLocation pointTwo;
 
 
-	@Override
-	protected void finalize() throws Throwable {
-		// TODO Auto-generated method stub
-		super.finalize();	
-	}
-
-
-
 
 
 
@@ -1516,6 +1508,10 @@ public class ItemCategoryDAO {
 		
 		return itemCategoryList;
 	}
+
+
+
+
 
 
 

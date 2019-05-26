@@ -516,6 +516,8 @@ public class ItemDAO {
 				+ " AND " + Shop.TABLE_NAME + "." + Shop.ACCOUNT_BALANCE + ">=" + GlobalConstants.min_account_balance_for_shop;
 
 
+
+
 //		+ " AND " + ShopItem.TABLE_NAME + "." + ShopItem.AVAILABLE_ITEM_QUANTITY + " > 0 "
 
 
@@ -523,6 +525,8 @@ public class ItemDAO {
 		{
 			queryJoin = queryJoin + " AND " + ItemSpecificationValue.TABLE_NAME + "." + ItemSpecificationValue.ID + " IN ( " + itemSpecValues + " ) ";
 		}
+
+
 
 
 

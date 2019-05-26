@@ -6,12 +6,14 @@ import com.google.gson.reflect.TypeToken;
 import net.coobird.thumbnailator.Thumbnails;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import org.nearbyshops.DAOsPrepared.ItemCategoryDAO;
 import org.nearbyshops.DAOsPrepared.ItemDAO;
 import org.nearbyshops.DAOsPrepared.ItemDAOJoinOuter;
 import org.nearbyshops.Globals.GlobalConstants;
 import org.nearbyshops.Globals.Globals;
 import org.nearbyshops.Model.Image;
 import org.nearbyshops.Model.Item;
+import org.nearbyshops.Model.ItemCategory;
 import org.nearbyshops.ModelEndpoint.ItemEndPoint;
 import org.nearbyshops.ModelRoles.StaffPermissions;
 import org.nearbyshops.ModelRoles.User;
@@ -41,6 +43,8 @@ public class ItemResource {
 
 	private ItemDAO itemDAO = Globals.itemDAO;
 	private ItemDAOJoinOuter itemDAOJoinOuter = Globals.itemDAOJoinOuter;
+	private ItemCategoryDAO itemCategoryDAO = Globals.itemCategoryDAO;
+
 
 
 	@POST
@@ -421,11 +425,16 @@ public class ItemResource {
 
 
 
+
+
+
+
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getItems(
             @QueryParam("ItemCategoryID")Integer itemCategoryID,
             @QueryParam("ShopID")Integer shopID,
+			@QueryParam("GetSubcategories")boolean getSubcategories,
             @QueryParam("latCenter") Double latCenter, @QueryParam("lonCenter") Double lonCenter,
             @QueryParam("ItemSpecValues") String itemSpecValues,
             @QueryParam("deliveryRangeMax")Double deliveryRangeMax,
@@ -439,6 +448,7 @@ public class ItemResource {
 	{
 
 
+		List<ItemCategory> subcategories;
 
 
 //		int set_limit = 30;
@@ -480,6 +490,29 @@ public class ItemResource {
 											sortBy,limit,offset,
 											getRowCount,getOnlyMetaData
 									);
+
+
+
+
+
+			if(getSubcategories)
+			{
+				subcategories = itemCategoryDAO.getItemCategoriesJoinRecursive(
+						shopID, itemCategoryID, null,
+						latCenter, lonCenter,
+						deliveryRangeMin,
+						deliveryRangeMax,
+						proximity,
+						true,
+						searchString,
+						ItemCategory.CATEGORY_ORDER,
+						null,null
+				);
+
+
+
+				endPoint.setSubcategories(subcategories);
+			}
 
 
 

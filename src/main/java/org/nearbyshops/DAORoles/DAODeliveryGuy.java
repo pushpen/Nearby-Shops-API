@@ -21,16 +21,6 @@ public class DAODeliveryGuy {
 	private HikariDataSource dataSource = Globals.getDataSource();
 
 
-	@Override
-	protected void finalize() throws Throwable {
-		// TODO Auto-generated method stub
-		super.finalize();
-	}
-
-
-
-
-
 
 	public int getShopIDforDeliveryGuy(int staffUserID) {
 
@@ -110,10 +100,10 @@ public class DAODeliveryGuy {
 	}
 
 
-	public void logMessage(String message)
-	{
-		System.out.println(message);
-	}
+//	public void logMessage(String message)
+//	{
+//		System.out.println(message);
+//	}
 
 
 
@@ -201,9 +191,6 @@ public class DAODeliveryGuy {
 
 		return rowCountUpdated;
 	}
-
-
-
 
 
 
@@ -535,9 +522,6 @@ public class DAODeliveryGuy {
 
 
 
-
-
-
 	public UserEndpoint getDeliveryGuyForShopAdmin(
 			Double latPickUp, Double lonPickUp,
 			Boolean gender,
@@ -781,8 +765,6 @@ public class DAODeliveryGuy {
 				}
 
 
-
-
 				if(gender!=null)
 				{
 					statementCount.setObject(++i,gender);
@@ -861,10 +843,6 @@ public class DAODeliveryGuy {
 
 		return endPoint;
 	}
-
-
-
-
 
 
 }
