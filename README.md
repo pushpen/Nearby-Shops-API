@@ -1,10 +1,6 @@
 Nearby Shops API (JSON based REST API)
 ====================================
 
-
-<img src="https://nearbyshops.org/wp-content/uploads/2019/02/nearby-shops-logo-e1549185087374-300x237.png" width="170"> 
-
-
 This is the server side component of the Nearby Shops e-commerce software. For more information about this project please visit https://nearbyshops.org
 
 Get paid to Contribute
@@ -18,11 +14,7 @@ To know how to contribute please visit https://nearbyshops.org/contribute/
 
 Screenshots
 -----------
-
-<img src="https://nearbyshops.org/wp-content/uploads/2018/12/Screenshot_20181222-181246-512x1024.png" width="208"> <img src="https://nearbyshops.org/wp-content/uploads/2018/12/Screenshot_20181222-181259-512x1024.png" width="208"> <img src="https://nearbyshops.org/wp-content/uploads/2018/12/Screenshot_20181222-181405-512x1024.png" width="208"> 
-
-<img src="https://nearbyshops.org/wp-content/uploads/2018/12/Screenshot_20181222-181453-512x1024.png" width="208"> <img src="https://nearbyshops.org/wp-content/uploads/2018/12/Screenshot_20181222-181504-512x1024.png" width="208"> <img src="https://nearbyshops.org/wp-content/uploads/2018/12/Screenshot_20181222-181513-512x1024.png" width="208">
-
+<img src="https://nearbyshops.org/images/3.png" width="208">   <img src="https://nearbyshops.org/images/5.png" width="208"> <img src="https://nearbyshops.org/images/6.png" width="208">
 
 Installation Guide
 --------------------
