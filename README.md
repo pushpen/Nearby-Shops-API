@@ -3,14 +3,6 @@ Nearby Shops API (JSON based REST API)
 
 This is the server side component of the Nearby Shops e-commerce software. For more information about this project please visit https://nearbyshops.org
 
-Get paid to Contribute
--------------------------
-
-Developer time is valuable and its not fair to expect developers to contribute their time without being reasonably compensated. Therefore we have made a policy to compensate the developers, designers or any other contributor who help us with the project. We will make best efforts to Compensate the contibutors.
-
-All the pull requests that gets accepted will be compensated. The compensation will be similar to how freelance developers, desginers get paid.
-
-To know how to contribute please visit https://forum.nearbyshops.org
 
 Screenshots
 -----------
@@ -46,15 +38,15 @@ Get it from Google play store
 
 <a href="https://play.google.com/store/apps/details?id=org.nearbyshops.enduserappnew"><img class="alignnone" src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" alt="Get it on Google Play" width="219" height="90" /></a>
 
-Demo
------
 
-Download the nearby shops android app from the above link and then set a fake location. 
+Get paid to Contribute
+-------------------------
 
-The nearby shops currently have shops available in only few cities. If you are living in a city where shops are not available. You need to fake your location and set it to some location where the shops are available. 
+Developer time is valuable and its not fair to expect developers to contribute their time without being reasonably compensated. Therefore we have made a policy to compensate the developers, designers or any other contributor who help us with the project. We will make best efforts to Compensate the contibutors.
 
-Use any location faker app which you can download from playstore and set your location to "Hyderabad, India". You will see some shops and items visible in the nearby shops app. 
+All the pull requests that gets accepted will be compensated. The compensation will be similar to how freelance developers, desginers get paid.
 
+To know how to contribute please visit https://forum.nearbyshops.org
 
 
 Community 
