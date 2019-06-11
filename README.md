@@ -10,7 +10,7 @@ Developer time is valuable and its not fair to expect developers to contribute t
 
 All the pull requests that gets accepted will be compensated. The compensation will be similar to how freelance developers, desginers get paid.
 
-To know how to contribute please visit https://nearbyshops.org/contribute/
+To know how to contribute please visit https://forum.nearbyshops.org
 
 Screenshots
 -----------
@@ -20,7 +20,7 @@ Installation Guide
 --------------------
 Installation guide is available for installing Nearby Shops API on the Could Hosting Service like Digital Ocean or AWS using Ubuntu 16.04 Server.
 
-For the installation guide please refer the Developer Section on https://nearbyshops.org
+For the installation guide please refer the Developer Section on https://developer.nearbyshops.org
 
 
 Technology Stack
@@ -62,9 +62,7 @@ Community
 
 Do you have questions ? Need help ? you can speak with original developers of this project. We welcome you to join our forum for discussion on anything related to this project !
 
-Please visit : https://nearbyshops.org/community/
-
-
+Please visit : https://forum.nearbyshops.org
 
 
 
@@ -73,11 +71,9 @@ Client Side Repositories
 
 End-User android app : https://github.com/SumeetMoray/Nearby-Shops-End-User-Android-app
 
-Shop-Owner android app : https://github.com/SumeetMoray/Nearby-Shops-Shop-Owner-app
+Shop-Owner android app : https://github.com/SumeetMoray/Nearby-Shops-Shop-Owner-Android-app
 
 Admin android app : https://github.com/SumeetMoray/Nearby-Shops-Admin-App
-
-
 
 
 
