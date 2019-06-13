@@ -246,14 +246,6 @@ public class ShopImageResource {
 
 
 
-
-
-
-
-
-
-
-
     // Image Utility Methods
 
     public boolean deleteImageFileInternal(String fileName)

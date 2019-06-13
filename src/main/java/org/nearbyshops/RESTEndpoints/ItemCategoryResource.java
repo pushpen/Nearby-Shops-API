@@ -501,6 +501,10 @@ public class ItemCategoryResource {
 
 
 
+
+
+
+
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getItemCategories(
@@ -750,9 +754,6 @@ public class ItemCategoryResource {
 
 
 
-
-
-
 	// Image MEthods
 
 	private static final java.nio.file.Path BASE_DIR = Paths.get("./images/ItemCategory");
@@ -868,6 +869,7 @@ public class ItemCategoryResource {
 			e.printStackTrace();
 		}
 	}
+
 
 
 

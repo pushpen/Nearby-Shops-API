@@ -21,18 +21,6 @@ public class ItemDAOJoinOuter {
 
 	private HikariDataSource dataSource = Globals.getDataSource();
 
-	@Override
-	protected void finalize() throws Throwable {
-		// TODO Auto-generated method stub
-		super.finalize();
-	}
-
-
-
-
-
-
-
 
 
 	//Integer shopID,

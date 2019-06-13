@@ -481,6 +481,72 @@ public class ShopDAO {
 
 
 
+	public int setShopOpen(boolean isOpen,int shopAdminID)
+	{
+
+
+		String updateStatement = "UPDATE " + Shop.TABLE_NAME
+				+ " SET "
+				+ Shop.IS_OPEN + " = ?"
+
+				+ " WHERE " + Shop.SHOP_ADMIN_ID + " = ?";
+
+
+
+		Connection connection = null;
+		PreparedStatement statement = null;
+		int updatedRows = -1;
+
+		try {
+
+			connection = dataSource.getConnection();
+
+			statement = connection.prepareStatement(updateStatement);
+
+			statement.setObject(1,isOpen);
+			statement.setObject(2,shopAdminID);
+
+			updatedRows = statement.executeUpdate();
+
+
+//			System.out.println("Total rows updated: " + updatedRows);
+
+			//conn.close();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally
+
+		{
+
+			try {
+
+				if(statement!=null)
+				{statement.close();}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			try {
+
+				if(connection!=null)
+				{connection.close();}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		return updatedRows;
+
+	}
+
+
+
+
 
 	public int deleteShop(int shopID)
 	{

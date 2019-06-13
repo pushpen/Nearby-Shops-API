@@ -1,10 +1,12 @@
 package org.nearbyshops.RESTEndpoints;
 
+import org.nearbyshops.DAOsPrepared.ItemCategoryDAO;
 import org.nearbyshops.DAOsPrepared.ShopItemByItemDAO;
 import org.nearbyshops.DAOsPrepared.ShopItemByShopDAO;
 import org.nearbyshops.DAOsPrepared.ShopItemDAO;
 import org.nearbyshops.Globals.GlobalConstants;
 import org.nearbyshops.Globals.Globals;
+import org.nearbyshops.Model.ItemCategory;
 import org.nearbyshops.Model.Shop;
 import org.nearbyshops.Model.ShopItem;
 import org.nearbyshops.ModelEndpoint.ShopItemEndPoint;
@@ -31,6 +33,10 @@ public class ShopItemResource {
 	private ShopItemByShopDAO shopItemByShopDAO = Globals.shopItemByShopDAO;
 	private ShopItemByItemDAO shopItemByItemDAO = Globals.shopItemByItemDAO;
 	private ShopItemDAO shopItemDAO = Globals.shopItemDAO;
+	private ItemCategoryDAO itemCategoryDAO = Globals.itemCategoryDAO;
+
+
+
 
 
 
@@ -136,8 +142,6 @@ public class ShopItemResource {
 
 		return null;
 	}
-
-
 
 
 
@@ -251,6 +255,9 @@ public class ShopItemResource {
 
 
 
+
+
+
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@RolesAllowed({GlobalConstants.ROLE_SHOP_ADMIN})
@@ -354,8 +361,6 @@ public class ShopItemResource {
 
 
 
-
-
 	@PUT
 	@Path("/UpdateByShop")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -400,14 +405,6 @@ public class ShopItemResource {
 
 
 
-
-
-
-
-
-
-	
-	
 	@DELETE
 	@RolesAllowed({GlobalConstants.ROLE_SHOP_ADMIN,GlobalConstants.ROLE_SHOP_STAFF})
 	public Response deleteShopItem(@QueryParam("ShopID")int ShopID, @QueryParam("ItemID") int itemID)
@@ -668,10 +665,12 @@ public class ShopItemResource {
 
 
 
+
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getShopItems(
             @QueryParam("ItemCategoryID")Integer ItemCategoryID,
+			@QueryParam("GetSubcategories")boolean getSubcategories,
             @QueryParam("ShopID")Integer ShopID, @QueryParam("ItemID") Integer itemID,
             @QueryParam("latCenter")Double latCenter, @QueryParam("lonCenter")Double lonCenter,
             @QueryParam("deliveryRangeMax")Double deliveryRangeMax,
@@ -859,6 +858,33 @@ public class ShopItemResource {
 //		} catch (InterruptedException e) {
 //			e.printStackTrace();
 //		}
+
+
+
+
+
+
+		List<ItemCategory> subcategories;
+
+		if(getSubcategories)
+		{
+			subcategories = itemCategoryDAO.getItemCategoriesJoinRecursive(
+					ShopID, ItemCategoryID, null,
+					latCenter, lonCenter,
+					deliveryRangeMin,
+					deliveryRangeMax,
+					proximity,
+					true,
+					searchString,
+					ItemCategory.CATEGORY_ORDER,
+					null,null
+			);
+
+
+
+			endPoint.setSubcategories(subcategories);
+		}
+
 
 
 

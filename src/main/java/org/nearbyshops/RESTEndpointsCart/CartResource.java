@@ -40,9 +40,9 @@ public class CartResource {
 					.location(URI.create("/api/Cart/" + idOfInsertedRow))
 					.entity(cart)
 					.build();
+
 			
-		}else if(idOfInsertedRow <=0)
-		{
+		}else {
 
 			//Response.status(Status.CREATED).location(arg0)
 			
@@ -50,9 +50,7 @@ public class CartResource {
 					.entity(null)
 					.build();
 		}
-		
-		return null;
-		
+
 	}
 
 	
@@ -114,7 +112,9 @@ public class CartResource {
 		
 		return null;
 	}
-	
+
+
+
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -145,7 +145,9 @@ public class CartResource {
 		}
 		
 	}
-	
+
+
+
 	
 	@GET
 	@Path("/{CartID}")

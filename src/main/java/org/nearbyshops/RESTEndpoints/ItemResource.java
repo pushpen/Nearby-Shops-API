@@ -83,16 +83,14 @@ public class ItemResource {
 					.entity(item)
 					.build();
 			
-		}else if(idOfInsertedRow <= 0)
-		{
+		}else {
 
 			return Response.status(Status.NOT_MODIFIED)
 					.entity(null)
 					.build();
 		}
-		
-		
-		return null;
+
+
 	}
 
 
@@ -848,6 +846,8 @@ public class ItemResource {
 
 
 
+
+
 	private void createThumbnails(String filename)
 	{
 		try {
@@ -890,6 +890,8 @@ public class ItemResource {
 
 
 
+	
+
 	@GET
 	@Path("/Image/{name}")
 	@Produces("image/jpeg")
@@ -911,6 +913,7 @@ public class ItemResource {
 
 		return null;
 	}
+
 
 
 
@@ -965,8 +968,6 @@ public class ItemResource {
 
 		return response;
 	}
-
-
 
 
 }

@@ -220,24 +220,76 @@ public class ShopResource {
 
 		if(rowCount >= 1)
 		{
-
 			return Response.status(Status.OK)
-					.entity(null)
-					.build();
-		}
-		if(rowCount <= 0)
-		{
-
-			return Response.status(Status.NOT_MODIFIED)
-					.entity(null)
 					.build();
 		}
 
-		return null;
+		return Response.status(Status.NOT_MODIFIED)
+				.entity(null)
+				.build();
+
 	}
 
 
-	
+
+
+	@PUT
+	@Path("/SetShopOpen")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@RolesAllowed({GlobalConstants.ROLE_SHOP_ADMIN})
+	public Response updateShopOpen()
+	{
+
+		int shopAdminID = ((User)Globals.accountApproved).getUserID();
+
+		int rowCount = shopDAO.setShopOpen(true,shopAdminID);
+
+
+		if(rowCount >= 1)
+		{
+			return Response.status(Status.OK)
+					.build();
+		}
+
+		return Response.status(Status.NOT_MODIFIED)
+				.build();
+
+	}
+
+
+
+
+
+	@PUT
+	@Path("/SetShopClosed")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@RolesAllowed({GlobalConstants.ROLE_SHOP_ADMIN})
+	public Response updateShopClosed()
+	{
+
+		int shopAdminID = ((User)Globals.accountApproved).getUserID();
+
+		int rowCount = shopDAO.setShopOpen(false,shopAdminID);
+
+
+
+
+		if(rowCount >= 1)
+		{
+			return Response.status(Status.OK)
+					.build();
+		}
+
+		return Response.status(Status.NOT_MODIFIED)
+				.build();
+
+	}
+
+
+
+
+
+
 	@DELETE
 	@Path("/{ShopID}")
 	@RolesAllowed({GlobalConstants.ROLE_SHOP_ADMIN, GlobalConstants.ROLE_ADMIN, GlobalConstants.ROLE_STAFF})
@@ -670,6 +722,9 @@ public class ShopResource {
 
 
 
+
+
+
 	@GET
 	@Path("/GetForShopAdmin")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -873,6 +928,8 @@ public class ShopResource {
 
 		return null;
 	}
+
+
 
 
 

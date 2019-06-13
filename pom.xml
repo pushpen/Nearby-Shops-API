@@ -130,10 +130,16 @@
 
         <!-- Dependencies for Connection Pooling Hikari CP -->
 
+<!--        <dependency>-->
+<!--            <groupId>com.zaxxer</groupId>-->
+<!--            <artifactId>HikariCP</artifactId>-->
+<!--            <version>2.4.7</version>-->
+<!--        </dependency>-->
+
         <dependency>
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
-            <version>2.4.7</version>
+            <version>3.3.1</version>
         </dependency>
 
 
