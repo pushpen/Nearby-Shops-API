@@ -12,19 +12,22 @@ public class Transaction {
 
 
     // constants
-    public static final int TRANSACTION_TYPE_TAXI_REFERRAL_CHARGE = 1;
+    public static final int TRANSACTION_TYPE_APP_FEE = 1;
     public static final int TRANSACTION_TYPE_JOINING_CREDIT = 2;
     public static final int TRANSACTION_TYPE_USER_REFERRAL_CREDIT = 3;
-    public static final int TRANSACTION_TYPE_PAYMENT_MADE = 4;
+    public static final int TRANSACTION_TYPE_PAYMENTS = 4;
 
-    public static final String TITLE_REFERRAL_CHARGE_FOR_TRIP = "Referral Charge";
-    public static final String DESCRIPTION_REFERRAL_CHARGE_FOR_TRIP = "Referral Charges for Trip";
+
+
+//    public static final String TITLE_REFERRAL_CHARGE_FOR_TRIP = "Referral Charge";
+//    public static final String DESCRIPTION_REFERRAL_CHARGE_FOR_TRIP = "Referral Charges for Trip";
 
     public static final String TITLE_JOINING_CREDIT_FOR_DRIVER = "Joining Credit";
     public static final String DESCRIPTION_JOINING_CREDIT_FOR_DRIVEr = "Joining credit applied for ";
 
     public static final String TITLE_REFERRAL_CREDIT_APPLIED = "Referral Credit";
     public static final String DESCRIPTION_REFERRAL_CREDIT_APPLIED = "Referral credit applied";
+
 
 
     // Table Name for User

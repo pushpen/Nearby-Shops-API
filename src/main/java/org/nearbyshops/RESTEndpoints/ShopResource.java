@@ -790,16 +790,16 @@ public class ShopResource {
 
 			return Response.status(Response.Status.OK)
 					.build();
-		}
-		else if(rowCount <= 0)
-		{
 
-			return Response.status(Response.Status.NOT_MODIFIED)
+
+		}
+		else {
+
+			return Response.status(Status.NOT_MODIFIED)
 					.build();
 		}
 
 
-		return null;
 	}
 
 

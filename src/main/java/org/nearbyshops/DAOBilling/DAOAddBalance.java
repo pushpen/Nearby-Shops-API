@@ -4,7 +4,6 @@ import com.zaxxer.hikari.HikariDataSource;
 import org.nearbyshops.Globals.Globals;
 import org.nearbyshops.Model.Shop;
 import org.nearbyshops.ModelBilling.Transaction;
-import org.nearbyshops.ModelRoles.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -91,7 +90,7 @@ public class DAOAddBalance {
 //                + " ? ,"
 //                + " ? ,"
 
-                + Transaction.TRANSACTION_TYPE_PAYMENT_MADE + ","
+                + Transaction.TRANSACTION_TYPE_PAYMENTS + ","
                 + "? ,"
 
                 + " true " + ","

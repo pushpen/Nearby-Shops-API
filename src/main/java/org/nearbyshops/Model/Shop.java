@@ -133,6 +133,9 @@ public class Shop {
 
 
 
+
+
+
 	public static final String addColumns =
 					" ALTER TABLE IF EXISTS " + Shop.TABLE_NAME
 					+ "  ADD COLUMN IF NOT EXISTS  " + Shop.ACCOUNT_BALANCE + "  float NOT NULL default 0 ,"
